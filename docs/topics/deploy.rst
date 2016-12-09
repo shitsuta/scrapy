@@ -1,7 +1,7 @@
 .. _topics-deploy:
 
 =================
-Deploying Spiders
+スパイダーのデプロイ
 =================
 
 This section describes the different options you have for deploying your Scrapy
@@ -18,7 +18,7 @@ Popular choices for deploying Scrapy spiders are:
 
 .. _deploy-scrapyd:
 
-Deploying to a Scrapyd Server
+Scrapyd サーバーへのデプロイ
 =============================
 
 `Scrapyd`_ is an open source application to run Scrapy spiders. It provides
@@ -32,7 +32,7 @@ Scrapyd is maintained by some of the Scrapy developers.
 
 .. _deploy-scrapy-cloud:
 
-Deploying to Scrapy Cloud
+Scrapy Cloud へのデプロイ
 =========================
 
 `Scrapy Cloud`_ is a hosted, cloud-based service by `Scrapinghub`_,

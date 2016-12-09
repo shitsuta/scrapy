@@ -1,20 +1,18 @@
 .. _intro-examples:
 
 ========
-Examples
+例
 ========
 
-The best way to learn is with examples, and Scrapy is no exception. For this
-reason, there is an example Scrapy project named quotesbot_, that you can use to
-play and learn more about Scrapy. It contains two spiders for
-http://quotes.toscrape.com, one using CSS selectors and another one using XPath
-expressions.
+学習する最善の方法は例を真似ることであり、Scrapyも例外ではありません.
+この理由から, quotesbot_ という名前のScrapyプロジェクトの例があります. 
+こののプロジェクトを使用して、Scrapyについての詳細を学び、学ぶことができます. 
+http://quotes.toscrape.com には2つのスパイダーがあり, 1つはCSSセレクターを使用し, もう1つはXPath式を使用します.
 
-The quotesbot_ project is available at: https://github.com/scrapy/quotesbot.
-You can find more information about it in the project's README.
+quotesbot_ プロジェクトは: https://github.com/scrapy/quotesbot で入手できます.
+詳細はプロジェクトのREADMEにあります.
 
-If you're familiar with git, you can checkout the code. Otherwise you can
-download the project as a zip file by clicking
-`here <https://github.com/scrapy/quotesbot/archive/master.zip>`_.
+gitに精通している場合は, コードをチェックアウトすることができます. 
+それ以外の場合は, `ココ <https://github.com/scrapy/quotesbot/archive/master.zip>`_ クリックしてzipファイルとしてプロジェクトをダウンロードできます.
 
 .. _quotesbot: https://github.com/scrapy/quotesbot

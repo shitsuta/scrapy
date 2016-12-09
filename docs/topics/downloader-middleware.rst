@@ -1,7 +1,7 @@
 .. _topics-downloader-middleware:
 
 =====================
-Downloader Middleware
+ダウンローダミドルウェア
 =====================
 
 The downloader middleware is a framework of hooks into Scrapy's
@@ -10,7 +10,7 @@ altering Scrapy's requests and responses.
 
 .. _topics-downloader-middleware-setting:
 
-Activating a downloader middleware
+ダウンローダミドルウェアの有効化
 ==================================
 
 To activate a downloader middleware component, add it to the
@@ -52,7 +52,7 @@ as its value.  For example, if you want to disable the user-agent middleware::
 Finally, keep in mind that some middlewares may need to be enabled through a
 particular setting. See each middleware documentation for more info.
 
-Writing your own downloader middleware
+独自のダウンローダミドルウェアの作成
 ======================================
 
 Each middleware component is a Python class that defines one or
@@ -159,7 +159,7 @@ more of the following methods:
 
 .. _topics-downloader-middleware-ref:
 
-Built-in downloader middleware reference
+ビルトインダウンローダーミドルウェアリファレンス
 ========================================
 
 This page describes all downloader middleware components that come with

@@ -1,7 +1,7 @@
 .. _topics-stats:
 
 ================
-Stats Collection
+統計コレクション
 ================
 
 Scrapy provides a convenient facility for collecting stats in the form of
@@ -26,7 +26,7 @@ opened when the spider is opened, and closed when the spider is closed.
 
 .. _topics-stats-usecases:
 
-Common Stats Collector uses
+共通統計コレクタを使用する
 ===========================
 
 Access the stats collector through the :attr:`~scrapy.crawler.Crawler.stats`
@@ -67,7 +67,7 @@ Get all stats::
     >>> stats.get_stats()
     {'custom_count': 1, 'start_time': datetime.datetime(2009, 7, 14, 21, 47, 28, 977139)}
 
-Available Stats Collectors
+利用可能な統計コレクタ
 ==========================
 
 Besides the basic :class:`StatsCollector` there are other Stats Collectors

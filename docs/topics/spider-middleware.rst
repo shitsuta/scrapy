@@ -1,7 +1,7 @@
 .. _topics-spider-middleware:
 
 =================
-Spider Middleware
+スパイダーミドルウェア
 =================
 
 The spider middleware is a framework of hooks into Scrapy's spider processing
@@ -11,7 +11,7 @@ and items that are generated from spiders.
 
 .. _topics-spider-middleware-setting:
 
-Activating a spider middleware
+スパイダーミドルウェアの有効化
 ==============================
 
 To activate a spider middleware component, add it to the
@@ -54,7 +54,7 @@ value.  For example, if you want to disable the off-site middleware::
 Finally, keep in mind that some middlewares may need to be enabled through a
 particular setting. See each middleware documentation for more info.
 
-Writing your own spider middleware
+独自のスパイダーミドルウェアの作成
 ==================================
 
 Each middleware component is a Python class that defines one or more of the
@@ -170,7 +170,7 @@ following methods:
 
 .. _topics-spider-middleware-ref:
 
-Built-in spider middleware reference
+ビルトインスパイダーミドルウェアリファレンス
 ====================================
 
 This page describes all spider middleware components that come with Scrapy. For
@@ -245,7 +245,7 @@ For more information see: `HTTP Status Code Definitions`_.
 
 .. _HTTP Status Code Definitions: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 
-HttpErrorMiddleware settings
+HttpErrorMiddleware 設定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. setting:: HTTPERROR_ALLOWED_CODES
@@ -314,7 +314,7 @@ RefererMiddleware
    Populates Request ``Referer`` header, based on the URL of the Response which
    generated it.
 
-RefererMiddleware settings
+RefererMiddleware 設定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. setting:: REFERER_ENABLED

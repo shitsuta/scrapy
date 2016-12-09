@@ -20,26 +20,24 @@ simple API for sending attachments and it's very easy to configure, with a few
 簡単な例
 =============
 
-There are two ways to instantiate the mail sender. You can instantiate it using
-the standard constructor::
+MailSenderをインスタンス化するには2つの方法があります. 標準コンストラクタを使用してインスタンス化できます::
 
     from scrapy.mail import MailSender
     mailer = MailSender()
 
-Or you can instantiate it passing a Scrapy settings object, which will respect
-the :ref:`settings <topics-email-settings>`::
+または, :ref:`settings <topics-email-settings>` を尊重する, Scrapy設定オブジェクトを渡してインスタンス化することもできます::
 
     mailer = MailSender.from_settings(settings)
 
-And here is how to use it to send an e-mail (without attachments)::
+そして、MailSenderを使って電子メールを送信する方法（添付ファイルなし）::
 
     mailer.send(to=["someone@example.com"], subject="Some subject", body="Some body", cc=["another@example.com"])
 
 MailSender クラスリファレンス
 ==========================
 
-MailSender is the preferred class to use for sending emails from Scrapy, as it
-uses `Twisted non-blocking IO`_, like the rest of the framework.
+MailSenderは, フレームワークの他の部分と同様に, `Twisted non-blocking IO`_, 
+を使用するため, Scrapyから電子メールを送信するために使用するのに望ましいクラスです.
 
 .. class:: MailSender(smtphost=None, mailfrom=None, smtpuser=None, smtppass=None, smtpport=None)
 
@@ -111,9 +109,8 @@ uses `Twisted non-blocking IO`_, like the rest of the framework.
 メール設定
 =============
 
-These settings define the default constructor values of the :class:`MailSender`
-class, and can be used to configure e-mail notifications in your project without
-writing any code (for those extensions and code that uses :class:`MailSender`).
+これらの設定は, :class:`MailSender` クラスのデフォルトのコンストラクタ値を定義し, 
+コードを記述することなくプロジェクト内の電子メール通知を構成するために使用できます（これらの拡張子と :class:`MailSender` を使用するコード用）.
 
 .. setting:: MAIL_FROM
 
@@ -122,7 +119,7 @@ MAIL_FROM
 
 初期値: ``'scrapy@localhost'``
 
-Sender email to use (``From:`` header) for sending emails.
+Eメールの送信に使用する送信者Eメール (``From:`` ヘッダー).
 
 .. setting:: MAIL_HOST
 
@@ -131,7 +128,7 @@ MAIL_HOST
 
 初期値: ``'localhost'``
 
-SMTP host to use for sending emails.
+Eメールの送信に使用するSMTPホスト.
 
 .. setting:: MAIL_PORT
 
@@ -140,7 +137,7 @@ MAIL_PORT
 
 初期値: ``25``
 
-SMTP port to use for sending emails.
+Eメールの送信に使用するSMTPポート.
 
 .. setting:: MAIL_USER
 
@@ -149,8 +146,7 @@ MAIL_USER
 
 初期値: ``None``
 
-User to use for SMTP authentication. If disabled no SMTP authentication will be
-performed.
+SMTP認証に使用するユーザー. 無効にすると、SMTP認証は実行されません.
 
 .. setting:: MAIL_PASS
 
@@ -159,7 +155,7 @@ MAIL_PASS
 
 初期値: ``None``
 
-Password to use for SMTP authentication, along with :setting:`MAIL_USER`.
+:setting:`MAIL_USER` とともにSMTP認証に使用するパスワード.
 
 .. setting:: MAIL_TLS
 
@@ -168,7 +164,7 @@ MAIL_TLS
 
 初期値: ``False``
 
-Enforce using STARTTLS. STARTTLS is a way to take an existing insecure connection, and upgrade it to a secure connection using SSL/TLS.
+STARTTLSを使用して強制する. STARTTLSは、既存の安全でない接続を取得し, SSL / TLSを使用して安全な接続にアップグレードする方法です.
 
 .. setting:: MAIL_SSL
 
@@ -177,4 +173,4 @@ MAIL_SSL
 
 初期値: ``False``
 
-Enforce connecting using an SSL encrypted connection
+SSL暗号化接続を使用して接続を強制する.

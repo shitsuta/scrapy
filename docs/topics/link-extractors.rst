@@ -1,7 +1,7 @@
 .. _topics-link-extractors:
 
 ===============
-Link Extractors
+リンク抽出
 ===============
 
 Link extractors are objects whose only purpose is to extract links from web
@@ -27,7 +27,7 @@ extract links.
 
 .. _topics-link-extractors-ref:
 
-Built-in link extractors reference
+ビルトインリンク抽出リファレンス
 ==================================
 
 .. module:: scrapy.linkextractors

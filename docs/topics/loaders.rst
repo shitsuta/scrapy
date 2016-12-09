@@ -1,7 +1,7 @@
 .. _topics-loaders:
 
 ============
-Item Loaders
+アイテムローダー
 ============
 
 .. module:: scrapy.loader
@@ -21,7 +21,7 @@ Item Loaders are designed to provide a flexible, efficient and easy mechanism
 for extending and overriding different field parsing rules, either by spider,
 or by source format (HTML, XML, etc) without becoming a nightmare to maintain.
 
-Using Item Loaders to populate items
+アイテムローダーを使用したアイテムの設定
 ====================================
 
 To use an Item Loader, you must first instantiate it. You can either
@@ -73,7 +73,7 @@ previously extracted and collected with the :meth:`~ItemLoader.add_xpath`,
 
 .. _topics-loaders-processors:
 
-Input and Output processors
+入力および出力プロセッサ
 ===========================
 
 An Item Loader contains one input processor and one output processor for each
@@ -144,7 +144,7 @@ Last, but not least, Scrapy comes with some :ref:`commonly used processors
 <topics-loaders-available-processors>` built-in for convenience.
 
 
-Declaring Item Loaders
+アイテムローダーの宣言
 ======================
 
 Item Loaders are declared like Items, by using a class definition syntax. Here
@@ -172,7 +172,7 @@ declare a default input/output processors using the
 
 .. _topics-loaders-processors-declaring:
 
-Declaring Input and Output Processors
+入力および出力プロセッサの宣言
 =====================================
 
 As seen in the previous section, input and output processors can be declared in
@@ -220,9 +220,8 @@ See also: :ref:`topics-loaders-extending`.
 
 .. _topics-loaders-context:
 
-Item Loader Context
-===================
-
+アイテムローダーコンテキスト
+=====================
 The Item Loader Context is a dict of arbitrary key/values which is shared among
 all input and output processors in the Item Loader. It can be passed when
 declaring, instantiating or using Item Loader. They are used to modify the
@@ -262,8 +261,8 @@ There are several ways to modify Item Loader context values:
            length_out = MapCompose(parse_length, unit='cm')
 
 
-ItemLoader objects
-==================
+ItemLoader オブジェクト
+====================
 
 .. class:: ItemLoader([item, selector, response], \**kwargs)
 
@@ -508,7 +507,7 @@ ItemLoader objects
 
 .. _topics-loaders-nested:
 
-Nested Loaders
+ネストされたローダー
 ==============
 
 When parsing related values from a subsection of a document, it can be
@@ -554,7 +553,7 @@ not go overboard with nesting or your parser can become difficult to read.
 
 .. _topics-loaders-extending:
 
-Reusing and extending Item Loaders
+アイテムローダの再利用と拡張
 ==================================
 
 As your project grows bigger and acquires more and more spiders, maintenance
@@ -610,7 +609,7 @@ needs.
 
 .. _topics-loaders-available-processors:
 
-Available built-in processors
+使用可能な内蔵プロセッサ
 =============================
 
 .. module:: scrapy.loader.processors

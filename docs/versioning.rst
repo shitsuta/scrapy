@@ -1,20 +1,18 @@
 .. _versioning:
 
 ============================
-Versioning and API Stability
+VersioningとAPIの安定性
 ============================
 
 Versioning
 ==========
 
-There are 3 numbers in a Scrapy version: *A.B.C*
+Scrapyバージョンには3つの数字があります： *A* . *B* . *C*
 
-* *A* is the major version. This will rarely change and will signify very
-  large changes.
-* *B* is the release number. This will include many changes including features
-  and things that possibly break backwards compatibility, although we strive to
-  keep theses cases at a minimum.
-* *C* is the bugfix release number.
+* *A* はメジャーバージョンです。これはめったに変わらず、非常に大きな変更を意味します。
+* *B* はリリース番号です。これには、後方互換性を損なう可能性のある機能やものを含む多くの変更が含まれますが、
+      これらのケースを最小限に抑えるよう努めています。
+* *C* はバグ修正リリース番号です。
 
 Backward-incompatibilities are explicitly mentioned in the :ref:`release notes <news>`,
 and may require special attention before upgrading.

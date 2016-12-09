@@ -1,7 +1,7 @@
 .. _topics-contracts:
 
 =================
-Spiders Contracts
+スパイダーコントラクト
 =================
 
 .. versionadded:: 0.15
@@ -57,7 +57,7 @@ This callback is tested using three built-in contracts:
 
 Use the :command:`check` command to run the contract checks.
 
-Custom Contracts
+カスタムコントラクト
 ================
 
 If you find you need more power than the built-in scrapy contracts you can

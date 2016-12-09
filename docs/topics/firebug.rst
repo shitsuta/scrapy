@@ -1,7 +1,7 @@
 .. _topics-firebug:
 
 ==========================
-Using Firebug for scraping
+スクレイピングにFirebugを使用する
 ==========================
 
 .. note:: Google Directory, the example website used in this guide is no longer
@@ -10,7 +10,7 @@ Using Firebug for scraping
    (working) site, your contribution will be more than welcome!. See :ref:`topics-contributing`
    for information on how to do so.
 
-Introduction
+イントロダクション
 ============
 
 This document explains how to use `Firebug`_ (a Firefox add-on) to make the
@@ -55,7 +55,7 @@ in this page, so we'll keep looking:
 As expected, the subcategories contain links to other subcategories, and also
 links to actual websites, which is the purpose of the directory.
 
-Getting links to follow
+フォローするリンクを取得する
 =======================
 
 By looking at the category URLs we can see they share a pattern:
@@ -100,7 +100,7 @@ This is how the spider would look so far::
            pass
 
 
-Extracting the data
+データの抽出
 ===================
 
 Now we're going to write the code to extract data from those pages.

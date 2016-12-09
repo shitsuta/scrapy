@@ -1,7 +1,7 @@
 .. _topics-commands:
 
 =================
-Command line tool
+コマンドラインツール
 =================
 
 .. versionadded:: 0.10
@@ -18,7 +18,7 @@ standalone ``scrapyd-deploy``. See `Deploying your project`_.)
 
 .. _topics-config-settings:
 
-Configuration settings
+環境設定
 ======================
 
 Scrapy will look for configuration parameters in ini-style ``scrapy.cfg`` files
@@ -42,7 +42,7 @@ variables. Currently these are:
 
 .. _topics-project-structure:
 
-Default structure of Scrapy projects
+Scrapyプロジェクトのデフォルト構造
 ====================================
 
 Before delving into the command-line tool and its sub-commands, let's first
@@ -70,7 +70,7 @@ the project settings. Here is an example::
     [settings]
     default = myproject.settings
 
-Using the ``scrapy`` tool
+``scrapy`` ツールを使う
 =========================
 
 You can start by running the Scrapy tool with no arguments and it will print
@@ -96,8 +96,8 @@ a project it would have printed something like this::
       scrapy <command> [options] [args]
 
     [...]
-
-Creating projects
+    
+プロジェクトの作成
 -----------------
 
 The first thing you typically do with the ``scrapy`` tool is create your Scrapy
@@ -115,7 +115,7 @@ Next, you go inside the new project directory::
 And you're ready to use the ``scrapy`` command to manage and control your
 project from there.
 
-Controlling projects
+プロジェクトの制御
 --------------------
 
 You use the ``scrapy`` tool from inside your projects to control and manage
@@ -138,7 +138,7 @@ check how spiders are downloading pages.
 
 .. _topics-commands-ref:
 
-Available tool commands
+利用可能なコマンド
 =======================
 
 This section contains a list of the available built-in commands with a
@@ -182,14 +182,14 @@ Project-only commands:
 startproject
 ------------
 
-* Syntax: ``scrapy startproject <project_name> [project_dir]``
-* Requires project: *no*
+* シンタックス: ``scrapy startproject <project_name> [project_dir]``
+* プロジェクトに必要か: *no*
 
 Creates a new Scrapy project named ``project_name``, under the ``project_dir``
 directory.
 If ``project_dir`` wasn't specified, ``project_dir`` will be the same as ``myproject``.
 
-Usage example::
+使用例::
 
     $ scrapy startproject myproject
 
@@ -198,12 +198,12 @@ Usage example::
 genspider
 ---------
 
-* Syntax: ``scrapy genspider [-t template] <name> <domain>``
-* Requires project: *no*
+* シンタックス: ``scrapy genspider [-t template] <name> <domain>``
+* プロジェクトに必要か: *no*
 
 Create a new spider in the current folder or in the current project's ``spiders`` folder, if called from inside a project. The ``<name>`` parameter is set as the spider's ``name``, while ``<domain>`` is used to generate the ``allowed_domains`` and ``start_urls`` spider's attributes.
 
-Usage example::
+使用例::
 
     $ scrapy genspider -l
     Available templates:
@@ -228,12 +228,12 @@ command.
 crawl
 -----
 
-* Syntax: ``scrapy crawl <spider>``
-* Requires project: *yes*
+* シンタックス: ``scrapy crawl <spider>``
+* プロジェクトに必要か: *yes*
 
 Start crawling using a spider.
 
-Usage examples::
+使用例::
 
     $ scrapy crawl myspider
     [ ... myspider starts crawling ... ]
@@ -244,12 +244,12 @@ Usage examples::
 check
 -----
 
-* Syntax: ``scrapy check [-l] <spider>``
-* Requires project: *yes*
+* シンタックス: ``scrapy check [-l] <spider>``
+* プロジェクトに必要か: *yes*
 
-Run contract checks.
+コントラクトチェックを実行する.
 
-Usage examples::
+使用例::
 
     $ scrapy check -l
     first_spider
@@ -271,13 +271,13 @@ Usage examples::
 list
 ----
 
-* Syntax: ``scrapy list``
-* Requires project: *yes*
+* シンタックス: ``scrapy list``
+* プロジェクトに必要か: *yes*
 
 List all available spiders in the current project. The output is one spider per
 line.
 
-Usage example::
+使用例::
 
     $ scrapy list
     spider1
@@ -288,8 +288,8 @@ Usage example::
 edit
 ----
 
-* Syntax: ``scrapy edit <spider>``
-* Requires project: *yes*
+* シンタックス: ``scrapy edit <spider>``
+* プロジェクトに必要か: *yes*
 
 Edit the given spider using the editor defined in the :setting:`EDITOR`
 setting.
@@ -298,7 +298,7 @@ This command is provided only as a convenience shortcut for the most common
 case, the developer is of course free to choose any tool or IDE to write and
 debug his spiders.
 
-Usage example::
+使用例::
 
     $ scrapy edit spider1
 
@@ -307,8 +307,8 @@ Usage example::
 fetch
 -----
 
-* Syntax: ``scrapy fetch <url>``
-* Requires project: *no*
+* シンタックス: ``scrapy fetch <url>``
+* プロジェクトに必要か: *no*
 
 Downloads the given URL using the Scrapy downloader and writes the contents to
 standard output.
@@ -322,7 +322,7 @@ So this command can be used to "see" how your spider would fetch a certain page.
 If used outside a project, no particular per-spider behaviour would be applied
 and it will just use the default Scrapy downloader settings.
 
-Usage examples::
+使用例::
 
     $ scrapy fetch --nolog http://www.example.com/some/page.html
     [ ... html content here ... ]
@@ -343,14 +343,14 @@ Usage examples::
 view
 ----
 
-* Syntax: ``scrapy view <url>``
-* Requires project: *no*
+* シンタックス: ``scrapy view <url>``
+* プロジェクトに必要か: *no*
 
 Opens the given URL in a browser, as your Scrapy spider would "see" it.
 Sometimes spiders see pages differently from regular users, so this can be used
 to check what the spider "sees" and confirm it's what you expect.
 
-Usage example::
+使用例::
 
     $ scrapy view http://www.example.com/some/page.html
     [ ... browser starts ... ]
@@ -360,15 +360,15 @@ Usage example::
 shell
 -----
 
-* Syntax: ``scrapy shell [url]``
-* Requires project: *no*
+* シンタックス: ``scrapy shell [url]``
+* プロジェクトに必要か: *no*
 
 Starts the Scrapy shell for the given URL (if given) or empty if no URL is
 given. Also supports UNIX-style local file paths, either relative with
 ``./`` or ``../`` prefixes or absolute file paths.
 See :ref:`topics-shell` for more info.
 
-Usage example::
+使用例::
 
     $ scrapy shell http://www.example.com/some/page.html
     [ ... scrapy shell starts ... ]
@@ -378,8 +378,8 @@ Usage example::
 parse
 -----
 
-* Syntax: ``scrapy parse <url> [options]``
-* Requires project: *yes*
+* シンタックス: ``scrapy parse <url> [options]``
+* プロジェクトに必要か: *yes*
 
 Fetches the given URL and parses it with the spider that handles it, using the
 method passed with the ``--callback`` option, or ``parse`` if not given.
@@ -410,7 +410,7 @@ Supported options:
 
 * ``--verbose`` or ``-v``: display information for each depth level
 
-Usage example::
+使用例::
 
     $ scrapy parse http://www.example.com/ -c parse_item
     [ ... scrapy log lines crawling example.com spider ... ]
@@ -430,8 +430,8 @@ Usage example::
 settings
 --------
 
-* Syntax: ``scrapy settings [options]``
-* Requires project: *no*
+* シンタックス: ``scrapy settings [options]``
+* プロジェクトに必要か: *no*
 
 Get the value of a Scrapy setting.
 
@@ -450,8 +450,8 @@ Example usage::
 runspider
 ---------
 
-* Syntax: ``scrapy runspider <spider_file.py>``
-* Requires project: *no*
+* シンタックス: ``scrapy runspider <spider_file.py>``
+* プロジェクトに必要か: *no*
 
 Run a spider self-contained in a Python file, without having to create a
 project.
@@ -466,8 +466,8 @@ Example usage::
 version
 -------
 
-* Syntax: ``scrapy version [-v]``
-* Requires project: *no*
+* シンタックス: ``scrapy version [-v]``
+* プロジェクトに必要か: *no*
 
 Prints the Scrapy version. If used with ``-v`` it also prints Python, Twisted
 and Platform info, which is useful for bug reports.
@@ -479,12 +479,12 @@ bench
 
 .. versionadded:: 0.17
 
-* Syntax: ``scrapy bench``
-* Requires project: *no*
+* シンタックス: ``scrapy bench``
+* プロジェクトに必要か: *no*
 
 Run a quick benchmark test. :ref:`benchmarking`.
 
-Custom project commands
+カスタムプロジェクトコマンド
 =======================
 
 You can also add your custom project commands by using the
@@ -497,21 +497,21 @@ You can also add your custom project commands by using the
 COMMANDS_MODULE
 ---------------
 
-Default: ``''`` (empty string)
+初期値: ``''`` (空文字列)
 
 A module to use for looking up custom Scrapy commands. This is used to add custom
 commands for your Scrapy project.
 
-Example::
+例::
 
     COMMANDS_MODULE = 'mybot.commands'
 
 .. _Deploying your project: http://scrapyd.readthedocs.org/en/latest/deploy.html
 
-Register commands via setup.py entry points
+setup.pyエントリポイントを介してコマンドを登録する
 -------------------------------------------
 
-.. note:: This is an experimental feature, use with caution.
+.. note:: これは実験的な機能なので注意してください.
 
 You can also add Scrapy commands from an external library by adding a
 ``scrapy.commands`` section in the entry points of the library ``setup.py``

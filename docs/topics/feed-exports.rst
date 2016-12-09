@@ -1,8 +1,8 @@
 .. _topics-feed-exports:
 
-============
-Feed exports
-============
+==============
+フィードのエクスポート
+==============
 
 .. versionadded:: 0.10
 
@@ -17,7 +17,7 @@ serialization formats and storage backends.
 
 .. _topics-feed-format:
 
-Serialization formats
+シリアライズフォーマット
 =====================
 
 For serializing the scraped data, the feed exports use the :ref:`Item exporters
@@ -88,7 +88,7 @@ Marshal
 
 .. _topics-feed-storage:
 
-Storages
+ストレージ
 ========
 
 When using the feed exports you define where to store the feed using a URI_
@@ -109,7 +109,7 @@ or boto_ library is installed (Scrapy supports boto_ only on Python 2).
 
 .. _topics-feed-uri-params:
 
-Storage URI parameters
+ストレージURIパラメータ
 ======================
 
 The storage URI can also contain parameters that get replaced when the feed is
@@ -135,12 +135,12 @@ Here are some examples to illustrate:
 
 .. _topics-feed-storage-backends:
 
-Storage backends
+バックエンドストレージ
 ================
 
 .. _topics-feed-storage-fs:
 
-Local filesystem
+ローカルファイルシステム
 ----------------
 
 The feeds are stored in the local filesystem.
@@ -187,7 +187,7 @@ passed through the following settings:
 
 .. _topics-feed-storage-stdout:
 
-Standard output
+標準出力
 ---------------
 
 The feeds are written to the standard output of the Scrapy process.
@@ -197,7 +197,7 @@ The feeds are written to the standard output of the Scrapy process.
  * Required external libraries: none
 
 
-Settings
+設定
 ========
 
 These are the settings used for configuring the feed exports:

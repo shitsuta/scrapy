@@ -1,7 +1,7 @@
 .. _topics-api:
 
 ========
-Core API
+コア API
 ========
 
 .. versionadded:: 0.15
@@ -11,7 +11,7 @@ extensions and middlewares.
 
 .. _topics-api-crawler:
 
-Crawler API
+クローラー API
 ===========
 
 The main entry point to Scrapy API is the :class:`~scrapy.crawler.Crawler`
@@ -109,7 +109,7 @@ how you :ref:`configure the downloader middlewares
 
 .. _topics-api-settings:
 
-Settings API
+設定 API
 ============
 
 .. module:: scrapy.settings
@@ -151,8 +151,8 @@ Settings API
 
 .. _topics-api-spiderloader:
 
-SpiderLoader API
-================
+スパイダーローダー API
+==================
 
 .. module:: scrapy.loader
    :synopsis: The spider loader
@@ -200,7 +200,7 @@ SpiderLoader API
 
 .. _topics-api-signals:
 
-Signals API
+シグナル API
 ===========
 
 .. automodule:: scrapy.signalmanager
@@ -210,7 +210,7 @@ Signals API
 
 .. _topics-api-stats:
 
-Stats Collector API
+統計コレクター API
 ===================
 
 There are several Stats Collectors available under the

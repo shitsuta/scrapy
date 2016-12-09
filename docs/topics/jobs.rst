@@ -1,7 +1,7 @@
 .. _topics-jobs:
 
 =================================
-Jobs: pausing and resuming crawls
+ジョブ: クロールの一時停止と再開
 =================================
 
 Sometimes, for big sites, it's desirable to pause crawls and be able to resume
@@ -17,7 +17,7 @@ facilities:
 * an extension that keeps some spider state (key/value pairs) persistent
   between batches
 
-Job directory
+ジョブディレクトリ
 =============
 
 To enable persistence support you just need to define a *job directory* through
@@ -27,7 +27,7 @@ this directory must not be shared by different spiders, or even different
 jobs/runs of the same spider, as it's meant to be used for storing the state of
 a *single* job.
 
-How to use it
+使用方法
 =============
 
 To start a spider with persistence supported enabled, run it like this::
@@ -39,7 +39,7 @@ a signal), and resume it later by issuing the same command::
 
     scrapy crawl somespider -s JOBDIR=crawls/somespider-1
 
-Keeping persistent state between batches
+バッチ間で永続的な状態を維持する
 ========================================
 
 Sometimes you'll want to keep some persistent spider state between pause/resume
@@ -55,20 +55,20 @@ is omitted for brevity)::
         # parse item here
         self.state['items_count'] = self.state.get('items_count', 0) + 1
 
-Persistence gotchas
+持続性の落とし穴
 ===================
 
 There are a few things to keep in mind if you want to be able to use the Scrapy
 persistence support:
 
-Cookies expiration
+Cookieの有効期限
 ------------------
 
 Cookies may expire. So, if you don't resume your spider quickly the requests
 scheduled may no longer work. This won't be an issue if you spider doesn't rely
 on cookies.
 
-Request serialization
+シリアル化を要求する
 ---------------------
 
 Requests must be serializable by the `pickle` module, in order for persistence

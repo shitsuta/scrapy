@@ -1,11 +1,11 @@
 .. _topics-debug:
 
 =================
-Debugging Spiders
+スパイダーのデバッグ
 =================
 
-This document explains the most common techniques for debugging spiders.
-Consider the following scrapy spider below::
+このドキュメントでは, スパイダーをデバッグするための最も一般的な手法について説明します.
+以下のスパイダーを考えてみましょう::
 
     import scrapy
     from myproject.items import MyItem
@@ -39,7 +39,7 @@ use the ``meta`` functionality of :class:`~scrapy.http.Request` to pass a
 partially populated item.
 
 
-Parse Command
+パースコマンド
 =============
 
 The most basic way of checking the output of your spider is to use the
@@ -47,7 +47,7 @@ The most basic way of checking the output of your spider is to use the
 of the spider at the method level. It has the advantage of being flexible and
 simple to use, but does not allow debugging code inside a method.
 
-In order to see the item scraped from a specific url::
+特定のURLからスクラップしたアイテムを表示するには::
 
     $ scrapy parse --spider=myspider -c parse_item -d 2 <item_url>
     [ ... scrapy log lines crawling example.com spider ... ]
@@ -85,7 +85,7 @@ using::
     $ scrapy parse --spider=myspider -d 3 'http://example.com/page1'
 
 
-Scrapy Shell
+Scrapy シェル
 ============
 
 While the :command:`parse` command is very useful for checking behaviour of a
@@ -108,7 +108,7 @@ Fortunately, the :command:`shell` is your bread and butter in this case (see
 
 See also: :ref:`topics-shell-inspect-response`.
 
-Open in browser
+ブラウザで開く
 ===============
 
 Sometimes you just want to see how a certain response looks in a browser, you
@@ -125,10 +125,10 @@ you would use it::
 that point, adjusting the `base tag`_ so that images and styles are displayed
 properly.
 
-Logging
+ロギング
 =======
 
-Logging is another useful option for getting information about your spider run.
+ロギングはスパイダーの実行に関する情報を得るためのもう1つの便利なオプションです.
 Although not as convenient, it comes with the advantage that the logs will be
 available in all future runs should they be necessary again::
 

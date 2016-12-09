@@ -9,40 +9,33 @@ Versioning
 
 Scrapyバージョンには3つの数字があります： *A* . *B* . *C* 
 
-* *A* はメジャーバージョンです。これはめったに変わらず、非常に大きな変更を意味します。
-* *B* はリリース番号です。これには、後方互換性を損なう可能性のある機能やものを含む多くの変更が含まれますが、
-      これらのケースを最小限に抑えるよう努めています。
-* *C* はバグ修正リリース番号です。
+* *A* はメジャーバージョンです. これはめったに変わらず, 非常に大きな変更を意味します.
+* *B* はリリース番号です. これには, 後方互換性を損なう可能性のある機能やものを含む多くの変更が含まれますが, これらのケースを最小限に抑えるよう努めています.
+* *C* はバグ修正リリース番号です.
 
-Backward-incompatibilities are explicitly mentioned in the :ref:`release notes <news>`,
-and may require special attention before upgrading.
+下位互換性は明示的に :ref:`release notes <news>` に示されていますが,
+アップグレードする前に特別な注意が必要な場合があります。
 
-Development releases do not follow 3-numbers version and are generally
-released as ``dev`` suffixed versions, e.g. ``1.3dev``.
+開発リリースは3桁のバージョンに従わず、一般的に末尾に ``dev`` をつけています, 例: ``1.3dev``.
 
 .. note::
-    With Scrapy 0.* series, Scrapy used `odd-numbered versions for development releases`_.
-    This is not the case anymore from Scrapy 1.0 onwards.
+    Scrapy 0.* シリーズでは, Scrapyは開発版に奇数バージョンを使用しました.
+    Scrapy 1.0 以降のケースではありません. Scrapy 1.0からは、すべてのリリースがプロダクションの準備ができていると見なされるべきです.
+    Starting with Scrapy 1.0, all releases should be considered production-ready.
 
-    Starting with Scrapy 1.0, all releases should be considered production-ready.
+例:
 
-For example:
-
-* *1.1.1* is the first bugfix release of the *1.1* series (safe to use in
-  production)
+* *1.1.1* は *1.1* シリーズの最初のバグフィックスバージョンです. (製品版で安全に使用するための.)
 
 
-API Stability
+API 安定性
 =============
 
-API stability was one of the major goals for the *1.0* release.
+API 安定性は *1.0* のリリースで一つのゴールを迎えました.
 
-Methods or functions that start with a single dash (``_``) are private and
-should never be relied as stable.
+単一のダッシュ（ `` _``）で始まるメソッドまたは関数はprivateであり, 決して安定したものであるべきではありません.
 
-Also, keep in mind that stable doesn't mean complete: stable APIs could grow
-new methods or functionality but the existing methods should keep working the
-same way.
+安定したAPIは新しいメソッドや機能を拡張する可能性がありますが、既存のメソッドは同じ方法で機能し続ける必要があります。
 
 
 .. _odd-numbered versions for development releases: https://en.wikipedia.org/wiki/Software_versioning#Odd-numbered_versions_for_development_releases

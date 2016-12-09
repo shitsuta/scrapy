@@ -13,6 +13,6 @@ quotesbot_ プロジェクトは: https://github.com/scrapy/quotesbot で入手�
 詳細はプロジェクトのREADMEにあります.
 
 gitに精通している場合は, コードをチェックアウトすることができます. 
-それ以外の場合は, `ココ <https://github.com/scrapy/quotesbot/archive/master.zip>`_ クリックしてzipファイルとしてプロジェクトをダウンロードできます.
+それ以外の場合は, `ここ <https://github.com/scrapy/quotesbot/archive/master.zip>`_ をクリックしてzipファイルとしてプロジェクトをダウンロードできます.
 
 .. _quotesbot: https://github.com/scrapy/quotesbot

@@ -6,8 +6,8 @@
 Scrapyd
 =======
 
-Scrapyd has been moved into a separate project.
+Scrapydは別のプロジェクトに移されました.
 
-Its documentation is now hosted at:
+ドキュメントは現在, 以下にあります:
 
     http://scrapyd.readthedocs.org/en/latest/

@@ -1,7 +1,7 @@
 .. _topics-request-response:
 
 ======================
-Requests and Responses
+リクエストとレスポンス
 ======================
 
 .. module:: scrapy.http
@@ -21,7 +21,7 @@ below in :ref:`topics-request-response-ref-request-subclasses` and
 :ref:`topics-request-response-ref-response-subclasses`.
 
 
-Request objects
+Request オブジェクト
 ===============
 
 .. class:: Request(url[, callback, method='GET', headers, body, cookies, meta, encoding='utf-8', priority=0, dont_filter=False, errback])
@@ -177,7 +177,7 @@ Request objects
 
 .. _topics-request-response-ref-request-callback-arguments:
 
-Passing additional data to callback functions
+追加データをコールバック関数に渡す
 ---------------------------------------------
 
 The callback of a request is a function that will be called when the response
@@ -217,7 +217,7 @@ different fields from different pages::
 
 .. _topics-request-response-ref-errbacks:
 
-Using errbacks to catch exceptions in request processing
+エラー処理を使用して要求処理で例外を捕捉する
 --------------------------------------------------------
 
 The errback of a request is a function that will be called when an exception
@@ -279,7 +279,7 @@ errors if needed::
 
 .. _topics-request-meta:
 
-Request.meta special keys
+Request.meta 特殊キー
 =========================
 
 The :attr:`Request.meta` attribute can contain any arbitrary data, but there
@@ -421,10 +421,10 @@ fields with form data from :class:`Response` objects.
        .. versionadded:: 1.1.0
           The ``formcss`` parameter.
 
-Request usage examples
+Request 使用例
 ----------------------
 
-Using FormRequest to send data via HTTP POST
+FormRequestを使用したHTTP POSTによるデータの送信
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 If you want to simulate a HTML Form POST in your spider and send a couple of
@@ -437,8 +437,8 @@ spider) like this::
 
 .. _topics-request-response-ref-request-userlogin:
 
-Using FormRequest.from_response() to simulate a user login
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+FormRequest.from_response（）を使用してユーザーログインをシミュレートする
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 It is usual for web sites to provide pre-populated form fields through ``<input
 type="hidden">`` elements, such as session related data or authentication
@@ -470,8 +470,8 @@ method for this job. Here's an example spider which uses it::
             # continue scraping with authenticated session...
 
 
-Response objects
-================
+Response オブジェクト
+===================
 
 .. class:: Response(url, [status=200, headers=None, body=b'', flags=None, request=None])
 
@@ -595,13 +595,13 @@ Response objects
 
 .. _topics-request-response-ref-response-subclasses:
 
-Response subclasses
+Response サブクラス
 ===================
 
 Here is the list of available built-in Response subclasses. You can also
 subclass the Response class to implement your own functionality.
 
-TextResponse objects
+TextResponse オブジェクト
 --------------------
 
 .. class:: TextResponse(url, [encoding[, ...]])
@@ -683,8 +683,8 @@ TextResponse objects
         kept for backwards compatibility; please prefer ``response.text``.
 
 
-HtmlResponse objects
---------------------
+HtmlResponse オブジェクト
+----------------------
 
 .. class:: HtmlResponse(url[, ...])
 
@@ -694,8 +694,8 @@ HtmlResponse objects
 
 .. _meta http-equiv: http://www.w3schools.com/TAGS/att_meta_http_equiv.asp
 
-XmlResponse objects
--------------------
+XmlResponse オブジェクト
+----------------------
 
 .. class:: XmlResponse(url[, ...])
 

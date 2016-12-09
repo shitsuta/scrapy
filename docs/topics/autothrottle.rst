@@ -40,7 +40,7 @@ effect, but there are some important differences:
   of errors it makes more sense to slow down: these errors may be caused by
   the high request rate.
 
-AutoThrottle doesn't have these issues.
+オートスロットルにはこれらの問題はありません.
 
 スロットルアルゴリズム
 ====================

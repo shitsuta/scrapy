@@ -1,7 +1,7 @@
 .. _topics-leaks:
 
 ======================
-Debugging memory leaks
+メモリリークのデバッグ
 ======================
 
 In Scrapy, objects such as Requests, Responses and Items have a finite
@@ -22,7 +22,7 @@ and you can also use a third-party library called :ref:`Guppy
 info). Both mechanisms must be used from the :ref:`Telnet Console
 <topics-telnetconsole>`.
 
-Common causes of memory leaks
+メモリリークの一般的な原因
 =============================
 
 It happens quite often (sometimes by accident, sometimes on purpose) that the
@@ -43,7 +43,7 @@ properly. For example, allocating resources on :signal:`spider_opened`
 but not releasing them on :signal:`spider_closed` may cause problems if
 you're running :ref:`multiple spiders per process <run-multiple-spiders>`.
 
-Too Many Requests?
+リクエストが多すぎ?
 ------------------
 
 By default Scrapy keeps the request queue in memory; it includes
@@ -55,7 +55,7 @@ in control.
 
 .. _topics-leaks-trackrefs:
 
-Debugging memory leaks with ``trackref``
+``trackref`` でメモリリークのデバッグをする
 ========================================
 
 :mod:`trackref` is a module provided by Scrapy to debug the most common cases of
@@ -82,7 +82,7 @@ figure out which spider is leaking by looking at the oldest request or response.
 You can get the oldest object of each class using the
 :func:`~scrapy.utils.trackref.get_oldest` function (from the telnet console).
 
-Which objects are tracked?
+どのオブジェクトが追跡されるの?
 --------------------------
 
 The objects tracked by ``trackrefs`` are all from these classes (and all its
@@ -94,7 +94,7 @@ subclasses):
 * :class:`scrapy.selector.Selector`
 * :class:`scrapy.spiders.Spider`
 
-A real example
+実際の例
 --------------
 
 Let's see a concrete example of a hypothetical case of memory leaks.
@@ -146,7 +146,7 @@ can use the :func:`scrapy.utils.trackref.iter_all` function::
      'http://www.somenastyspider.com/product.php?pid=584',
     ...
 
-Too many spiders?
+スパイダーが多すぎる?
 -----------------
 
 If your project has too many spiders executed in parallel,
@@ -161,8 +161,8 @@ example, this won't show any live references to spiders::
 .. module:: scrapy.utils.trackref
    :synopsis: Track references of live objects
 
-scrapy.utils.trackref module
-----------------------------
+scrapy.utils.trackref モジュール
+------------------------------
 
 Here are the functions available in the :mod:`~scrapy.utils.trackref` module.
 
@@ -193,7 +193,7 @@ Here are the functions available in the :mod:`~scrapy.utils.trackref` module.
 
 .. _topics-leaks-guppy:
 
-Debugging memory leaks with Guppy
+Guppy でメモリリークの
 =================================
 
 ``trackref`` provides a very convenient mechanism for tracking down memory
@@ -255,7 +255,7 @@ knowledge about Python internals. For more info about Guppy, refer to the
 
 .. _topics-leaks-without-leaks:
 
-Leaks without leaks
+漏れのない漏れ
 ===================
 
 Sometimes, you may notice that the memory usage of your Scrapy process will

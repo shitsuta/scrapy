@@ -193,7 +193,7 @@ Here are the functions available in the :mod:`~scrapy.utils.trackref` module.
 
 .. _topics-leaks-guppy:
 
-Guppy でメモリリークの
+Guppy でメモリリークのデバッグをする
 =================================
 
 ``trackref`` provides a very convenient mechanism for tracking down memory

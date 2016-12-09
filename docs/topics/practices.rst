@@ -1,7 +1,7 @@
 .. _topics-practices:
 
 ================
-Common Practices
+一般的なプラクティス
 ================
 
 This section documents common practices when using Scrapy. These are things
@@ -9,7 +9,7 @@ that cover many topics and don't often fall into any other specific section.
 
 .. _run-from-script:
 
-Run Scrapy from a script
+スクリプトからScrapyを実行する
 ========================
 
 You can use the :ref:`API <topics-api>` to run Scrapy from a script, instead of
@@ -104,7 +104,7 @@ reactor after `MySpider` has finished running.
 
 .. _run-multiple-spiders:
 
-Running multiple spiders in the same process
+同じプロセスで複数のスパイダーを実行する
 ============================================
 
 By default, Scrapy runs a single spider per process when you run ``scrapy
@@ -189,7 +189,7 @@ Same example but running the spiders sequentially by chaining the deferreds:
 
 .. _distributed-crawls:
 
-Distributed crawls
+分散クロール
 ==================
 
 Scrapy doesn't provide any built-in facility for running crawls in a distribute
@@ -220,7 +220,7 @@ crawl::
 
 .. _bans:
 
-Avoiding getting banned
+BANされることを回避する
 =======================
 
 Some websites implement certain measures to prevent bots from crawling them,

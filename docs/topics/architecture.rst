@@ -1,13 +1,12 @@
 .. _topics-architecture:
 
 =====================
-Architecture overview
+アーキテクチャの概要
 =====================
 
-This document describes the architecture of Scrapy and how its components
-interact.
+このドキュメントでは、Scrapyのアーキテクチャとそのコンポーネントがどのように相互作用するかについて説明します.
 
-Overview
+概要
 ========
 
 The following diagram shows an overview of the Scrapy architecture with its
@@ -18,7 +17,7 @@ also described below.
 
 .. _data-flow:
 
-Data flow
+データフロー
 =========
 
 .. image:: _images/scrapy_architecture_02.png
@@ -70,12 +69,12 @@ this:
 9. The process repeats (from step 1) until there are no more requests from the
    :ref:`Scheduler <component-scheduler>`.
 
-Components
+コンポーネント
 ==========
 
 .. _component-engine:
 
-Scrapy Engine
+Scrapy エンジン
 -------------
 
 The engine is responsible for controlling the data flow between all components
@@ -84,7 +83,7 @@ of the system, and triggering events when certain actions occur. See the
 
 .. _component-scheduler:
 
-Scheduler
+スケジューラー
 ---------
 
 The Scheduler receives requests from the engine and enqueues them for feeding
@@ -92,7 +91,7 @@ them later (also to the engine) when the engine requests them.
 
 .. _component-downloader:
 
-Downloader
+ダウンローダー
 ----------
 
 The Downloader is responsible for fetching web pages and feeding them to the
@@ -100,7 +99,7 @@ engine which, in turn, feeds them to the spiders.
 
 .. _component-spiders:
 
-Spiders
+スパイダー
 -------
 
 Spiders are custom classes written by Scrapy users to parse responses and
@@ -109,7 +108,7 @@ follow. For more information see :ref:`topics-spiders`.
 
 .. _component-pipelines:
 
-Item Pipeline
+アイテムパイプライン
 -------------
 
 The Item Pipeline is responsible for processing the items once they have been
@@ -119,7 +118,7 @@ information see :ref:`topics-item-pipeline`.
 
 .. _component-downloader-middleware:
 
-Downloader middlewares
+ダウンロードミドルウェア
 ----------------------
 
 Downloader middlewares are specific hooks that sit between the Engine and the
@@ -139,7 +138,7 @@ For more information see :ref:`topics-downloader-middleware`.
 
 .. _component-spider-middleware:
 
-Spider middlewares
+スパイダーミドルウェア
 ------------------
 
 Spider middlewares are specific hooks that sit between the Engine and the
@@ -156,7 +155,7 @@ Use a Spider middleware if you need to
 
 For more information see :ref:`topics-spider-middleware`.
 
-Event-driven networking
+イベントドリブンネットワーキング
 =======================
 
 Scrapy is written with `Twisted`_, a popular event-driven networking framework

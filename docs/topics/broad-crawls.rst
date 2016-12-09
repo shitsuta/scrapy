@@ -1,7 +1,7 @@
 .. _topics-broad-crawls:
 
 ============
-Broad Crawls
+ブロードクロール
 ============
 
 Scrapy defaults are optimized for crawling specific sites. These sites are
@@ -39,7 +39,7 @@ you need to keep in mind when using Scrapy for doing broad crawls, along with
 concrete suggestions of Scrapy settings to tune in order to achieve an
 efficient broad crawl.
 
-Increase concurrency
+並行性を高める
 ====================
 
 Concurrency is the number of requests that are processed in parallel. There is
@@ -57,7 +57,7 @@ To increase the global concurrency use::
 
     CONCURRENT_REQUESTS = 100
 
-Increase Twisted IO thread pool maximum size
+Twisted のIOスレッドプールの最大サイズを増やす
 ============================================
 
 Currently Scrapy does DNS resolution in a blocking way with usage of thread
@@ -70,7 +70,7 @@ To increase maximum thread pool size use::
 
     REACTOR_THREADPOOL_MAXSIZE = 20
 
-Setup your own DNS
+独自のDNSの設定
 ==================
 
 If you have multiple crawling processes and single central DNS, it can act
@@ -78,7 +78,7 @@ like DoS attack on the DNS server resulting to slow down of entire network or
 even blocking your machines. To avoid this setup your own DNS server with
 local cache and upstream to some large DNS like OpenDNS or Verizon.
 
-Reduce log level
+ログレベルを下げる
 ================
 
 When doing broad crawls you are often only interested in the crawl rates you
@@ -92,7 +92,7 @@ To set the log level use::
 
     LOG_LEVEL = 'INFO'
 
-Disable cookies
+クッキーを無効にする
 ===============
 
 Disable cookies unless you *really* need. Cookies are often not needed when
@@ -104,7 +104,7 @@ To disable cookies use::
 
     COOKIES_ENABLED = False
 
-Disable retries
+リトライを無効にする
 ===============
 
 Retrying failed HTTP requests can slow down the crawls substantially, specially
@@ -116,7 +116,7 @@ To disable retries use::
 
     RETRY_ENABLED = False
 
-Reduce download timeout
+ダウンロードタイムアウトを減らす
 =======================
 
 Unless you are crawling from a very slow connection (which shouldn't be the
@@ -127,7 +127,7 @@ To reduce the download timeout use::
 
     DOWNLOAD_TIMEOUT = 15
 
-Disable redirects
+リダイレクトを無効にする
 =================
 
 Consider disabling redirects, unless you are interested in following them. When
@@ -140,7 +140,7 @@ To disable redirects use::
 
     REDIRECT_ENABLED = False
 
-Enable crawling of "Ajax Crawlable Pages"
+「Ajaxクロール可能なページ」のクロールを有効にする
 =========================================
 
 Some pages (up to 1%, based on empirical data from year 2013) declare

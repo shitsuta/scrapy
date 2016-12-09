@@ -1,7 +1,7 @@
 .. _topics-settings:
 
 ========
-Settings
+設定
 ========
 
 The Scrapy settings allows you to customize the behaviour of all Scrapy
@@ -18,7 +18,7 @@ For a list of available built-in settings see: :ref:`topics-settings-ref`.
 
 .. _topics-settings-module-envvar:
 
-Designating the settings
+設定を指定する
 ========================
 
 When you use Scrapy, you have to tell it which settings you're using. You can
@@ -30,7 +30,7 @@ Python `import search path`_.
 
 .. _import search path: https://docs.python.org/2/tutorial/modules.html#the-module-search-path
 
-Populating the settings
+設定を入力する
 =======================
 
 Settings can be populated using different mechanisms, each of which having a
@@ -49,7 +49,7 @@ manual handling is possible using API calls. See the
 
 These mechanisms are described in more detail below.
 
-1. Command line options
+1. コマンドラインオプション
 -----------------------
 
 Arguments provided by the command line are the ones that take most precedence,
@@ -62,7 +62,7 @@ Example::
 
     scrapy crawl myspider -s LOG_FILE=scrapy.log
 
-2. Settings per-spider
+2. スパイダーごとの設定
 ----------------------
 
 Spiders (See the :ref:`topics-spiders` chapter for reference) can define their
@@ -76,7 +76,7 @@ do so by setting their :attr:`~scrapy.spiders.Spider.custom_settings` attribute:
             'SOME_SETTING': 'some value',
         }
 
-3. Project settings module
+3. プロジェクト設定モジュール
 --------------------------
 
 The project settings module is the standard configuration file for your Scrapy
@@ -84,7 +84,7 @@ project, it's where most of your custom settings will be populated. For a
 standard Scrapy project, this means you'll be adding or changing the settings
 in the ``settings.py`` file created for your project.
 
-4. Default settings per-command
+4. コマンドごとのデフォルト設定
 -------------------------------
 
 Each :doc:`Scrapy tool </topics/commands>` command can have its own default
@@ -92,13 +92,13 @@ settings, which override the global default settings. Those custom command
 settings are specified in the ``default_settings`` attribute of the command
 class.
 
-5. Default global settings
+5. デフォルトのグローバル設定
 --------------------------
 
 The global defaults are located in the ``scrapy.settings.default_settings``
 module and documented in the :ref:`topics-settings-ref` section.
 
-How to access settings
+設定にアクセスする方法
 ======================
 
 .. highlight:: python
@@ -137,7 +137,7 @@ The settings object can be used like a dict (e.g.,
 in the format you need it to avoid type errors, using one of the methods
 provided by the :class:`~scrapy.settings.Settings` API.
 
-Rationale for setting names
+名前を設定する理由
 ===========================
 
 Setting names are usually prefixed with the component that they configure. For
@@ -147,7 +147,7 @@ example, proper setting names for a fictional robots.txt extension would be
 
 .. _topics-settings-ref:
 
-Built-in settings reference
+ビルトイン設定リファレンス
 ===========================
 
 Here's a list of all available Scrapy settings, in alphabetical order, along

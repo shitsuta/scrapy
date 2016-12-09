@@ -1,16 +1,14 @@
 .. _benchmarking:
 
 ============
-Benchmarking
+ベンチマーキング
 ============
 
 .. versionadded:: 0.17
 
-Scrapy comes with a simple benchmarking suite that spawns a local HTTP server
-and crawls it at the maximum possible speed. The goal of this benchmarking is
-to get an idea of how Scrapy performs in your hardware, in order to have a
-common baseline for comparisons. It uses a simple spider that does nothing and
-just follows links.
+Scrapyには、ローカルのHTTPサーバーを生成し、最大限の速度でクロールする単純なベンチマークスイートが付属しています.
+このベンチマークの目的は、比較のための共通ベースラインを得るために、Scrapyがハードウェアでどのように機能するかを理解することです.
+これは何もせず, リンクをたどる単純なスパイダーを使用します.
 
 To run it use::
 
@@ -51,11 +49,9 @@ You should see an output like this::
          'start_time': datetime.datetime(2013, 5, 16, 16, 8, 47, 676539)}
     2013-05-16 13:08:57-0300 [scrapy] INFO: Spider closed (closespider_timeout)
 
-That tells you that Scrapy is able to crawl about 3900 pages per minute in the
-hardware where you run it. Note that this is a very simple spider intended to
-follow links, any custom spider you write will probably do more stuff which
-results in slower crawl rates. How slower depends on how much your spider does
-and how well it's written.
+これは、Scrapyを実行しているハードウェアで毎分約3900ページをクロールできることを示しています.
+これはリンクをたどることを目的とした非常にシンプルなスパイダーであることに注意してください.
+カスタムスパイダーを作成すると, クロール速度が遅くなるほど多くの処理が行われます.
+どのくらい遅くなるかは、あなたのスパイダーがどれくらいのことをしているか, どの程度うまく書かれているかによって決まります.
 
-In the future, more cases will be added to the benchmarking suite to cover
-other common scenarios.
+将来、他の一般的なシナリオをカバーするために, ベンチマークスイートにさらに多くのケースが追加されます.

@@ -1,8 +1,8 @@
 .. _topics-exporters:
 
-==============
-Item Exporters
-==============
+===============
+アイテムエクスポーター
+===============
 
 .. module:: scrapy.exporters
    :synopsis: Item Exporters
@@ -14,7 +14,7 @@ purpose of the scraping process.
 For this purpose Scrapy provides a collection of Item Exporters for different
 output formats, such as XML, CSV or JSON.
 
-Using Item Exporters
+アイテムエクスポーターを使う
 ====================
 
 If you are in a hurry, and just want to use an Item Exporter to output scraped
@@ -72,7 +72,7 @@ Exporter to export scraped items to different files, one per spider::
 
 .. _topics-exporters-field-serialization:
 
-Serialization of item fields
+アイテムフィールドのシリアル化
 ============================
 
 By default, the field values are passed unmodified to the underlying
@@ -87,7 +87,7 @@ described next.
 
 .. _topics-exporters-serializers:
 
-1. Declaring a serializer in the field
+1. フィールド内のシリアライザの宣言
 --------------------------------------
 
 If you use :class:`~.Item` you can declare a serializer in the 
@@ -106,7 +106,7 @@ Example::
         price = scrapy.Field(serializer=serialize_price)
 
 
-2. Overriding the serialize_field() method
+2. serialize_field() メソッドのオーバーライド
 ------------------------------------------
 
 You can also override the :meth:`~BaseItemExporter.serialize_field()` method to
@@ -128,7 +128,7 @@ Example::
 
 .. _topics-exporters-reference:
 
-Built-in Item Exporters reference
+ビルトインアイテムエクスポーターレファレンス
 =================================
 
 Here is a list of the Item Exporters bundled with Scrapy. Some of them contain

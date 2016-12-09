@@ -1,8 +1,8 @@
 .. _topics-items:
 
-=====
-Items
-=====
+======
+アイテム
+======
 
 .. module:: scrapy.item
    :synopsis: Item and Field classes
@@ -28,7 +28,7 @@ tracks Item instances to help finding memory leaks
 
 .. _topics-items-declaring:
 
-Declaring Items
+宣言項目
 ===============
 
 Items are declared using a simple class definition syntax and :class:`Field`
@@ -51,7 +51,7 @@ objects. Here is an example::
 
 .. _topics-items-fields:
 
-Item Fields
+アイテムフィールド
 ===========
 
 :class:`Field` objects are used to specify metadata for each field. For
@@ -73,14 +73,14 @@ It's important to note that the :class:`Field` objects used to declare the item
 do not stay assigned as class attributes. Instead, they can be accessed through
 the :attr:`Item.fields` attribute.
 
-Working with Items
+アイテムの操作
 ==================
 
 Here are some examples of common tasks performed with items, using the
 ``Product`` item :ref:`declared above  <topics-items-declaring>`. You will
 notice the API is very similar to the `dict API`_.
 
-Creating items
+アイテムの作成
 --------------
 
 ::
@@ -89,7 +89,7 @@ Creating items
     >>> print product
     Product(name='Desktop PC', price=1000)
 
-Getting field values
+フィールド値の取得
 --------------------
 
 ::
@@ -130,7 +130,7 @@ Getting field values
     >>> 'lala' in product.fields  # is lala a declared field?
     False
 
-Setting field values
+フィールド値の設定
 --------------------
 
 ::
@@ -144,7 +144,7 @@ Setting field values
         ...
     KeyError: 'Product does not support field: lala'
 
-Accessing all populated values
+入力されたすべての値にアクセスする
 ------------------------------
 
 To access all populated values, just use the typical `dict API`_::
@@ -155,7 +155,7 @@ To access all populated values, just use the typical `dict API`_::
     >>> product.items()
     [('price', 1000), ('name', 'Desktop PC')]
 
-Other common tasks
+その他の一般的なタスク
 ------------------
 
 Copying items::
@@ -183,7 +183,7 @@ Creating items from dicts::
         ...
     KeyError: 'Product does not support field: lala'
 
-Extending Items
+アイテムの拡張
 ===============
 
 You can extend Items (to add more fields or to change some metadata for some
@@ -204,8 +204,8 @@ appending more values, or changing existing values, like this::
 That adds (or replaces) the ``serializer`` metadata key for the ``name`` field,
 keeping all the previously existing metadata values.
 
-Item objects
-============
+Itemオブジェクト
+==============
 
 .. class:: Item([arg])
 
@@ -223,7 +223,7 @@ Item objects
 
 .. _dict API: https://docs.python.org/2/library/stdtypes.html#dict
 
-Field objects
+Fieldオブジェクト
 =============
 
 .. class:: Field([arg])

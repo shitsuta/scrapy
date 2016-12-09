@@ -6,8 +6,8 @@
 DjangoItem
 ==========
 
-DjangoItem has been moved into a separate project.
+DjangoItemは別のプロジェクトに移されました.
 
-It is hosted at:
+ここにホストされています:
 
     https://github.com/scrapy-plugins/scrapy-djangoitem

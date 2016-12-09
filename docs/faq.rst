@@ -1,16 +1,14 @@
 .. _faq:
 
-Frequently Asked Questions
+よくある質問
 ==========================
 
 .. _faq-scrapy-bs-cmp:
 
-How does Scrapy compare to BeautifulSoup or lxml?
+ScrapyとBeautifulSoupまたはlxmlとの比較
 -------------------------------------------------
 
-`BeautifulSoup`_ and `lxml`_ are libraries for parsing HTML and XML. Scrapy is
-an application framework for writing web spiders that crawl web sites and
-extract data from them.
+`BeautifulSoup`_ と `lxml`_ はHTMLとXMLを解析するためのライブラリです. Scrapyは, Webサイトをクロールし, Webサイトからデータを抽出するWebスパイダーを作成するためのアプリケーションフレームワークです.
 
 Scrapy provides a built-in mechanism for extracting data (called
 :ref:`selectors <topics-selectors>`) but you can easily use `BeautifulSoup`_
@@ -26,10 +24,10 @@ comparing `jinja2`_ to `Django`_.
 .. _jinja2: http://jinja.pocoo.org/
 .. _Django: https://www.djangoproject.com/
 
-Can I use Scrapy with BeautifulSoup?
+私はBeautifulSoupでScrapyを使うことができますか?
 ------------------------------------
 
-Yes, you can.
+使用できます.
 As mentioned :ref:`above <faq-scrapy-bs-cmp>`, `BeautifulSoup`_ can be used
 for parsing HTML responses in Scrapy callbacks.
 You just have to feed the response's body into a ``BeautifulSoup`` object
@@ -66,7 +64,7 @@ Here's an example spider using BeautifulSoup API, with ``lxml`` as the HTML pars
 
 .. _faq-python-versions:
 
-What Python versions does Scrapy support?
+どのPythonのバージョンがScrapyサポートをしていますか?
 -----------------------------------------
 
 Scrapy is supported under Python 2.7 and Python 3.3+.
@@ -93,20 +91,20 @@ focus on the real problems we need to solve.
 We'd be proud if Scrapy serves as an inspiration for other projects. Feel free
 to steal from us!
 
-Does Scrapy work with HTTP proxies?
+ScrapyはHTTPプロキシで動作しますか?
 -----------------------------------
 
 Yes. Support for HTTP proxies is provided (since Scrapy 0.8) through the HTTP
 Proxy downloader middleware. See
 :class:`~scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware`.
 
-How can I scrape an item with attributes in different pages?
+異なるページの属性を持つアイテムをスクラップする方法はありますか?
 ------------------------------------------------------------
 
 See :ref:`topics-request-response-ref-request-callback-arguments`.
 
 
-Scrapy crashes with: ImportError: No module named win32api
+Scrapyがクラッシュする: No module named win32api
 ----------------------------------------------------------
 
 You need to install `pywin32`_ because of `this Twisted bug`_.
@@ -114,14 +112,14 @@ You need to install `pywin32`_ because of `this Twisted bug`_.
 .. _pywin32: https://sourceforge.net/projects/pywin32/
 .. _this Twisted bug: https://twistedmatrix.com/trac/ticket/3707
 
-How can I simulate a user login in my spider?
+スパイダーでユーザーログインをシミュレートする方法はありますか?
 ---------------------------------------------
 
-See :ref:`topics-request-response-ref-request-userlogin`.
+:ref:`topics-request-response-ref-request-userlogin` を確認してください.
 
 .. _faq-bfo-dfo:
 
-Does Scrapy crawl in breadth-first or depth-first order?
+Scrapyは幅優先, 深さ優先どちらでクロールしますか?
 --------------------------------------------------------
 
 By default, Scrapy uses a `LIFO`_ queue for storing pending requests, which
@@ -133,7 +131,7 @@ setting the following settings::
     SCHEDULER_DISK_QUEUE = 'scrapy.squeues.PickleFifoDiskQueue'
     SCHEDULER_MEMORY_QUEUE = 'scrapy.squeues.FifoMemoryQueue'
 
-My Scrapy crawler has memory leaks. What can I do?
+私の Scrapy のクローラにはメモリリークがあります。どうしたら良いですか?
 --------------------------------------------------
 
 See :ref:`topics-leaks`.
@@ -141,17 +139,17 @@ See :ref:`topics-leaks`.
 Also, Python has a builtin memory leak issue which is described in
 :ref:`topics-leaks-without-leaks`.
 
-How can I make Scrapy consume less memory?
+どうしたらScrapyの消費メモリを少なくすることができますか?
 ------------------------------------------
 
-See previous question.
+直前の質問を見てください.
 
-Can I use Basic HTTP Authentication in my spiders?
+スパイダーで基本的なHTTP認証を使用することはできますか?
 --------------------------------------------------
 
-Yes, see :class:`~scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware`.
+はい, :class:`~scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware` を確認してください.
 
-Why does Scrapy download pages in English instead of my native language?
+どのようにして英語のかわりに, 私の母国語でページをダウンロードするのですか？
 ------------------------------------------------------------------------
 
 Try changing the default `Accept-Language`_ request header by overriding the
@@ -159,22 +157,22 @@ Try changing the default `Accept-Language`_ request header by overriding the
 
 .. _Accept-Language: https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4
 
-Where can I find some example Scrapy projects?
+Scrapyプロジェクトの例はどこにありますか?
 ----------------------------------------------
 
-See :ref:`intro-examples`.
+:ref:`intro-examples` を確認してください.
 
-Can I run a spider without creating a project?
+プロジェクトを作成せずにスパイダーを動かすことはできますか?
 ----------------------------------------------
 
-Yes. You can use the :command:`runspider` command. For example, if you have a
+はい. You can use the :command:`runspider` command. For example, if you have a
 spider written in a ``my_spider.py`` file you can run it with::
 
     scrapy runspider my_spider.py
 
 See :command:`runspider` command for more info.
 
-I get "Filtered offsite request" messages. How can I fix them?
+ "Filtered offsite request"メッセージが表示されます. どうすれば修正できますか?
 --------------------------------------------------------------
 
 Those messages (logged with ``DEBUG`` level) don't necessarily mean there is a
@@ -187,25 +185,25 @@ domains outside the ones covered by the spider.
 For more info see:
 :class:`~scrapy.spidermiddlewares.offsite.OffsiteMiddleware`.
 
-What is the recommended way to deploy a Scrapy crawler in production?
+プロダクションでScrapyクローラーを導入するための推奨される方法はなんですか?
 ---------------------------------------------------------------------
 
-See :ref:`topics-deploy`.
+:ref:`topics-deploy` を確認してください.
 
-Can I use JSON for large exports?
+大量のエクスポートにJSONを使用することはできますか?
 ---------------------------------
 
 It'll depend on how large your output is. See :ref:`this warning
 <json-with-large-data>` in :class:`~scrapy.exporters.JsonItemExporter`
 documentation.
 
-Can I return (Twisted) deferreds from signal handlers?
+シグナルハンドラから（Twised）遅延を返すことはできますか?
 ------------------------------------------------------
 
 Some signals support returning deferreds from their handlers, others don't. See
 the :ref:`topics-signals-ref` to know which ones.
 
-What does the response status code 999 means?
+応答ステータスコード999は何を意味しますか？
 ---------------------------------------------
 
 999 is a custom response status code used by Yahoo sites to throttle requests.
@@ -259,7 +257,7 @@ which scrapes one of these sites.
 .. _this page: http://search.cpan.org/~ecarroll/HTML-TreeBuilderX-ASP_NET-0.09/lib/HTML/TreeBuilderX/ASP_NET.pm
 .. _example spider: https://github.com/AmbientLighter/rpn-fas/blob/master/fas/spiders/rnp.py
 
-What's the best way to parse big XML/CSV data feeds?
+大きなXML / CSVデータフィードを解析する最適な方法は何ですか?
 ----------------------------------------------------
 
 Parsing big feeds with XPath selectors can be problematic since they need to
@@ -271,7 +269,7 @@ the functions ``xmliter`` and ``csviter`` from ``scrapy.utils.iterators``
 module. In fact, this is what the feed spiders (see :ref:`topics-spiders`) use
 under the cover.
 
-Does Scrapy manage cookies automatically?
+Scrapyは自動的にクッキーを管理しますか？
 -----------------------------------------
 
 Yes, Scrapy receives and keeps track of cookies sent by servers, and sends them
@@ -279,23 +277,23 @@ back on subsequent requests, like any regular web browser does.
 
 For more info see :ref:`topics-request-response` and :ref:`cookies-mw`.
 
-How can I see the cookies being sent and received from Scrapy?
+Scrapyから送受信されるクッキーを確認するにはどうすればよいですか？
 --------------------------------------------------------------
 
 Enable the :setting:`COOKIES_DEBUG` setting.
 
-How can I instruct a spider to stop itself?
+スパイダーに止めるように指示するにはどうすればよいですか？
 -------------------------------------------
 
 Raise the :exc:`~scrapy.exceptions.CloseSpider` exception from a callback. For
 more info see: :exc:`~scrapy.exceptions.CloseSpider`.
 
-How can I prevent my Scrapy bot from getting banned?
+私のScrapyボットが禁止されるのを防ぐには？
 ----------------------------------------------------
 
-See :ref:`bans`.
+:ref:`bans` を確認してください.
 
-Should I use spider arguments or settings to configure my spider?
+スパイダーの引数や設定を使用してスパイダーを構成する必要がありますか?
 -----------------------------------------------------------------
 
 Both :ref:`spider arguments <spiderargs>` and :ref:`settings <topics-settings>`
@@ -311,10 +309,10 @@ section of the site (which varies each time). In that case, the credentials to
 log in would be settings, while the url of the section to scrape would be a
 spider argument.
 
-I'm scraping a XML document and my XPath selector doesn't return any items
+XML文書をスクラップしていて、XPathセレクタがアイテムを返さない
 --------------------------------------------------------------------------
 
-You may need to remove namespaces. See :ref:`removing-namespaces`.
+ネームスペースを削除する必要があるかもしれません. :ref:`removing-namespaces` を確認してください.
 
 .. _user agents: https://en.wikipedia.org/wiki/User_agent
 .. _LIFO: https://en.wikipedia.org/wiki/Stack_(abstract_data_type)

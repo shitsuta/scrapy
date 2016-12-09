@@ -1,23 +1,23 @@
 .. _topics-index:
 
 ==============================
-Scrapy |version| documentation
+Scrapy |version| ドキュメント
 ==============================
 
-This documentation contains everything you need to know about Scrapy.
+このドキュメントには、Scrapyについて知っておくべきすべてが含まれています。
 
 Getting help
 ============
 
-Having trouble? We'd like to help!
+トラブルですか? 私達が助けます!
 
-* Try the :doc:`FAQ <faq>` -- it's got answers to some common questions.
-* Looking for specific information? Try the :ref:`genindex` or :ref:`modindex`.
-* Ask or search questions in `StackOverflow using the scrapy tag`_,
-* Search for information in the `archives of the scrapy-users mailing list`_, or
-  `post a question`_.
-* Ask a question in the `#scrapy IRC channel`_,
-* Report bugs with Scrapy in our `issue tracker`_.
+* :doc:`FAQ <faq>` を試してください -- いくつかのよくある質問への答えがあります.
+* 具体的な情報をお探しですか？ :ref:`genindex` か :ref:`modindex` を試してください.
+* `StackOverflow using the scrapy tag`_ で質問するか, 答えを探してください.
+* `archives of the scrapy-users mailing list`_, か
+  `post a question`_ で情報を探してください.
+* `#scrapy IRC channel`_ で質問してください.
+* Scrapy のバグは 私達の `issue tracker`_ に報告してください.
 
 .. _archives of the scrapy-users mailing list: https://groups.google.com/forum/#!forum/scrapy-users
 .. _post a question: https://groups.google.com/forum/#!forum/scrapy-users
@@ -26,11 +26,11 @@ Having trouble? We'd like to help!
 .. _issue tracker: https://github.com/scrapy/scrapy/issues
 
 
-First steps
+最初のステップ
 ===========
 
 .. toctree::
-   :caption: First steps
+   :caption: 最初のステップ 
    :hidden:
 
    intro/overview
@@ -39,25 +39,25 @@ First steps
    intro/examples
 
 :doc:`intro/overview`
-    Understand what Scrapy is and how it can help you.
+    Scrapy がどのようにしてあなたを手助けするかを理解する.
 
 :doc:`intro/install`
-    Get Scrapy installed on your computer.
+    コンピューターに Scraoy をインストールする方法.
 
 :doc:`intro/tutorial`
-    Write your first Scrapy project.
+    最初の Scrapy プロジェクトを作成する.
 
 :doc:`intro/examples`
-    Learn more by playing with a pre-made Scrapy project.
+    あらかじめ作成された Scrapy プロジェクトで遊ぶことでさらに学ぶ.
 
 .. _section-basics:
 
-Basic concepts
+基本概念
 ==============
 
 .. toctree::
-   :caption: Basic concepts
-   :hidden:
+   :caption: 基本概念
+   :hidden:
 
    topics/commands
    topics/spiders
@@ -74,48 +74,48 @@ Basic concepts
 
 
 :doc:`topics/commands`
-    Learn about the command-line tool used to manage your Scrapy project.
+    Scrapy プロジェクトの管理に使用するコマンドラインツールについて学ぶ.
 
 :doc:`topics/spiders`
-    Write the rules to crawl your websites.
+    ウェブサイトをクロールするためのルールを書く.
 
 :doc:`topics/selectors`
-    Extract the data from web pages using XPath.
+    XPathを使用してWebページからデータを抽出する.
 
 :doc:`topics/shell`
-    Test your extraction code in an interactive environment.
+    インタラクティブな環境で抽出コードをテストする.
 
 :doc:`topics/items`
-    Define the data you want to scrape.
+    スクレイプしたいデータを定義する.
 
 :doc:`topics/loaders`
-    Populate your items with the extracted data.
+    抽出したデータをアイテムに埋め込む.
 
 :doc:`topics/item-pipeline`
-    Post-process and store your scraped data.
+    後処理してスクラップしたデータを保存する.
 
 :doc:`topics/feed-exports`
-    Output your scraped data using different formats and storages.
+    さまざまなフォーマットとストレージを使用してスクラップしたデータを出力する.
 
 :doc:`topics/request-response`
-    Understand the classes used to represent HTTP requests and responses.
+    HTTP要求と応答を表すために使用されるクラスを理解する.
 
 :doc:`topics/link-extractors`
-    Convenient classes to extract links to follow from pages.
+    ページから続くリンクを抽出するための便利なクラス.
 
 :doc:`topics/settings`
-    Learn how to configure Scrapy and see all :ref:`available settings <topics-settings-ref>`.
+    Scrapyを設定方法を学び, :ref:`利用可能な設定 <topics-settings-ref>` をすべて見る.
 
 :doc:`topics/exceptions`
-    See all available exceptions and their meaning.
+    使用可能な例外とその意味をすべて表示する.
 
 
-Built-in services
+Built-in サービス
 =================
 
 .. toctree::
-   :caption: Built-in services
-   :hidden:
+   :caption: Built-in サービス
+   :hidden:
 
    topics/logging
    topics/stats
@@ -124,26 +124,26 @@ Built-in services
    topics/webservice
 
 :doc:`topics/logging`
-    Learn how to use Python's builtin logging on Scrapy.
+    Pythonの組み込みログをScrapyで使用する方法を学ぶ.
 
 :doc:`topics/stats`
-    Collect statistics about your scraping crawler.
+    スクレイピングクローラに関する統計情報を収集する.
 
 :doc:`topics/email`
-    Send email notifications when certain events occur.
+    特定のイベントが発生したときに電子メール通知を送信する.
 
 :doc:`topics/telnetconsole`
-    Inspect a running crawler using a built-in Python console.
+    組み込みのPythonコンソールを使用して実行中のクローラを検査する.
 
 :doc:`topics/webservice`
-    Monitor and control a crawler using a web service.
+    Webサービスを使用してクローラを監視および制御する.
 
 
-Solving specific problems
+特定の問題の解決
 =========================
 
 .. toctree::
-   :caption: Solving specific problems
+   :caption: 特定の問題の解決
    :hidden:
 
    faq
@@ -161,52 +161,52 @@ Solving specific problems
    topics/jobs
 
 :doc:`faq`
-    Get answers to most frequently asked questions.
+    最もよく寄せられる質問への回答を得る.
 
 :doc:`topics/debug`
-    Learn how to debug common problems of your scrapy spider.
+    スパイダーの一般的な問題をデバッグする方法を学ぶ.
 
 :doc:`topics/contracts`
-    Learn how to use contracts for testing your spiders.
+    スパイダーをテストのために使用する方法を学ぶ.
 
 :doc:`topics/practices`
-    Get familiar with some Scrapy common practices.
+    いくつかの Scrapy の共通プラクティスを理解する.
 
 :doc:`topics/broad-crawls`
-    Tune Scrapy for crawling a lot domains in parallel.
+    多くのドメインを並行してクロールするための調整.
 
 :doc:`topics/firefox`
-    Learn how to scrape with Firefox and some useful add-ons.
+    Firefoxといくつかの便利なアドオンを使用してスクラップする方法を学ぶ.
 
 :doc:`topics/firebug`
-    Learn how to scrape efficiently using Firebug.
+    Firebugを使って効率的にスクレイプする方法を学ぶ.
 
 :doc:`topics/leaks`
-    Learn how to find and get rid of memory leaks in your crawler.
+    クローラでメモリリークを見つけて取り除く方法を学ぶ.
 
 :doc:`topics/media-pipeline`
-    Download files and/or images associated with your scraped items.
+    スクラップしたアイテムに関連するファイルや画像をダウンロードする.
 
 :doc:`topics/deploy`
-    Deploying your Scrapy spiders and run them in a remote server.
+    Scrapyスパイダーをデプロイしてリモートサーバーで実行する.
 
 :doc:`topics/autothrottle`
-    Adjust crawl rate dynamically based on load.
+    負荷に基づいて動的にクロール速度を調整する.
 
 :doc:`topics/benchmarking`
-    Check how Scrapy performs on your hardware.
+    あなたのハードウェアでScrapyがどのように機能するかを調べる.
 
 :doc:`topics/jobs`
-    Learn how to pause and resume crawls for large spiders.
+    大きなスパイダーのクロールを一時停止して再開する方法を学ぶ.
 
 .. _extending-scrapy:
 
-Extending Scrapy
+Scrapy を拡張する
 ================
 
 .. toctree::
-   :caption: Extending Scrapy
-   :hidden:
+   :caption: Scrapy を拡張する
+   :hidden:
 
    topics/architecture
    topics/downloader-middleware
@@ -218,32 +218,32 @@ Extending Scrapy
 
 
 :doc:`topics/architecture`
-    Understand the Scrapy architecture.
+    Scrapyアーキテクチャを理解する.
 
 :doc:`topics/downloader-middleware`
-    Customize how pages get requested and downloaded.
+    ページのリクエスト数とダウンロードのカスタマイズする.
 
 :doc:`topics/spider-middleware`
-    Customize the input and output of your spiders.
+    スパイダーの入力と出力をカスタマイズする.
 
 :doc:`topics/extensions`
-    Extend Scrapy with your custom functionality
-
+    カスタム機能でScrapyを拡張する.
+    
 :doc:`topics/api`
-    Use it on extensions and middlewares to extend Scrapy functionality
-
+    拡張機能やミドルウェアでそれを使ってScrapy機能を拡張する.
+    
 :doc:`topics/signals`
-    See all available signals and how to work with them.
+    利用可能なすべてのシグナルとそれらを操作する方法を見る.
 
 :doc:`topics/exporters`
-    Quickly export your scraped items to a file (XML, CSV, etc).
+    スクラップしたアイテムをファイルにすばやくエクスポートする (XML, CSV, etc).
 
 
-All the rest
+残りのすべて
 ============
 
 .. toctree::
-   :caption: All the rest
+   :caption: 残りのすべて
    :hidden:
 
    news
@@ -251,10 +251,10 @@ All the rest
    versioning
 
 :doc:`news`
-    See what has changed in recent Scrapy versions.
+    最近のScrapyのバージョンで何が変わったのか見る.
 
 :doc:`contributing`
-    Learn how to contribute to the Scrapy project.
+    Scrapyプロジェクトに貢献する方法を学ぶ.
 
 :doc:`versioning`
-    Understand Scrapy versioning and API stability.
+    ScrapyのバージョニングとAPIの安定性を理解する.

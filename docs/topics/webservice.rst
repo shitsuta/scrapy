@@ -1,11 +1,11 @@
 .. _topics-webservice:
 
 ===========
-Web Service
+ウェブサービス
 ===========
 
-webservice has been moved into a separate project.
+webservice は別のプロジェクトに移動されました.
 
-It is hosted at:
+以下にホストされています:
 
     https://github.com/scrapy-plugins/scrapy-jsonrpc

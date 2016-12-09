@@ -1,7 +1,7 @@
 .. _topics-selectors:
 
 =========
-Selectors
+セレクタ
 =========
 
 When you're scraping web pages, the most common task you need to perform is
@@ -44,10 +44,10 @@ For a complete reference of the selectors API see
 .. _CSS: https://www.w3.org/TR/selectors
 
 
-Using selectors
+セレクタの使用
 ===============
 
-Constructing selectors
+セレクタの作成
 ----------------------
 
 .. highlight:: python
@@ -79,7 +79,7 @@ it's totally OK to use this shortcut when possible::
     [u'good']
 
 
-Using selectors
+セレクタの使用
 ---------------
 
 To explain how to use the selectors we'll use the `Scrapy shell` (which
@@ -198,7 +198,7 @@ Now we're going to get the base URL and some image links::
 
 .. _topics-selectors-nesting-selectors:
 
-Nesting selectors
+ネストセレクタ
 -----------------
 
 The selection methods (``.xpath()`` or ``.css()``) return a list of selectors
@@ -223,7 +223,7 @@ too. Here's an example::
     Link number 3 points to url [u'image4.html'] and image [u'image4_thumb.jpg']
     Link number 4 points to url [u'image5.html'] and image [u'image5_thumb.jpg']
 
-Using selectors with regular expressions
+正規表現でのセレクタの使用
 ----------------------------------------
 
 :class:`~scrapy.selector.Selector` also has a ``.re()`` method for extracting
@@ -249,7 +249,7 @@ named ``.re_first()``. Use it to extract just the first matching string::
 
 .. _topics-selectors-relative-xpaths:
 
-Working with relative XPaths
+相対XPathの操作
 ----------------------------
 
 Keep in mind that if you are nesting selectors and use an XPath that starts
@@ -283,7 +283,7 @@ XPath specification.
 
 .. _Location Paths: https://www.w3.org/TR/xpath#location-paths
 
-Using EXSLT extensions
+EXSLT拡張機能の使用
 ----------------------
 
 Being built atop `lxml`_, Scrapy selectors also support some `EXSLT`_ extensions
@@ -297,7 +297,7 @@ re      \http://exslt.org/regular-expressions    `regular expressions`_
 set     \http://exslt.org/sets                   `set manipulation`_
 ======  =====================================    =======================
 
-Regular expressions
+正規表現
 ~~~~~~~~~~~~~~~~~~~
 
 The ``test()`` function, for example, can prove quite useful when XPath's
@@ -329,7 +329,7 @@ Example selecting links in list item with a "class" attribute ending with a digi
     Thus, using regexp functions in your XPath expressions may add a small
     performance penalty.
 
-Set operations
+操作を設定する
 ~~~~~~~~~~~~~~
 
 These can be handy for excluding parts of a document tree before
@@ -429,7 +429,7 @@ inside another ``itemscope``.
 .. _set manipulation: http://exslt.org/set/index.html
 
 
-Some XPath tips
+XPathのヒント
 ---------------
 
 Here are some tips that you may find useful when using XPath
@@ -442,7 +442,7 @@ you may want to take a look first at this `XPath tutorial`_.
 .. _`this post from ScrapingHub's blog`: https://blog.scrapinghub.com/2014/07/17/xpath-tips-from-the-web-scraping-trenches/
 
 
-Using text nodes in a condition
+条件内のテキストノードの使用
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 When you need to use the text content as argument to an `XPath string function`_,
@@ -483,7 +483,7 @@ But using the ``.`` to mean the node, works::
 
 .. _`XPath string function`: https://www.w3.org/TR/xpath/#section-String-Functions
 
-Beware of the difference between //node[1] and (//node)[1]
+//node[1] と (//node)[1] の違いに注意してください
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ``//node[1]`` selects all the nodes occurring first under their respective parents.
@@ -526,8 +526,8 @@ And this gets the first ``<li>``  element under an ``<ul>``  parent in the whole
     >>> xp("(//ul/li)[1]")
     [u'<li>1</li>']
 
-When querying by class, consider using CSS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+クラス別にクエリを実行する場合は, CSSを使用することを検討してください
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Because an element can contain multiple CSS classes, the XPath way to select elements
 by class is the rather verbose::
@@ -553,7 +553,7 @@ to use the ``.`` in the XPath expressions that will follow.
 
 .. _topics-selectors-ref:
 
-Built-in Selectors reference
+ビルトインセレクタリファレンス
 ============================
 
 .. module:: scrapy.selector
@@ -644,7 +644,7 @@ Built-in Selectors reference
      given by the contents it selects.
 
 
-SelectorList objects
+SelectorList オブジェクト
 --------------------
 
 .. class:: SelectorList
@@ -681,7 +681,7 @@ SelectorList objects
         returns True if the list is not empty, False otherwise.
 
 
-Selector examples on HTML response
+HTMLレスポンスのセレクタの例
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here's a couple of :class:`Selector` examples to illustrate several concepts.
@@ -706,7 +706,7 @@ a :class:`~scrapy.http.HtmlResponse` object like this::
       for node in sel.xpath("//p"):
           print node.xpath("@class").extract()
 
-Selector examples on XML response
+XMLレスポンスのセレクタの例
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Here's a couple of examples to illustrate several concepts. In both cases we
@@ -728,7 +728,7 @@ assume there is already a :class:`Selector` instantiated with an
 
 .. _removing-namespaces:
 
-Removing namespaces
+ネームスペースの削除
 ~~~~~~~~~~~~~~~~~~~
 
 When dealing with scraping projects, it is often quite convenient to get rid of

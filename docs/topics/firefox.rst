@@ -1,7 +1,7 @@
 .. _topics-firefox:
 
 ==========================
-Using Firefox for scraping
+スクレイピングにFireFoxを使用する
 ==========================
 
 Here is a list of tips and advice on using Firefox for scraping, along with a
@@ -9,7 +9,7 @@ list of useful Firefox add-ons to ease the scraping process.
 
 .. _topics-firefox-livedom:
 
-Caveats with inspecting the live browser DOM
+ライブブラウザDOMの検査に関する警告
 ============================================
 
 Since Firefox add-ons operate on a live browser DOM, what you'll actually see
@@ -34,7 +34,7 @@ Firefox and XPath:
 
 .. _topics-firefox-addons:
 
-Useful Firefox add-ons for scraping
+スクレイピングに便利なFirefoxアドオン
 ===================================
 
 Firebug

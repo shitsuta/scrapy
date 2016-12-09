@@ -1,31 +1,25 @@
 .. _topics-contributing:
 
 ======================
-Contributing to Scrapy
+Scrapy に貢献する
 ======================
 
 .. important::
 
-    Double check you are reading the most recent version of this document at
-    http://doc.scrapy.org/en/master/contributing.html
+    この文書の最新版を確認してください.
+    http://doc.scrapy.org/en/master/contributing.html
 
-There are many ways to contribute to Scrapy. Here are some of them:
+Scrapy に貢献する方法はたくさんあります. ここに幾つか示します:
 
-* Blog about Scrapy. Tell the world how you're using Scrapy. This will help
-  newcomers with more examples and the Scrapy project to increase its
-  visibility.
+* Scrapyについてのブログ. あなたがScrapyをどのように使っているかを世界に伝えてください. これは, より多くの新しい仲間と, Scrapyプロジェクトの可視性を高めるのに役立ちます.
 
-* Report bugs and request features in the `issue tracker`_, trying to follow
-  the guidelines detailed in `Reporting bugs`_ below.
+* `issue tracker`_　にバグと、機能の要望を報告する. 下記の `Reporting bugs`_ に記載されているガイドラインに従ってください.
 
-* Submit patches for new functionality and/or bug fixes. Please read
-  `Writing patches`_ and `Submitting patches`_ below for details on how to
-  write and submit a patch.
+* 新しい機能やバグ修正のためのパッチを提出する. パッチを作成して提出する方法の詳細は `Writing patches`_ と `Submitting patches`_ を読んで下さい.
 
-* Join the `scrapy-users`_ mailing list and share your ideas on how to
-  improve Scrapy. We're always open to suggestions.
+* あなたのアイデアを共有するために `scrapy-users`_ メーリングリストに参加する. 私たちは常に提案を受け入れています.
 
-Reporting bugs
+バグの報告
 ==============
 
 .. note::
@@ -60,7 +54,7 @@ guidelines when reporting a new bug.
 
 .. _Minimal, Complete, and Verifiable example: https://stackoverflow.com/help/mcve
 
-Writing patches
+パッチを書く
 ===============
 
 The better written a patch is, the higher chance that it'll get accepted and
@@ -83,7 +77,7 @@ Well-written patches should:
   the documentation changes in the same patch.  See `Documentation policies`_
   below.
 
-Submitting patches
+パッチを提出する
 ==================
 
 The best way to submit a patch is to issue a `pull request`_ on GitHub,
@@ -110,7 +104,7 @@ Finally, try to keep aesthetic changes (:pep:`8` compliance, unused imports
 removal, etc) in separate commits than functional changes. This will make pull
 requests easier to review and more likely to get merged.
 
-Coding style
+コーディングスタイル
 ============
 
 Please follow these coding conventions when writing code for inclusion in
@@ -124,7 +118,7 @@ Scrapy:
 * Don't put your name in the code you contribute. Our policy is to keep
   the contributor's name in the `AUTHORS`_ file distributed with Scrapy.
 
-Scrapy Contrib
+Scrapy 寄稿者
 ==============
 
 Scrapy contrib shares a similar rationale as Django contrib, which is explained
@@ -133,7 +127,7 @@ are working on a new functionality, please follow that rationale to decide
 whether it should be a Scrapy contrib. If unsure, you can ask in
 `scrapy-users`_.
 
-Documentation policies
+ドキュメントポリシー
 ======================
 
 * **Don't** use docstrings for documenting classes, or methods which are
@@ -145,13 +139,13 @@ Documentation policies
   (sphinx) documentation, such as functions from ``scrapy.utils`` package and
   its sub-modules.
 
-Tests
+テスト
 =====
 
 Tests are implemented using the `Twisted unit-testing framework`_, running
 tests requires `tox`_.
 
-Running tests
+テストの実行
 -------------
 
 Make sure you have a recent enough `tox`_ installation:
@@ -178,7 +172,7 @@ see output of ``coverage --help`` for more options like html or xml report.
 
 .. _coverage: https://pypi.python.org/pypi/coverage
 
-Writing tests
+テストを書く
 -------------
 
 All functionality (including new features and bug fixes) must include a test

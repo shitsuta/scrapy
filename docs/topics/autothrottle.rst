@@ -1,34 +1,29 @@
 .. _topics-autothrottle:
 
 ======================
-AutoThrottle extension
+AutoThrottle 拡張機能
 ======================
 
-This is an extension for automatically throttling crawling speed based on load
-of both the Scrapy server and the website you are crawling.
+これは、ScrapyサーバーとクロールしているWebサイトの両方の負荷に基づいてクロール速度を自動的に調整する拡張機能です.
 
-Design goals
+設計目標
 ============
 
-1. be nicer to sites instead of using default download delay of zero
-2. automatically adjust scrapy to the optimum crawling speed, so the user
-   doesn't have to tune the download delays to find the optimum one.
-   The user only needs to specify the maximum concurrent requests
-   it allows, and the extension does the rest.
+1. 既定のダウンロード遅延ゼロを使用する代わりに、サイトをより良くする
+2. 自動的に最適なクロール速度に調整し, ユーザーはダウンロード遅延をチューニングして最適なものを見つける必要がない.
+   ユーザーは許可する同時要求の最大数を指定するだけで, 残りの部分は拡張機能で処理する.
 
 .. _autothrottle-algorithm:
 
-How it works
+使い方
 ============
 
-AutoThrottle extension adjusts download delays dynamically to make spider send
-:setting:`AUTOTHROTTLE_TARGET_CONCURRENCY` concurrent requests on average
-to each remote website.
+AutoThrottle拡張機能はダウンロード遅延を動的に調整して、スパイダーが 
+:setting:`AUTOTHROTTLE_TARGET_CONCURRENCY` の同時リクエストを各リモートWebサイトに送信します.
 
-It uses download latency to compute the delays. The main idea is the
-following: if a server needs ``latency`` seconds to respond, a client
-should send a request each ``latency/N`` seconds to have ``N`` requests
-processed in parallel.
+ダウンロード待ち時間を使用して遅延を計算します. 
+主な考え方は次のとおりです: サーバが応答するのに ``待ち時間`` が必要な場合, クライアントは
+``N`` 個の要求を並行して処理するために, 各 ``待ち時間/ N`` 秒間に要求を送信する必要があります.
 
 Instead of adjusting the delays one can just set a small fixed
 download delay and impose hard limits on concurrency using
@@ -47,10 +42,10 @@ effect, but there are some important differences:
 
 AutoThrottle doesn't have these issues.
 
-Throttling algorithm
+スロットルアルゴリズム
 ====================
 
-AutoThrottle algorithm adjusts download delays based on the following rules:
+オートスロットルアルゴリズムは、次のルールに基づいてダウンロードの遅延を調整します:
 
 1. spiders always start with a download delay of
    :setting:`AUTOTHROTTLE_START_DELAY`;
@@ -80,10 +75,10 @@ callback, for example, and unable to attend downloads. However, these latencies
 should still give a reasonable estimate of how busy Scrapy (and ultimately, the
 server) is, and this extension builds on that premise.
 
-Settings
+設定
 ========
 
-The settings used to control the AutoThrottle extension are:
+オートスロットルエクステンションを制御するための設定以下です:
 
 * :setting:`AUTOTHROTTLE_ENABLED`
 * :setting:`AUTOTHROTTLE_START_DELAY`
@@ -93,14 +88,14 @@ The settings used to control the AutoThrottle extension are:
 * :setting:`CONCURRENT_REQUESTS_PER_IP`
 * :setting:`DOWNLOAD_DELAY`
 
-For more information see :ref:`autothrottle-algorithm`.
+より多くの情報は :ref:`autothrottle-algorithm` を確認してください.
 
 .. setting:: AUTOTHROTTLE_ENABLED
 
 AUTOTHROTTLE_ENABLED
 ~~~~~~~~~~~~~~~~~~~~
 
-Default: ``False``
+初期値: ``False``
 
 Enables the AutoThrottle extension.
 
@@ -109,7 +104,7 @@ Enables the AutoThrottle extension.
 AUTOTHROTTLE_START_DELAY
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-Default: ``5.0``
+初期値: ``5.0``
 
 The initial download delay (in seconds).
 
@@ -118,7 +113,7 @@ The initial download delay (in seconds).
 AUTOTHROTTLE_MAX_DELAY
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Default: ``60.0``
+初期値: ``60.0``
 
 The maximum download delay (in seconds) to be set in case of high latencies.
 
@@ -129,7 +124,7 @@ AUTOTHROTTLE_TARGET_CONCURRENCY
 
 .. versionadded:: 1.1
 
-Default: ``1.0``
+初期値: ``1.0``
 
 Average number of requests Scrapy should be sending in parallel to remote
 websites.
@@ -157,7 +152,7 @@ value the crawler tries to approach, not a hard limit.
 AUTOTHROTTLE_DEBUG
 ~~~~~~~~~~~~~~~~~~
 
-Default: ``False``
+初期値: ``False``
 
 Enable AutoThrottle debug mode which will display stats on every response
 received, so you can see how the throttling parameters are being adjusted in

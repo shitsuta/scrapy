@@ -1,7 +1,7 @@
 .. _topics-signals:
 
 =======
-Signals
+シグナル
 =======
 
 Scrapy uses signals extensively to notify when certain events occur. You can
@@ -47,7 +47,7 @@ Here is a simple example showing how you can catch signals and perform some acti
             pass
 
 
-Deferred signal handlers
+遅延シグナルハンドラ
 ========================
 
 Some signals support returning `Twisted deferreds`_ from their handlers, see
@@ -57,7 +57,7 @@ the :ref:`topics-signals-ref` below to know which ones.
 
 .. _topics-signals-ref:
 
-Built-in signals reference
+ビルトインシグナルリファレンス
 ==========================
 
 .. module:: scrapy.signals

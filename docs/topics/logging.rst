@@ -1,7 +1,7 @@
 .. _topics-logging:
 
 =======
-Logging
+ロギング
 =======
 
 .. note::
@@ -24,7 +24,7 @@ Scrapy from scripts as described in :ref:`run-from-script`.
 
 .. _topics-logging-levels:
 
-Log levels
+ログレベル
 ==========
 
 Python's builtin logging defines 5 different levels to indicate severity on a
@@ -36,7 +36,7 @@ given log message. Here are the standard ones, listed in decreasing order:
 4. ``logging.INFO`` - for informational messages
 5. ``logging.DEBUG`` - for debugging messages (lowest severity)
 
-How to log messages
+ログメッセージの使用方法
 ===================
 
 Here's a quick example of how to log a message using the ``logging.WARNING``
@@ -91,7 +91,7 @@ path::
 
 .. _topics-logging-from-spiders:
 
-Logging from Spiders
+スパイダーからのロギング
 ====================
 
 Scrapy provides a :data:`~scrapy.spiders.Spider.logger` within each Spider
@@ -125,7 +125,7 @@ Python logger you want. For example::
 
 .. _topics-logging-configuration:
 
-Logging configuration
+ロギング設定
 =====================
 
 Loggers on their own don't manage how messages sent through them are displayed.
@@ -138,7 +138,7 @@ the settings below.
 
 .. _topics-logging-settings:
 
-Logging settings
+ロギング設定
 ----------------
 
 These settings can be used to configure the logging:
@@ -170,7 +170,7 @@ listed in `logging's logrecord attributes docs
 <https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior>`_
 respectively.
 
-Command-line options
+コマンドラインオプション
 --------------------
 
 There are command-line arguments, available for all commands, that you can use
@@ -188,8 +188,8 @@ to override some of the Scrapy settings regarding logging.
     Module `logging.handlers <https://docs.python.org/2/library/logging.handlers.html>`_
         Further documentation on available handlers
 
-scrapy.utils.log module
-=======================
+scrapy.utils.log モジュール
+=========================
 
 .. module:: scrapy.utils.log
    :synopsis: Logging utils

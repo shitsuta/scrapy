@@ -1,7 +1,7 @@
 .. _topics-shell:
 
 ============
-Scrapy shell
+Scrapy シェル
 ============
 
 The Scrapy shell is an interactive shell where you can try and debug your
@@ -17,7 +17,7 @@ spider, without having to run the spider to test every change.
 Once you get familiarized with the Scrapy shell, you'll see that it's an
 invaluable tool for developing and debugging your spiders.
 
-Configuring the shell
+シェルの設定
 =====================
 
 If you have `IPython`_ installed, the Scrapy shell will use it (instead of the
@@ -43,7 +43,7 @@ variable; or by defining it in your :ref:`scrapy.cfg <topics-config-settings>`::
 .. _IPython installation guide: http://ipython.org/install.html
 .. _bpython: http://www.bpython-interpreter.org/
 
-Launch the shell
+シェルの実行
 ================
 
 To launch the Scrapy shell you can use the :command:`shell` command like
@@ -85,14 +85,14 @@ the following syntaxes for local files::
     exists in the current directory. Again, be explicit.
 
 
-Using the shell
+シェルの使用
 ===============
 
 The Scrapy shell is just a regular Python console (or `IPython`_ console if you
 have it available) which provides some additional shortcut functions for
 convenience.
 
-Available Shortcuts
+使用可能なショートカット
 -------------------
 
  * ``shelp()`` - print a help with the list of available objects and shortcuts
@@ -108,7 +108,7 @@ Available Shortcuts
 
 .. _<base> tag: https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
 
-Available Scrapy objects
+使用可能な Scrapy オブジェクト
 ------------------------
 
 The Scrapy shell automatically creates some convenient objects from the
@@ -134,7 +134,7 @@ Those objects are:
 
  * ``settings`` - the current :ref:`Scrapy settings <topics-settings>`
 
-Example of shell session
+シェルセッションの例
 ========================
 
 Here's an example of a typical shell session where we start by scraping the
@@ -202,7 +202,7 @@ After that, we can start playing with the objects::
 
 .. _topics-shell-inspect-response:
 
-Invoking the shell from spiders to inspect responses
+応答を調べるためにシェルを起動する
 ====================================================
 
 Sometimes you want to inspect the responses that are being processed in a

@@ -1,7 +1,7 @@
 .. _topics-spiders:
 
 =======
-Spiders
+スパイダー
 =======
 
 Spiders are classes which define how a certain site (or a group of sites) will be
@@ -272,7 +272,7 @@ to give data more structure you can use :ref:`topics-items`::
 
 .. _spiderargs:
 
-Spider arguments
+スパイダーの引数
 ================
 
 Spiders can receive arguments that modify their behaviour. Some common uses for
@@ -302,7 +302,7 @@ See `Scrapyd documentation`_.
 
 .. _builtin-spiders:
 
-Generic Spiders
+一般的なスパイダー
 ===============
 
 Scrapy comes with some useful generic spiders that you can use to subclass
@@ -353,7 +353,7 @@ CrawlSpider
       :class:`~scrapy.item.Item` object, a :class:`~scrapy.http.Request`
       object, or an iterable containing any of them.
 
-Crawling rules
+クローリング規則
 ~~~~~~~~~~~~~~
 
 .. class:: Rule(link_extractor, callback=None, cb_kwargs=None, follow=None, process_links=None, process_request=None)
@@ -389,7 +389,7 @@ Crawling rules
    every request extracted by this rule, and must return a request or None (to
    filter out the request).
 
-CrawlSpider example
+CrawlSpider 設定
 ~~~~~~~~~~~~~~~~~~~
 
 Let's now take a look at an example CrawlSpider with rules::
@@ -511,7 +511,7 @@ XMLFeedSpider
         those results. It must return a list of results (Items or Requests).
 
 
-XMLFeedSpider example
+XMLFeedSpider 例
 ~~~~~~~~~~~~~~~~~~~~~
 
 These spiders are pretty easy to use, let's have a look at one example::
@@ -570,7 +570,7 @@ CSVFeedSpider
        opportunity to override ``adapt_response`` and ``process_results`` methods
        for pre- and post-processing purposes.
 
-CSVFeedSpider example
+CSVFeedSpider 例
 ~~~~~~~~~~~~~~~~~~~~~
 
 Let's see an example similar to the previous one, but using a
@@ -664,7 +664,7 @@ SitemapSpider
         Default is ``sitemap_alternate_links`` disabled.
 
 
-SitemapSpider examples
+SitemapSpider 例
 ~~~~~~~~~~~~~~~~~~~~~~
 
 Simplest example: process all urls discovered through sitemaps using the

@@ -1,7 +1,7 @@
 .. _topics-exceptions:
 
 ==========
-Exceptions
+エクセプション
 ==========
 
 .. module:: scrapy.exceptions
@@ -9,31 +9,30 @@ Exceptions
 
 .. _topics-exceptions-ref:
 
-Built-in Exceptions reference
+ビルトインエクセプションリファレンス
 =============================
 
-Here's a list of all exceptions included in Scrapy and their usage.
+Scrapyに含まれるすべての例外のリストとその使用法.
 
 DropItem
 --------
 
 .. exception:: DropItem
 
-The exception that must be raised by item pipeline stages to stop processing an
-Item. For more information see :ref:`topics-item-pipeline`.
+アイテムの処理を停止するためにアイテムパイプラインステージで発生させる必要がある例外. 
+詳細については、項目 :ref:`topics-item-pipeline` を参照してください.
 
 CloseSpider
 -----------
 
 .. exception:: CloseSpider(reason='cancelled')
 
-    This exception can be raised from a spider callback to request the spider to be
-    closed/stopped. Supported arguments:
+    この例外は、スパイダーのコールバックからクローズ/ストップを要求することができます. サポートされている引数:
 
-    :param reason: the reason for closing
-    :type reason: str
+    :param reason: クローズした理由
+    :type reason: str
 
-For example::
+例::
 
     def parse_page(self, response):
         if 'Bandwidth exceeded' in response.body:
@@ -44,28 +43,26 @@ IgnoreRequest
 
 .. exception:: IgnoreRequest
 
-This exception can be raised by the Scheduler or any downloader middleware to
-indicate that the request should be ignored.
+この例外は、スケジューラまたは任意のダウンローダミドルウェアによって, リクエストを無視すべきであることを示すために発生させることができます.
 
 NotConfigured
 -------------
 
 .. exception:: NotConfigured
 
-This exception can be raised by some components to indicate that they will
-remain disabled. Those components include:
+この例外は, 一部のコンポーネントによって, それらが無効のままであることを示すために発生させることができます. コンポーネントは以下を含んでいます:
 
- * Extensions
- * Item pipelines
- * Downloader middlewares
- * Spider middlewares
-
-The exception must be raised in the component's ``__init__`` method.
+ * 拡張機能
+ * アイテムパイプライン
+ * ダウンローダミドルウェア
+ * スパイダーミドルウェア
+ 
+コンポーネントの ``__init__`` メソッドで例外を発生させる必要があります.
 
 NotSupported
 ------------
 
 .. exception:: NotSupported
 
-This exception is raised to indicate an unsupported feature.
+この例外は、サポートされていない機能を示すために発生します.
 

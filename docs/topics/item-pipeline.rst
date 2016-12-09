@@ -1,8 +1,8 @@
 .. _topics-item-pipeline:
 
-=============
-Item Pipeline
-=============
+==============
+アイテムパイプライン
+==============
 
 After an item has been scraped by a spider, it is sent to the Item Pipeline
 which processes it through several components that are executed sequentially.
@@ -20,7 +20,7 @@ Typical uses of item pipelines are:
 * storing the scraped item in a database
 
 
-Writing your own item pipeline
+独自のアイテムパイプラインの作成
 ==============================
 
 Each item pipeline component is a Python class that must implement the following method:
@@ -69,10 +69,10 @@ Additionally, they may also implement the following methods:
 
 .. _Twisted Deferred: https://twistedmatrix.com/documents/current/core/howto/defer.html
 
-Item pipeline example
+アイテムパイプラインの例
 =====================
 
-Price validation and dropping items with no prices
+価格の確認と価格のないアイテムのドロップ
 --------------------------------------------------
 
 Let's take a look at the following hypothetical pipeline that adjusts the
@@ -95,7 +95,7 @@ contain a price::
                 raise DropItem("Missing price in %s" % item)
 
 
-Write items to a JSON file
+アイテムをJSONファイルに出力する
 --------------------------
 
 The following pipeline stores all scraped items (from all spiders) into a
@@ -121,7 +121,7 @@ format::
    item pipelines. If you really want to store all scraped items into a JSON
    file you should use the :ref:`Feed exports <topics-feed-exports>`.
 
-Write items to MongoDB
+アイテムをMongoDBに出力する
 ----------------------
 
 In this example we'll write items to MongoDB_ using pymongo_.
@@ -162,8 +162,7 @@ method and how to clean up the resources properly.::
 .. _MongoDB: https://www.mongodb.org/
 .. _pymongo: https://api.mongodb.org/python/current/
 
-
-Take screenshot of item
+アイテムのスクリーンショットを撮る
 -----------------------
 
 This example demonstrates how to return Deferred_ from :meth:`process_item` method.
@@ -211,7 +210,7 @@ and Deferred callback fires, it saves item to a file and adds filename to an ite
 .. _Splash: http://splash.readthedocs.io/en/stable/
 .. _Deferred: https://twistedmatrix.com/documents/current/core/howto/defer.html
 
-Duplicates filter
+重複チェック
 -----------------
 
 A filter that looks for duplicate items, and drops those items that were
@@ -234,7 +233,7 @@ returns multiples items with the same id::
                 return item
 
 
-Activating an Item Pipeline component
+アイテムパイプラインコンポーネントの有効化
 =====================================
 
 To activate an Item Pipeline component you must add its class to the

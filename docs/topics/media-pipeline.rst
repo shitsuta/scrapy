@@ -1,7 +1,7 @@
 .. _topics-media-pipeline:
 
 ===========================================
-Downloading and processing files and images
+ファイルと画像のダウンロードと処理
 ===========================================
 
 .. currentmodule:: scrapy.pipelines.images
@@ -28,7 +28,7 @@ being scheduled for download, and connect those responses that arrive containing
 the same media to that queue. This avoids downloading the same media more than
 once when it's shared by several items.
 
-Using the Files Pipeline
+ファイルパイプラインの使用
 ========================
 
 The typical workflow, when using the :class:`FilesPipeline` goes like
@@ -55,7 +55,7 @@ this:
    error will be logged and the file won't be present in the ``files`` field.
 
 
-Using the Images Pipeline
+画像パイプラインの使用
 =========================
 
 Using the :class:`ImagesPipeline` is a lot like using the :class:`FilesPipeline`,
@@ -79,7 +79,7 @@ PIL.
 
 .. _topics-media-pipeline-enabling:
 
-Enabling your Media Pipeline
+メディアパイプラインの有効化
 ============================
 
 .. setting:: IMAGES_STORE
@@ -113,15 +113,15 @@ For the Images Pipeline, set the :setting:`IMAGES_STORE` setting::
 
    IMAGES_STORE = '/path/to/valid/dir'
 
-Supported Storage
-=================
+サポートされているストレージ
+=====================
 
 File system is currently the only officially supported storage, but there is
 also support for storing files in `Amazon S3`_.
 
 .. _Amazon S3: https://aws.amazon.com/s3/
 
-File system storage
+ファイルシステムストレージ
 -------------------
 
 The files are stored using a `SHA1 hash`_ of their URLs for the file names.
@@ -146,7 +146,7 @@ Where:
 * ``full`` is a sub-directory to separate full images from thumbnails (if
   used). For more info see :ref:`topics-images-thumbnails`.
 
-Amazon S3 storage
+Amazon S3 ストレージ
 -----------------
 
 .. setting:: FILES_STORE_S3_ACL
@@ -171,7 +171,7 @@ For more information, see `canned ACLs`_ in the Amazon S3 Developer Guide.
 
 .. _canned ACLs: http://docs.aws.amazon.com/AmazonS3/latest/dev/acl-overview.html#canned-acl
 
-Usage example
+使用例
 =============
 
 .. setting:: FILES_URLS_FIELD
@@ -222,10 +222,10 @@ called MyPipeline and you want to have custom IMAGES_URLS_FIELD you define
 setting MYPIPELINE_IMAGES_URLS_FIELD and your custom settings will be used.
 
 
-Additional features
+その他の機能
 ===================
 
-File expiration
+ファイルの有効期限
 ---------------
 
 .. setting:: IMAGES_EXPIRES
@@ -254,7 +254,7 @@ and pipeline class MyPipeline will have expiration time set to 180.
 
 .. _topics-images-thumbnails:
 
-Thumbnail generation for images
+画像のサムネイル生成
 -------------------------------
 
 The Images Pipeline can automatically create thumbnails of the downloaded
@@ -294,7 +294,7 @@ Example of image files stored using ``small`` and ``big`` thumbnail names::
 
 The first one is the full image, as downloaded from the site.
 
-Filtering out small images
+小さな画像をフィルタリングする
 --------------------------
 
 .. setting:: IMAGES_MIN_HEIGHT
@@ -322,7 +322,7 @@ By default, there are no size constraints, so all images are processed.
 
 .. _topics-media-pipeline-override:
 
-Extending the Media Pipelines
+メディアパイプラインの拡張
 =============================
 
 .. module:: scrapy.pipelines.files
@@ -434,7 +434,7 @@ See here the methods that you can override in your custom Images Pipeline:
       By default, the :meth:`item_completed` method returns the item.
 
 
-Custom Images pipeline example
+カスタムイメージのパイプラインの例
 ==============================
 
 Here is a full example of the Images Pipeline whose methods are examplified

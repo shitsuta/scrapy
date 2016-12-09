@@ -511,7 +511,7 @@ commands for your Scrapy project.
 setup.pyエントリポイントを介してコマンドを登録する
 -------------------------------------------
 
-.. note:: これは実験的な機能なので注意してください.
+.. note::これは実験的な機能なので注意してください.
 
 You can also add Scrapy commands from an external library by adding a
 ``scrapy.commands`` section in the entry points of the library ``setup.py``

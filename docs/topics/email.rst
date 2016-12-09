@@ -1,7 +1,7 @@
 .. _topics-email:
 
 ==============
-Sending e-mail
+Eメールを送る
 ==============
 
 .. module:: scrapy.mail
@@ -17,7 +17,7 @@ simple API for sending attachments and it's very easy to configure, with a few
 .. _smtplib: https://docs.python.org/2/library/smtplib.html
 .. _Twisted non-blocking IO: https://twistedmatrix.com/documents/current/core/howto/defer-intro.html
 
-Quick example
+簡単な例
 =============
 
 There are two ways to instantiate the mail sender. You can instantiate it using
@@ -35,7 +35,7 @@ And here is how to use it to send an e-mail (without attachments)::
 
     mailer.send(to=["someone@example.com"], subject="Some subject", body="Some body", cc=["another@example.com"])
 
-MailSender class reference
+MailSender クラスリファレンス
 ==========================
 
 MailSender is the preferred class to use for sending emails from Scrapy, as it
@@ -108,7 +108,7 @@ uses `Twisted non-blocking IO`_, like the rest of the framework.
 
 .. _topics-email-settings:
 
-Mail settings
+メール設定
 =============
 
 These settings define the default constructor values of the :class:`MailSender`
@@ -120,7 +120,7 @@ writing any code (for those extensions and code that uses :class:`MailSender`).
 MAIL_FROM
 ---------
 
-Default: ``'scrapy@localhost'``
+初期値: ``'scrapy@localhost'``
 
 Sender email to use (``From:`` header) for sending emails.
 
@@ -129,7 +129,7 @@ Sender email to use (``From:`` header) for sending emails.
 MAIL_HOST
 ---------
 
-Default: ``'localhost'``
+初期値: ``'localhost'``
 
 SMTP host to use for sending emails.
 
@@ -138,7 +138,7 @@ SMTP host to use for sending emails.
 MAIL_PORT
 ---------
 
-Default: ``25``
+初期値: ``25``
 
 SMTP port to use for sending emails.
 
@@ -147,7 +147,7 @@ SMTP port to use for sending emails.
 MAIL_USER
 ---------
 
-Default: ``None``
+初期値: ``None``
 
 User to use for SMTP authentication. If disabled no SMTP authentication will be
 performed.
@@ -157,7 +157,7 @@ performed.
 MAIL_PASS
 ---------
 
-Default: ``None``
+初期値: ``None``
 
 Password to use for SMTP authentication, along with :setting:`MAIL_USER`.
 
@@ -166,7 +166,7 @@ Password to use for SMTP authentication, along with :setting:`MAIL_USER`.
 MAIL_TLS
 --------
 
-Default: ``False``
+初期値: ``False``
 
 Enforce using STARTTLS. STARTTLS is a way to take an existing insecure connection, and upgrade it to a secure connection using SSL/TLS.
 
@@ -175,6 +175,6 @@ Enforce using STARTTLS. STARTTLS is a way to take an existing insecure connectio
 MAIL_SSL
 --------
 
-Default: ``False``
+初期値: ``False``
 
 Enforce connecting using an SSL encrypted connection

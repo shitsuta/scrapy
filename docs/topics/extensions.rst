@@ -1,7 +1,7 @@
 .. _topics-extensions:
 
 ==========
-Extensions
+拡張機能
 ==========
 
 The extensions framework provides a mechanism for inserting your own
@@ -10,7 +10,7 @@ custom functionality into Scrapy.
 Extensions are just regular classes that are instantiated at Scrapy startup,
 when extensions are initialized.
 
-Extension settings
+拡張機能設定
 ==================
 
 Extensions use the :ref:`Scrapy settings <topics-settings>` to manage their
@@ -23,7 +23,7 @@ hypothetic extension to handle `Google Sitemaps`_ would use settings like
 
 .. _Google Sitemaps: https://en.wikipedia.org/wiki/Sitemaps
 
-Loading & activating extensions
+拡張機能の読み込みと有効化
 ===============================
 
 Extensions are loaded and activated at startup by instantiating a single
@@ -53,14 +53,14 @@ defines all extensions with the same order (``0``). However, this feature can
 be exploited if you need to add an extension which depends on other extensions
 already loaded.
 
-Available, enabled and disabled extensions
+利用可能, 有効, 無効な拡張機能
 ==========================================
 
 Not all available extensions will be enabled. Some of them usually depend on a
 particular setting. For example, the HTTP Cache extension is available by default
 but disabled unless the :setting:`HTTPCACHE_ENABLED` setting is set.
 
-Disabling an extension
+拡張機能の無効化
 ======================
 
 In order to disable an extension that comes enabled by default (ie. those
@@ -71,7 +71,7 @@ included in the :setting:`EXTENSIONS_BASE` setting) you must set its order to
         'scrapy.extensions.corestats.CoreStats': None,
     }
 
-Writing your own extension
+独自の拡張機能を書く
 ==========================
 
 Each extension is a Python class. The main entry point for a Scrapy extension
@@ -86,7 +86,7 @@ Finally, if the ``from_crawler`` method raises the
 :exc:`~scrapy.exceptions.NotConfigured` exception, the extension will be
 disabled. Otherwise, the extension will be enabled.
 
-Sample extension
+かんたんな拡張機能
 ----------------
 
 Here we will implement a simple extension to illustrate the concepts described
@@ -148,13 +148,13 @@ Here is the code of such extension::
 
 .. _topics-extensions-ref:
 
-Built-in extensions reference
+ビルトイン拡張機能リファレンス
 =============================
 
-General purpose extensions
+汎用的な拡張機能
 --------------------------
 
-Log Stats extension
+ログ統計拡張機能
 ~~~~~~~~~~~~~~~~~~~
 
 .. module:: scrapy.extensions.logstats
@@ -164,7 +164,7 @@ Log Stats extension
 
 Log basic stats like crawled pages and scraped items.
 
-Core Stats extension
+コア統計拡張機能
 ~~~~~~~~~~~~~~~~~~~~
 
 .. module:: scrapy.extensions.corestats
@@ -177,7 +177,7 @@ enabled (see :ref:`topics-stats`).
 
 .. _topics-extensions-ref-telnetconsole:
 
-Telnet console extension
+Telnetコンソール拡張機能
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. module:: scrapy.extensions.telnet
@@ -194,7 +194,7 @@ setting, and the server will listen in the port specified in
 
 .. _topics-extensions-ref-memusage:
 
-Memory usage extension
+メモリ使用量拡張機能
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. module:: scrapy.extensions.memusage
@@ -223,7 +223,7 @@ can be configured with the following settings:
 * :setting:`MEMUSAGE_REPORT`
 * :setting:`MEMUSAGE_CHECK_INTERVAL_SECONDS`
 
-Memory debugger extension
+メモリデバッガ拡張機能
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. module:: scrapy.extensions.memdebug
@@ -239,7 +239,7 @@ An extension for debugging memory usage. It collects information about:
 To enable this extension, turn on the :setting:`MEMDEBUG_ENABLED` setting. The
 info will be stored in the stats.
 
-Close spider extension
+クローズスパイダー拡張機能
 ~~~~~~~~~~~~~~~~~~~~~~
 
 .. module:: scrapy.extensions.closespider
@@ -310,7 +310,7 @@ closing the spider. If the spider generates more than that number of errors,
 it will be closed with the reason ``closespider_errorcount``. If zero (or non
 set), spiders won't be closed by number of errors.
 
-StatsMailer extension
+StatsMailer 拡張機能
 ~~~~~~~~~~~~~~~~~~~~~
 
 .. module:: scrapy.extensions.statsmailer
@@ -326,10 +326,10 @@ setting.
 .. module:: scrapy.extensions.debug
    :synopsis: Extensions for debugging Scrapy
 
-Debugging extensions
+デバッギング拡張機能
 --------------------
 
-Stack trace dump extension
+スタックトレースダンプ拡張
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. class:: scrapy.extensions.debug.StackTraceDump
@@ -358,7 +358,7 @@ There are at least two ways to send Scrapy the `SIGQUIT`_ signal:
 .. _SIGUSR2: https://en.wikipedia.org/wiki/SIGUSR1_and_SIGUSR2
 .. _SIGQUIT: https://en.wikipedia.org/wiki/SIGQUIT
 
-Debugger extension
+デバッガ拡張機能
 ~~~~~~~~~~~~~~~~~~
 
 .. class:: scrapy.extensions.debug.Debugger

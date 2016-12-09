@@ -1,53 +1,47 @@
 .. _intro-install:
 
 ==================
-Installation guide
+インストールガイド
 ==================
 
-Installing Scrapy
+Scrapy のインストール
 =================
 
-Scrapy runs on Python 2.7 and Python 3.3 or above
-(except on Windows where Python 3 is not supported yet).
+Scrapy は Python 2.7 と Python 3.3 以上で実行できます
+(Python 3 がまだサポートされていない Windows を除いて).
 
-If you’re already familiar with installation of Python packages,
-you can install Scrapy and its dependencies from PyPI with::
+Pythonパッケージのインストールに慣れている場合は, PyPIからScrapyとその依存関係をインストールすることができます::
 
     pip install Scrapy
 
-We strongly recommend that you install Scrapy in :ref:`a dedicated virtualenv <intro-using-virtualenv>`,
-to avoid conflicting with your system packages.
+:ref:`専用のvirtualenv <intro-using-virtualenv>` にScrapyをインストールして、システムパッケージとの衝突を避けることを強くお勧めします
 
-For more detailed and platform specifics instructions, read on.
+詳細およびプラットフォームの詳細については, 以下を参照してください.
 
 
-Things that are good to know
+知りたいこと
 ----------------------------
 
-Scrapy is written in pure Python and depends on a few key Python packages (among others):
+crapyは純粋なPythonで書かれており、いくつかの主要なPythonパッケージ（他のものの中でも）に依存しています:
 
-* `lxml`_, an efficient XML and HTML parser
-* `parsel`_, an HTML/XML data extraction library written on top of lxml,
-* `w3lib`_, a multi-purpose helper for dealing with URLs and web page encodings
-* `twisted`_, an asynchronous networking framework
-* `cryptography`_ and `pyOpenSSL`_, to deal with various network-level security needs
+* `lxml`_, 効率的なXMLとHTMLパーサー.
+* `parsel`_, lxmlの上に書かれたHTML / XMLデータ抽出ライブラリ.
+* `w3lib`_, URLやWebページのエンコーディングを扱うための多目的ヘルパー.
+* `twisted`_, 非同期ネットワーキングフレームワーク.
+* `cryptography`_ と `pyOpenSSL`_, さまざまなネットワークレベルのセキュリティニーズに対処する.
 
-The minimal versions which Scrapy is tested against are:
+Scrapyがテストされる最小バージョンは:
 
 * Twisted 14.0
 * lxml 3.4
 * pyOpenSSL 0.14
 
-Scrapy may work with older versions of these packages
-but it is not guaranteed it will continue working
-because it’s not being tested against them.
+Scrapyはこれらのパッケージの古いバージョンで動作するかもしれませんが, テストされていないため動作し続けることは保証されません.
 
-Some of these packages themselves depends on non-Python packages
-that might require additional installation steps depending on your platform.
-Please check :ref:`platform-specific guides below <intro-install-platform-notes>`.
+これらのパッケージ自体は, プラットフォームに応じて追加のインストール手順が必要な非Pythonパッケージに依存しています.
+以下の :ref:`プラットフォーム固有のガイド <intro-install-platform-notes>` を確認してください.
 
-In case of any trouble related to these dependencies,
-please refer to their respective installation instructions:
+これらの依存関係に関連する問題が発生した場合は, それぞれのインストール手順を参照してください:
 
 * `lxml installation`_
 * `cryptography installation`_
@@ -58,28 +52,23 @@ please refer to their respective installation instructions:
 
 .. _intro-using-virtualenv:
 
-Using a virtual environment (recommended)
+仮想環境を使用する（推奨）
 -----------------------------------------
 
-TL;DR: We recommend installing Scrapy inside a virtual environment
-on all platforms.
+TL;DR: すべてのプラットフォームで仮想環境内にScrapyをインストールすることをお勧めします.
 
-Python packages can be installed either globally (a.k.a system wide),
-or in user-space. We do not recommend installing scrapy system wide.
+Pythonパッケージは、グローバル（a.k.aシステム全体）またはユーザスペースにインストールできます。私たちは、Scrapyをシステム全体にインストールすることはお勧めしません.
 
-Instead, we recommend that you install scrapy within a so-called
-"virtual environment" (`virtualenv`_).
-Virtualenvs allow you to not conflict with already-installed Python
-system packages (which could break some of your system tools and scripts),
-and still install packages normally with ``pip`` (without ``sudo`` and the likes).
+代わりに、いわゆる "仮想環境" (`virtualenv`_) 内にScrapyをインストールすることをお勧めします.
+Virtualenvsを使用すると, 既にインストールされているPythonシステムパッケージと競合することなく（システムツールやスクリプトの一部が壊れる可能性があります）, 
+``pip``（ ``sudo`` などはありません）でパッケージをインストールできます
 
-To get started with virtual environments, see `virtualenv installation instructions`_.
-To install it globally (having it globally installed actually helps here),
-it should be a matter of running::
+仮想環境を使い始めるには, `virtualenvのインストール手順`_ を参照してください. 
+それをグローバルにインストールするには（グローバルにインストールすると実際に役立ちます）、これは実行の問題です::
 
     $ [sudo] pip install virtualenv
 
-Check this `user guide`_ on how to create your virtualenv.
+Check this `ユーザーガイド`_ on how to create your virtualenv.
 
 .. note::
     If you use Linux or OS X, `virtualenvwrapper`_ is a handy tool to create virtualenvs.
@@ -95,14 +84,14 @@ Python virtualenvs can be created to use Python 2 by default, or Python 3 by def
 * And if you want to install scrapy with Python 2, install scrapy within a Python 2 virtualenv.
 
 .. _virtualenv: https://virtualenv.pypa.io
-.. _virtualenv installation instructions: https://virtualenv.pypa.io/en/stable/installation/
+.. _virtualenvのインストール手順: https://virtualenv.pypa.io/en/stable/installation/
 .. _virtualenvwrapper: http://virtualenvwrapper.readthedocs.io/en/latest/install.html
-.. _user guide: https://virtualenv.pypa.io/en/stable/userguide/
+.. _ユーザーガイド: https://virtualenv.pypa.io/en/stable/userguide/
 
 
 .. _intro-install-platform-notes:
 
-Platform specific installation notes
+プラットフォーム固有のインストールメモ
 ====================================
 
 Windows
@@ -145,7 +134,7 @@ Windows
      Python 3 is not supported on Windows. This is because Scrapy core requirement Twisted does not support
      Python 3 on Windows.
 
-Ubuntu 12.04 or above
+Ubuntu 12.04 以上
 ---------------------
 
 Scrapy is currently tested with recent-enough versions of lxml,

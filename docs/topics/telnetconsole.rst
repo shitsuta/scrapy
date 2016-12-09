@@ -1,83 +1,79 @@
 .. _topics-telnetconsole:
 
 ==============
-Telnet Console
+Telnet コンソール
 ==============
 
 .. module:: scrapy.extensions.telnet
    :synopsis: The Telnet Console
 
-Scrapy comes with a built-in telnet console for inspecting and controlling a
-Scrapy running process. The telnet console is just a regular python shell
-running inside the Scrapy process, so you can do literally anything from it.
+Scrapyには、Scrapy実行プロセスを検査および制御するための組み込みのTelnetコンソールが付属しています.
+elnetコンソールは、Scrapyプロセス内で実行されている通常のPythonシェルであるため、文字通りその中から何かを行うことができます.
 
-The telnet console is a :ref:`built-in Scrapy extension
-<topics-extensions-ref>` which comes enabled by default, but you can also
-disable it if you want. For more information about the extension itself see
-:ref:`topics-extensions-ref-telnetconsole`.
+Telnetコンソールは, デフォルトで有効になっている :ref:`組み込みScrapy拡張
+<topics-extensions-ref>` ですが, 必要に応じて無効にすることもできます.
+拡張機能の詳細については, 
+:ref:`topics-extensions-ref-telnetconsole` を参照してください.
 
 .. highlight:: none
 
-How to access the telnet console
+Telnetコンソールにアクセスする方法
 ================================
 
-The telnet console listens in the TCP port defined in the
-:setting:`TELNETCONSOLE_PORT` setting, which defaults to ``6023``. To access
-the console you need to type::
+Telnetコンソールは
+:setting:`TELNETCONSOLE_PORT` 設定で定義されているTCPポートをリッスンします.
+デフォルトでは ``6023`` に設定されています.
+コンソールにアクセスするには::
 
     telnet localhost 6023
     >>>
     
-You need the telnet program which comes installed by default in Windows, and
-most Linux distros.
+Windowsにデフォルトでインストールされるtelnetプログラムと、ほとんどのLinuxディストリビューションが必要です.
 
-Available variables in the telnet console
+Telnetコンソールで使用可能な変数
 =========================================
 
-The telnet console is like a regular Python shell running inside the Scrapy
-process, so you can do anything from it including importing new modules, etc. 
+elnetコンソールは、Scrapyプロセス内で動作する通常のPythonシェルに似ているので、新しいモジュールのインポートなど、何でもできます. 
 
-However, the telnet console comes with some default variables defined for
-convenience:
+しかし, telnetコンソールには, 便宜上いくつかのデフォルト変数が定義されています:
 
 +----------------+-------------------------------------------------------------------+
 | Shortcut       | Description                                                       |
 +================+===================================================================+
-| ``crawler``    | the Scrapy Crawler (:class:`scrapy.crawler.Crawler` object)       |
+| ``crawler``    | Scrapy クローラー (:class:`scrapy.crawler.Crawler` オブジェクト)         |
 +----------------+-------------------------------------------------------------------+
-| ``engine``     | Crawler.engine attribute                                          |
+| ``engine``     | Crawler.engine 属性                                               |
 +----------------+-------------------------------------------------------------------+
-| ``spider``     | the active spider                                                 |
+| ``spider``     | アクティブスパイダー                                                    |
 +----------------+-------------------------------------------------------------------+
-| ``slot``       | the engine slot                                                   |
+| ``slot``       | エンジンスロット                                                       |
 +----------------+-------------------------------------------------------------------+
-| ``extensions`` | the Extension Manager (Crawler.extensions attribute)              |
+| ``extensions`` | 拡張マネージャー (Crawler.extensions 属性)                            |
 +----------------+-------------------------------------------------------------------+
-| ``stats``      | the Stats Collector (Crawler.stats attribute)                     |
+| ``stats``      | 統計コレクター (Crawler.stats 属性)                                   |
 +----------------+-------------------------------------------------------------------+
-| ``settings``   | the Scrapy settings object (Crawler.settings attribute)           |
+| ``settings``   | Scrapy設定オブジェクト (Crawler.settings 属性)                         |
 +----------------+-------------------------------------------------------------------+
-| ``est``        | print a report of the engine status                               |
+| ``est``        | エンジン状態のレポートを印刷する                                          |
 +----------------+-------------------------------------------------------------------+
-| ``prefs``      | for memory debugging (see :ref:`topics-leaks`)                    |
+| ``prefs``      | メモリデバッグ用 ( :ref:`topics-leaks` を参照してください)                  |
 +----------------+-------------------------------------------------------------------+
-| ``p``          | a shortcut to the `pprint.pprint`_ function                       |
+| ``p``          | `pprint.pprint`_ 機能のショートカット                                   |
 +----------------+-------------------------------------------------------------------+
-| ``hpy``        | for memory debugging (see :ref:`topics-leaks`)                    |
+| ``hpy``        | メモリデバッグ用 ( :ref:`topics-leaks` を参照してください)                  |
 +----------------+-------------------------------------------------------------------+
 
 .. _pprint.pprint: https://docs.python.org/library/pprint.html#pprint.pprint
 
-Telnet console usage examples
+Telnetコンソールの使用例
 =============================
 
-Here are some example tasks you can do with the telnet console:
+Telnetコンソールで実行できるタスクの例を以下に示します:
 
-View engine status
-------------------
+エンジンステータスを表示する
+----------------------
 
-You can use the ``est()`` method of the Scrapy engine to quickly show its state
-using the telnet console::
+Scrapyエンジンの ``est()`` メソッドを使用すると、telnetコンソールを使用して状態をすばやく表示できます::
 
     telnet localhost 6023
     >>> est()
@@ -100,55 +96,54 @@ using the telnet console::
     engine.scraper.slot.needs_backout()             : False
 
 
-Pause, resume and stop the Scrapy engine
+Scrapyエンジンの一時停止, 再開, 停止
 ----------------------------------------
 
-To pause::
+一時停止::
 
     telnet localhost 6023
     >>> engine.pause()
     >>>
 
-To resume::
+再開::
 
     telnet localhost 6023
     >>> engine.unpause()
     >>>
 
-To stop::
+停止::
 
     telnet localhost 6023
     >>> engine.stop()
     Connection closed by foreign host.
 
-Telnet Console signals
+Telnetコンソールシグナル
 ======================
 
 .. signal:: update_telnet_vars
 .. function:: update_telnet_vars(telnet_vars)
 
-    Sent just before the telnet console is opened. You can hook up to this
-    signal to add, remove or update the variables that will be available in the
-    telnet local namespace. In order to do that, you need to update the
-    ``telnet_vars`` dict in your handler.
+    STelnetコンソールを開く直前に送信されます. 
+    この信号に接続して、telnetローカル名前空間で使用できる変数を追加、削除、または更新することができます. 
+    そのためには, ハンドラの ``telnet_vars`` を更新する必要があります.
 
-    :param telnet_vars: the dict of telnet variables
-    :type telnet_vars: dict
+    :param telnet_vars: telnet の辞書型変数
+    :type telnet_vars: dict
 
-Telnet settings
+Telnet設定
 ===============
 
-These are the settings that control the telnet console's behaviour:
+telnetコンソールの動作を制御する設定です:
 
 .. setting:: TELNETCONSOLE_PORT
 
 TELNETCONSOLE_PORT
 ------------------
 
-Default: ``[6023, 6073]``
+デフォルト: ``[6023, 6073]``
 
-The port range to use for the telnet console. If set to ``None`` or ``0``, a
-dynamically assigned port is used.
+Telnetコンソールに使用するポート範囲. 
+``None`` または ``0`` に設定すると, 動的に割り当てられたポートが使用されます.
 
 
 .. setting:: TELNETCONSOLE_HOST
@@ -156,7 +151,7 @@ dynamically assigned port is used.
 TELNETCONSOLE_HOST
 ------------------
 
-Default: ``'127.0.0.1'``
+デフォルト: ``'127.0.0.1'``
 
-The interface the telnet console should listen on
+Telnetコンソールが監視すべきインターフェース
 

@@ -1,48 +1,40 @@
 .. _topics-link-extractors:
 
 ===============
-リンク抽出
+LinkExtractor
 ===============
 
-Link extractors are objects whose only purpose is to extract links from web
-pages (:class:`scrapy.http.Response` objects) which will be eventually
-followed.
+LinkExtractorは, 最終的に追跡されるウェブページ (:class:`scrapy.http.Response` オブジェクト) からリンクを抽出することのみを目的とするオブジェクトです.
 
-There is ``scrapy.linkextractors import LinkExtractor`` available
-in Scrapy, but you can create your own custom Link Extractors to suit your
-needs by implementing a simple interface.
+``scrapy.linkextractors import LinkExtractor`` によって Scrapy で有効化されますが, シンプルなインターフェースを実装することで, 独自のカスタム LinkExtractor を作成してニーズに合わせることができます.
 
-The only public method that every link extractor has is ``extract_links``,
-which receives a :class:`~scrapy.http.Response` object and returns a list
-of :class:`scrapy.link.Link` objects. Link extractors are meant to be
-instantiated once and their ``extract_links`` method called several times
-with different responses to extract links to follow.
+すべてのリンク抽出プログラムが持つ唯一のパブリックメソッドは ``extract_links`` です.
+これは,  :class:`~scrapy.http.Response` オブジェクトを受け取り
+:class:`scrapy.link.Link` オブジェクトのリストを返します. 
+LinkExtractor は一度インスタンス化されることを意図されており,  ``extract_links`` メソッドは異なる応答で数回呼び出され, 続くリンクを抽出します.
 
-Link extractors are used in the :class:`~scrapy.spiders.CrawlSpider`
-class (available in Scrapy), through a set of rules, but you can also use it in
-your spiders, even if you don't subclass from
-:class:`~scrapy.spiders.CrawlSpider`, as its purpose is very simple: to
-extract links.
+LinkExtractor は, 一連のルールを通じて :class:`~scrapy.spiders.CrawlSpider`
+クラス (Scrapyで利用可能) で使用されますが,
+:class:`~scrapy.spiders.CrawlSpider` からサブクラス化しない場合でも、スパイダーで使用することができます.
 
 
 .. _topics-link-extractors-ref:
 
-ビルトインリンク抽出リファレンス
+ビルトイン LinkExtractor リファレンス
 ==================================
 
 .. module:: scrapy.linkextractors
    :synopsis: Link extractors classes
 
-Link extractors classes bundled with Scrapy are provided in the
-:mod:`scrapy.linkextractors` module.
+Scrapy にバンドルされたリンク抽出クラスは, 
+:mod:`scrapy.linkextractors` モジュールとして提供されています.
 
-The default link extractor is ``LinkExtractor``, which is the same as
-:class:`~.LxmlLinkExtractor`::
+デフォルトのリンク抽出プログラムは ``LinkExtractor`` で, 
+:class:`~.LxmlLinkExtractor` と同じです::
 
     from scrapy.linkextractors import LinkExtractor
 
-There used to be other link extractor classes in previous Scrapy versions,
-but they are deprecated now.
+古いScrapyバージョンでは他のリンク抽出クラスが使用されていましたが, 現在は推奨されていません.
 
 LxmlLinkExtractor
 -----------------
@@ -53,77 +45,60 @@ LxmlLinkExtractor
 
 .. class:: LxmlLinkExtractor(allow=(), deny=(), allow_domains=(), deny_domains=(), deny_extensions=None, restrict_xpaths=(), restrict_css=(), tags=('a', 'area'), attrs=('href',), canonicalize=True, unique=True, process_value=None)
 
-    LxmlLinkExtractor is the recommended link extractor with handy filtering
-    options. It is implemented using lxml's robust HTMLParser.
+    LxmlLinkExtractor は, 便利なフィルタリングオプションを備えた推奨リンク抽出ツールです. lxmlの堅牢なHTMLパーサーを使用して実装されています.
 
-    :param allow: a single regular expression (or list of regular expressions)
-        that the (absolute) urls must match in order to be extracted. If not
-        given (or empty), it will match all links.
-    :type allow: a regular expression (or list of)
+    :param allow: リンクを抽出するために（絶対）URLが一致しなければならない単一の正規表現（または正規表現のリスト）. 
+    指定されていない（または空）場合, すべてのリンクに一致します.
+    :type allow: 正規表現（またはそのリスト）
 
-    :param deny: a single regular expression (or list of regular expressions)
-        that the (absolute) urls must match in order to be excluded (ie. not
-        extracted). It has precedence over the ``allow`` parameter. If not
-        given (or empty) it won't exclude any links.
-    :type deny: a regular expression (or list of)
+    :param deny: 除外する（絶対）URLが一致しなければならない（つまり抽出されない）単一の正規表現（または正規表現のリスト）. 
+    これは, ``allow`` パラメータよりも優先されます. 指定されていない場合（または空の場合）, リンクを除外しません.
+    :type deny: 正規表現（またはそのリスト）
 
-    :param allow_domains: a single value or a list of string containing
-        domains which will be considered for extracting the links
-    :type allow_domains: str or list
+    :param allow_domains:リンクを抽出するために考慮されるドメインを含む文字列の単一の値, またはリスト
+    :type allow_domains: 文字列またはリスト
+    
+    :param deny_domains: リンクを抽出するために考慮されないドメインを含む文字列の単一の値、またはリスト
+    :type deny_domains: 文字列またはリスト
 
-    :param deny_domains: a single value or a list of strings containing
-        domains which won't be considered for extracting the links
-    :type deny_domains: str or list
+    :param deny_extensions: リンクを抽出するときに無視すべき拡張子を含む単一の値または文字列のリスト.
+        指定されていない場合は,  `scrapy.linkextractors`_ パッケージで定義されている
+        デフォルトの ``IGNORED_EXTENSIONS`` の値になります.
+    :type deny_extensions: リスト
+    
+    :param restrict_xpaths: は, XPath（またはXPathのリスト）であり, そこからリンクを抽出する応答内の領域を定義します. 
+        指定すると, それらのXPathによって選択されたテキストのみがリンクのためにスキャンされます. 下記の例を参照してください.
+    :type restrict_xpaths: 文字列またはリスト
 
-    :param deny_extensions: a single value or list of strings containing
-        extensions that should be ignored when extracting links.
-        If not given, it will default to the
-        ``IGNORED_EXTENSIONS`` list defined in the
-        `scrapy.linkextractors`_ package.
-    :type deny_extensions: list
+    :param restrict_css: リンクの抽出元となる応答内の領域を定義するCSSセレクタ（またはセレクタのリスト）.
+        ``restrict_xpaths`` と同じ動作をします.
+    :type restrict_css: 文字列またはリスト
 
-    :param restrict_xpaths: is an XPath (or list of XPath's) which defines
-        regions inside the response where links should be extracted from.
-        If given, only the text selected by those XPath will be scanned for
-        links. See examples below.
-    :type restrict_xpaths: str or list
+    :param tags: リンクを抽出するときに考慮するタグまたはタグのリスト. デフォルトは ``('a', 'area')`` タグです.
+    :type tags: 文字列またはリスト
 
-    :param restrict_css: a CSS selector (or list of selectors) which defines
-        regions inside the response where links should be extracted from.
-        Has the same behaviour as ``restrict_xpaths``.
-    :type restrict_css: str or list
-
-    :param tags: a tag or a list of tags to consider when extracting links.
-        Defaults to ``('a', 'area')``.
-    :type tags: str or list
-
-    :param attrs: an attribute or list of attributes which should be considered when looking
-        for links to extract (only for those tags specified in the ``tags``
-        parameter). Defaults to ``('href',)``
-    :type attrs: list
-
-    :param canonicalize: canonicalize each extracted url (using
-        w3lib.url.canonicalize_url). Defaults to ``True``.
+    :param attrs: 抽出するリンクを探すときに考慮する属性または属性のリスト（ ``tags`` パラメータで指定されたタグのみ）. デフォルトは ``('href',)``
+    :type attrs: リスト
+    
+    :param canonicalize: 抽出された各URLを正規化します (w3lib.url.canonicalize_urlを使用). デフォルトは ``True``.
     :type canonicalize: boolean
 
-    :param unique: whether duplicate filtering should be applied to extracted
-        links.
+    :param unique: 抽出されたリンクに重複フィルタリングを適用するかどうか.
     :type unique: boolean
 
-    :param process_value: a function which receives each value extracted from
-        the tag and attributes scanned and can modify the value and return a
-        new one, or return ``None`` to ignore the link altogether. If not
-        given, ``process_value`` defaults to ``lambda x: x``.
+    :param process_value: タグから抽出された各値とスキャンされた属性を受け取り, 値を修正して新しい値を返す, 
+        または ``None`` を返してリンクを完全に無視する関数.
+        指定されていない場合, ``process_value`` のデフォルトは ``lambda x: x``.
 
         .. highlight:: html
 
-        For example, to extract links from this code::
+        たとえば, このコードからリンクを抽出するには::
 
             <a href="javascript:goToPage('../other/page.html'); return false">Link text</a>
 
         .. highlight:: python
 
-        You can use the following function in ``process_value``::
+        ``process_value`` で次の関数を使用することができます::
 
             def process_value(value):
                 m = re.search("javascript:goToPage\('(.*?)'", value)

@@ -10,7 +10,7 @@ extract structured data from their pages (i.e. scraping items). In other words,
 Spiders are the place where you define the custom behaviour for crawling and
 parsing pages for a particular site (or, in some cases, a group of sites).
 
-For spiders, the scraping cycle goes through something like this:
+スパイダーの場合, スクレイピングのライフサイクルは以下のようになります:
 
 1. You start by generating the initial Requests to crawl the first URLs, and
    specify a callback function to be called with the response downloaded from
@@ -38,9 +38,7 @@ For spiders, the scraping cycle goes through something like this:
    database (in some :ref:`Item Pipeline <topics-item-pipeline>`) or written to
    a file using :ref:`topics-feed-exports`.
 
-Even though this cycle applies (more or less) to any kind of spider, there are
-different kinds of default spiders bundled into Scrapy for different purposes.
-We will talk about those types here.
+このサイクルはどんな種類のスパイダーにも（多かれ少なかれ）適用されますが, さまざまな種類のデフォルトのスパイダーが Scrapy にバンドルされています. これらのタイプについてはここで説明します.
 
 .. module:: scrapy.spiders
    :synopsis: Spiders base class, spider manager and spider middleware
@@ -52,27 +50,21 @@ scrapy.Spider
 
 .. class:: Spider()
 
-   This is the simplest spider, and the one from which every other spider
-   must inherit (including spiders that come bundled with Scrapy, as well as spiders
-   that you write yourself). It doesn't provide any special functionality. It just
-   provides a default :meth:`start_requests` implementation which sends requests from
-   the :attr:`start_urls` spider attribute and calls the spider's method ``parse``
-   for each of the resulting responses.
+   これは最もシンプルなスパイダーで, 他のすべてのスパイダーが継承しなければならないものです（Scrapyにバンドルされたスパイダー、あなた自身で作成したスパイダーを含む）.
+   特別な機能は提供しません. 
+   :attr:`start_urls` 属性からリクエストを送信し、スパイダーの ``parse`` メソッドを, 
+   レスポンス結果ごとに呼び出す :meth:`start_requests` メソッドの実装を提供するだけです.
 
    .. attribute:: name
 
-       A string which defines the name for this spider. The spider name is how
-       the spider is located (and instantiated) by Scrapy, so it must be
-       unique. However, nothing prevents you from instantiating more than one
-       instance of the same spider. This is the most important spider attribute
-       and it's required.
+       スパイダーの名前を定義する文字列. 名前は, スパイダーが Scrapy によってどのように配置（インスタンス化）されているか判別するために, ユニークでなければなりません. 
+       ただし、同じスパイダーのインスタンスは一つだけ作成可能で, 複数インスタンス化することはできません. 
+       これは最も重要なスパイダー属性であり, 必須です.
 
-       If the spider scrapes a single domain, a common practice is to name the
-       spider after the domain, with or without the `TLD`_. So, for example, a
-       spider that crawls ``mywebsite.com`` would often be called
-       ``mywebsite``.
+       スパイダーが単一のドメインをスクラップする場合, 一般的には,  `TLD`_の有無にかかわらず, ドメイン名と同じの名前を付けます. 
+       したがって, たとえば,  ``mywebsite.com`` をクロールするスパイダーには,  ``mywebsite``という名前をつけます.
 
-       .. note:: In Python 2 this must be ASCII only.
+       .. note:: Python 2では, ASCIIのみでなければなりません.
 
    .. attribute:: allowed_domains
 
@@ -667,8 +659,7 @@ SitemapSpider
 SitemapSpider 例
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Simplest example: process all urls discovered through sitemaps using the
-``parse`` callback::
+かんたんな例: サイトマップを利用して見つけたURLを, すべて ``parse`` コールバックによって処理する::
 
     from scrapy.spiders import SitemapSpider
 
@@ -678,8 +669,7 @@ Simplest example: process all urls discovered through sitemaps using the
         def parse(self, response):
             pass # ... scrape item here ...
 
-Process some urls with certain callback and other urls with a different
-callback::
+特定のコールバックと, いくつかの別のコールバックを持つ他のURLを処理する::
 
     from scrapy.spiders import SitemapSpider
 
@@ -696,8 +686,7 @@ callback::
         def parse_category(self, response):
             pass # ... scrape category ...
 
-Follow sitemaps defined in the `robots.txt`_ file and only follow sitemaps
-whose url contains ``/sitemap_shop``::
+ `robots.txt`_ ファイルによって定義されたサイトマップと, 一部に ``/sitemap_shop`` を含むURLのみを処理する::
 
     from scrapy.spiders import SitemapSpider
 
@@ -711,7 +700,7 @@ whose url contains ``/sitemap_shop``::
         def parse_shop(self, response):
             pass # ... scrape shop here ...
 
-Combine SitemapSpider with other sources of urls::
+SitemapSpiderと他のURLのソースを結合する::
 
     from scrapy.spiders import SitemapSpider
 

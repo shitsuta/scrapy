@@ -4,70 +4,60 @@
 設定
 ========
 
-The Scrapy settings allows you to customize the behaviour of all Scrapy
-components, including the core, extensions, pipelines and spiders themselves.
+Scrapyの設定では, コア, 拡張機能, パイプライン, スパイダー自体を含むすべての Scrapy コンポーネントの動作をカスタマイズすることができます.
 
-The infrastructure of the settings provides a global namespace of key-value mappings
-that the code can use to pull configuration values from. The settings can be
-populated through different mechanisms, which are described below.
+設定のインフラストラクチャは, コードで値を取得するために使用できる, キーと値のマッピングのグローバルな名前空間を提供します. 
+この設定は、以下で説明するさまざまなメカニズムによって設定できます.
 
-The settings are also the mechanism for selecting the currently active Scrapy
-project (in case you have many).
+この設定は, 現在アクティブなScrapyプロジェクトを選択するためのメカニズムでもあります.
 
-For a list of available built-in settings see: :ref:`topics-settings-ref`.
+使用可能なビルトイン設定のリストについては,  :ref:`topics-settings-ref` を参照してください.
 
 .. _topics-settings-module-envvar:
 
 設定を指定する
 ========================
 
-When you use Scrapy, you have to tell it which settings you're using. You can
-do this by using an environment variable, ``SCRAPY_SETTINGS_MODULE``.
+Scrapyを使用するときは, 環境変数 ``SCRAPY_SETTINGS_MODULE`` を使用して, 設定を Scrapy に教えてください.
 
-The value of ``SCRAPY_SETTINGS_MODULE`` should be in Python path syntax, e.g.
-``myproject.settings``. Note that the settings module should be on the
-Python `import search path`_.
+``SCRAPY_SETTINGS_MODULE`` の値はPythonのパス構文でなければなりません, e.g.
+``myproject.settings``. 設定モジュールは, Pythonの `インポートサーチパス`_ 上にある必要があります.
 
-.. _import search path: https://docs.python.org/2/tutorial/modules.html#the-module-search-path
+.. _インポートサーチパス: https://docs.python.org/2/tutorial/modules.html#the-module-search-path
 
 設定を入力する
 =======================
 
-Settings can be populated using different mechanisms, each of which having a
-different precedence. Here is the list of them in decreasing order of
-precedence:
+設定は, それぞれ異なる優先順位を持つ異なるメカニズムを使用しています. 以下は優先順位の高い順にリストされています:
 
- 1. Command line options (most precedence)
- 2. Settings per-spider
- 3. Project settings module
- 4. Default settings per-command
- 5. Default global settings (less precedence)
+ 1. コマンドラインオプション（優先度高）
+ 2. スパイダーごとの設定
+ 3. プロジェクト設定モジュール
+ 4. コマンドごとのデフォルト設定
+ 5. デフォルトのグローバル設定（優先度低）
 
-The population of these settings sources is taken care of internally, but a
-manual handling is possible using API calls. See the
-:ref:`topics-api-settings` topic for reference.
+これら設定の優先度は内部的に処理されますが, API呼び出しを使用して手動で処理することが可能です. 
+:ref:`topics-api-settings` を参照してください.
 
-These mechanisms are described in more detail below.
+これらのメカニズムは, 以下でより詳細に説明します.
 
 1. コマンドラインオプション
 -----------------------
 
-Arguments provided by the command line are the ones that take most precedence,
-overriding any other options. You can explicitly override one (or more)
-settings using the ``-s`` (or ``--set``) command line option.
+コマンドラインで提供される引数は, 他のオプションよりも優先されます. 
+``-s`` (または ``--set``) コマンドラインオプションを使用して, 1つ（またはそれ以上）の設定を明示的に上書きすることができます.
 
 .. highlight:: sh
 
-Example::
+例::
 
     scrapy crawl myspider -s LOG_FILE=scrapy.log
 
 2. スパイダーごとの設定
 ----------------------
 
-Spiders (See the :ref:`topics-spiders` chapter for reference) can define their
-own settings that will take precedence and override the project ones. They can
-do so by setting their :attr:`~scrapy.spiders.Spider.custom_settings` attribute::
+スパイダー ( :ref:`topics-spiders` を参照) は, 独自の設定を定義して優先順位を上げることができます. 
+これは,  :attr:`~scrapy.spiders.Spider.custom_settings` 属性に設定することで可能です::
 
     class MySpider(scrapy.Spider):
         name = 'myspider'
@@ -79,31 +69,29 @@ do so by setting their :attr:`~scrapy.spiders.Spider.custom_settings` attribute:
 3. プロジェクト設定モジュール
 --------------------------
 
-The project settings module is the standard configuration file for your Scrapy
-project, it's where most of your custom settings will be populated. For a
-standard Scrapy project, this means you'll be adding or changing the settings
-in the ``settings.py`` file created for your project.
+プロジェクト設定モジュールは、Scrapyプロジェクトの標準設定ファイルです. 
+カスタム設定の大部分が設定されます. 
+標準の Scrapy プロジェクトでは, プロジェクト用に作成された ``settings.py`` ファイルの設定を追加または変更することになります.
 
 4. コマンドごとのデフォルト設定
 -------------------------------
 
-Each :doc:`Scrapy tool </topics/commands>` command can have its own default
-settings, which override the global default settings. Those custom command
-settings are specified in the ``default_settings`` attribute of the command
-class.
+各 :doc:`Scrapy ツール </topics/commands>` コマンドには独自のデフォルト設定があり, 
+グローバルなデフォルト設定を上書きします. 
+これらのカスタムコマンド設定は,  ``default_settings`` 属性で指定されます.
 
 5. デフォルトのグローバル設定
 --------------------------
 
-The global defaults are located in the ``scrapy.settings.default_settings``
-module and documented in the :ref:`topics-settings-ref` section.
+グローバルなデフォルト設定は ``scrapy.settings.default_settings``
+モジュールにあり,  :ref:`topics-settings-ref` に記載されています.
 
 設定にアクセスする方法
 ======================
 
 .. highlight:: python
 
-In a spider, the settings are available through ``self.settings``::
+スパイダーでは,  設定は ``self.settings`` で取得することができます::
 
     class MySpider(scrapy.Spider):
         name = 'myspider'
@@ -140,9 +128,9 @@ provided by the :class:`~scrapy.settings.Settings` API.
 名前を設定する理由
 ===========================
 
-Setting names are usually prefixed with the component that they configure. For
-example, proper setting names for a fictional robots.txt extension would be
-``ROBOTSTXT_ENABLED``, ``ROBOTSTXT_OBEY``, ``ROBOTSTXT_CACHEDIR``, etc.
+設定名には通常, 構成するコンポーネントの接頭辞が付いています. 
+例えば, 架空の ``robots.txt`` 拡張子の適切な設定名は
+``ROBOTSTXT_ENABLED``, ``ROBOTSTXT_OBEY``, ``ROBOTSTXT_CACHEDIR`` などです.
 
 
 .. _topics-settings-ref:
@@ -150,8 +138,7 @@ example, proper setting names for a fictional robots.txt extension would be
 ビルトイン設定リファレンス
 ===========================
 
-Here's a list of all available Scrapy settings, in alphabetical order, along
-with their default values and the scope where they apply.
+ここでは, アルファベット順に使用可能なすべてのScrapy設定のリストと, デフォルト値, 適用されるスコープが示されています.
 
 The scope, where available, shows where the setting is being used, if it's tied
 to any particular component. In that case the module of that component will be
@@ -163,41 +150,37 @@ component must be enabled in order for the setting to have any effect.
 AWS_ACCESS_KEY_ID
 -----------------
 
-Default: ``None``
+デフォルト: ``None``
 
-The AWS access key used by code that requires access to `Amazon Web services`_,
-such as the :ref:`S3 feed storage backend <topics-feed-storage-s3>`.
+:ref:`S3フィードストレージバックエンド <topics-feed-storage-s3>` など,   `Amazon Web services`_ のアクセスを必要とするコードで使用されるAWSアクセスキー.
 
 .. setting:: AWS_SECRET_ACCESS_KEY
 
 AWS_SECRET_ACCESS_KEY
 ---------------------
 
-Default: ``None``
+デフォルト: ``None``
 
-The AWS secret key used by code that requires access to `Amazon Web services`_,
-such as the :ref:`S3 feed storage backend <topics-feed-storage-s3>`.
+:ref:`S3フィードストレージバックエンド <topics-feed-storage-s3>` など,  `Amazon Web services`_ へのアクセスを必要とするコードで使用されるAWS秘密鍵.
 
 .. setting:: BOT_NAME
 
 BOT_NAME
 --------
 
-Default: ``'scrapybot'``
+デフォルト: ``'scrapybot'``
 
-The name of the bot implemented by this Scrapy project (also known as the
-project name). This will be used to construct the User-Agent by default, and
-also for logging.
+このScrapyプロジェクトによって実装されたボットの名前（プロジェクト名とも呼ばれます）. 
+これは、デフォルトで User-Agent, ロギングに使用されます.
 
-It's automatically populated with your project name when you create your
-project with the :command:`startproject` command.
+:command:`startproject` コマンドを使用してプロジェクトを作成すると, プロジェクト名が自動的に入力されます.
 
 .. setting:: CONCURRENT_ITEMS
 
 CONCURRENT_ITEMS
 ----------------
 
-Default: ``100``
+デフォルト: ``100``
 
 Maximum number of concurrent items (per response) to process in parallel in the
 Item Processor (also known as the :ref:`Item Pipeline <topics-item-pipeline>`).
@@ -207,7 +190,7 @@ Item Processor (also known as the :ref:`Item Pipeline <topics-item-pipeline>`).
 CONCURRENT_REQUESTS
 -------------------
 
-Default: ``16``
+デフォルト: ``16``
 
 The maximum number of concurrent (ie. simultaneous) requests that will be
 performed by the Scrapy downloader.
@@ -217,7 +200,7 @@ performed by the Scrapy downloader.
 CONCURRENT_REQUESTS_PER_DOMAIN
 ------------------------------
 
-Default: ``8``
+デフォルト: ``8``
 
 The maximum number of concurrent (ie. simultaneous) requests that will be
 performed to any single domain.
@@ -231,7 +214,7 @@ See also: :ref:`topics-autothrottle` and its
 CONCURRENT_REQUESTS_PER_IP
 --------------------------
 
-Default: ``0``
+デフォルト: ``0``
 
 The maximum number of concurrent (ie. simultaneous) requests that will be
 performed to any single IP. If non-zero, the
@@ -249,7 +232,7 @@ is non-zero, download delay is enforced per IP, not per domain.
 DEFAULT_ITEM_CLASS
 ------------------
 
-Default: ``'scrapy.item.Item'``
+デフォルト: ``'scrapy.item.Item'``
 
 The default class that will be used for instantiating items in the :ref:`the
 Scrapy shell <topics-shell>`.
@@ -259,7 +242,7 @@ Scrapy shell <topics-shell>`.
 DEFAULT_REQUEST_HEADERS
 -----------------------
 
-Default::
+デフォルト::
 
     {
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -274,9 +257,9 @@ The default headers used for Scrapy HTTP Requests. They're populated in the
 DEPTH_LIMIT
 -----------
 
-Default: ``0``
+デフォルト: ``0``
 
-Scope: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
+スコープ: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
 
 The maximum depth that will be allowed to crawl for any site. If zero, no limit
 will be imposed.
@@ -286,9 +269,9 @@ will be imposed.
 DEPTH_PRIORITY
 --------------
 
-Default: ``0``
+デフォルト: ``0``
 
-Scope: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
+スコープ: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
 
 An integer that is used to adjust the request priority based on its depth:
 
@@ -312,20 +295,20 @@ See also: :ref:`faq-bfo-dfo` about tuning Scrapy for BFO or DFO.
 DEPTH_STATS
 -----------
 
-Default: ``True``
+デフォルト: ``True``
 
-Scope: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
+スコープ: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
 
-Whether to collect maximum depth stats.
+最大深度統計を収集するかどうか.
 
 .. setting:: DEPTH_STATS_VERBOSE
 
 DEPTH_STATS_VERBOSE
 -------------------
 
-Default: ``False``
+デフォルト: ``False``
 
-Scope: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
+スコープ: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
 
 Whether to collect verbose depth stats. If this is enabled, the number of
 requests for each depth is collected in the stats.
@@ -335,43 +318,43 @@ requests for each depth is collected in the stats.
 DNSCACHE_ENABLED
 ----------------
 
-Default: ``True``
+デフォルト: ``True``
 
-Whether to enable DNS in-memory cache.
+DNSインメモリキャッシュを有効にするかどうか.
 
 .. setting:: DNSCACHE_SIZE
 
 DNSCACHE_SIZE
 -------------
 
-Default: ``10000``
+デフォルト: ``10000``
 
-DNS in-memory cache size.
+DNSのインメモリキャッシュサイズ.
 
 .. setting:: DNS_TIMEOUT
 
 DNS_TIMEOUT
 -----------
 
-Default: ``60``
+デフォルト: ``60``
 
-Timeout for processing of DNS queries in seconds. Float is supported.
+DNSクエリを処理するための秒単位タイムアウト. フロートがサポートされています.
 
 .. setting:: DOWNLOADER
 
 DOWNLOADER
 ----------
 
-Default: ``'scrapy.core.downloader.Downloader'``
+デフォルト: ``'scrapy.core.downloader.Downloader'``
 
-The downloader to use for crawling.
+クロールに使用するダウンローダ.
 
 .. setting:: DOWNLOADER_HTTPCLIENTFACTORY
 
 DOWNLOADER_HTTPCLIENTFACTORY
 ----------------------------
 
-Default: ``'scrapy.core.downloader.webclient.ScrapyHTTPClientFactory'``
+デフォルト: ``'scrapy.core.downloader.webclient.ScrapyHTTPClientFactory'``
 
 Defines a Twisted ``protocol.ClientFactory``  class to use for HTTP/1.0
 connections (for ``HTTP10DownloadHandler``).
@@ -389,7 +372,7 @@ connections (for ``HTTP10DownloadHandler``).
 DOWNLOADER_CLIENTCONTEXTFACTORY
 -------------------------------
 
-Default: ``'scrapy.core.downloader.contextfactory.ScrapyClientContextFactory'``
+デフォルト: ``'scrapy.core.downloader.contextfactory.ScrapyClientContextFactory'``
 
 Represents the classpath to the ContextFactory to use.
 
@@ -417,7 +400,7 @@ parameter at init (this is the ``OpenSSL.SSL`` method mapping
 DOWNLOADER_CLIENT_TLS_METHOD
 ----------------------------
 
-Default: ``'TLS'``
+デフォルト: ``'TLS'``
 
 Use this setting to customize the TLS/SSL method used by the default
 HTTP/1.1 downloader.
@@ -443,7 +426,7 @@ This setting must be one of these string values:
 DOWNLOADER_MIDDLEWARES
 ----------------------
 
-Default:: ``{}``
+デフォルト:: ``{}``
 
 A dict containing the downloader middlewares enabled in your project, and their
 orders. For more info see :ref:`topics-downloader-middleware-setting`.
@@ -453,7 +436,7 @@ orders. For more info see :ref:`topics-downloader-middleware-setting`.
 DOWNLOADER_MIDDLEWARES_BASE
 ---------------------------
 
-Default::
+デフォルト::
 
     {
         'scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware': 100,
@@ -483,7 +466,7 @@ should never modify this setting in your project, modify
 DOWNLOADER_STATS
 ----------------
 
-Default: ``True``
+デフォルト: ``True``
 
 Whether to enable downloader stats collection.
 
@@ -492,7 +475,7 @@ Whether to enable downloader stats collection.
 DOWNLOAD_DELAY
 --------------
 
-Default: ``0``
+デフォルト: ``0``
 
 The amount of time (in secs) that the downloader should wait before downloading
 consecutive pages from the same website. This can be used to throttle the
@@ -516,7 +499,7 @@ spider attribute.
 DOWNLOAD_HANDLERS
 -----------------
 
-Default: ``{}``
+デフォルト: ``{}``
 
 A dict containing the request downloader handlers enabled in your project.
 See :setting:`DOWNLOAD_HANDLERS_BASE` for example format.
@@ -526,7 +509,7 @@ See :setting:`DOWNLOAD_HANDLERS_BASE` for example format.
 DOWNLOAD_HANDLERS_BASE
 ----------------------
 
-Default::
+デフォルト::
 
     {
         'file': 'scrapy.core.downloader.handlers.file.FileDownloadHandler',
@@ -554,7 +537,7 @@ handler (without replacement), place this in your ``settings.py``::
 DOWNLOAD_TIMEOUT
 ----------------
 
-Default: ``180``
+デフォルト: ``180``
 
 The amount of time (in secs) that the downloader will wait before timing out.
 
@@ -569,7 +552,7 @@ The amount of time (in secs) that the downloader will wait before timing out.
 DOWNLOAD_MAXSIZE
 ----------------
 
-Default: `1073741824` (1024MB)
+デフォルト: `1073741824` (1024MB)
 
 The maximum response size (in bytes) that downloader will download.
 
@@ -590,7 +573,7 @@ If you want to disable it set to 0.
 DOWNLOAD_WARNSIZE
 -----------------
 
-Default: `33554432` (32MB)
+デフォルト: `33554432` (32MB)
 
 The response size (in bytes) that downloader will start to warn.
 
@@ -609,7 +592,7 @@ If you want to disable it set to 0.
 DUPEFILTER_CLASS
 ----------------
 
-Default: ``'scrapy.dupefilters.RFPDupeFilter'``
+デフォルト: ``'scrapy.dupefilters.RFPDupeFilter'``
 
 The class used to detect and filter duplicate requests.
 
@@ -625,7 +608,7 @@ scrapy :class:`~scrapy.http.Request` object and return its fingerprint
 DUPEFILTER_DEBUG
 ----------------
 
-Default: ``False``
+デフォルト: ``False``
 
 By default, ``RFPDupeFilter`` only logs the first duplicate request.
 Setting :setting:`DUPEFILTER_DEBUG` to ``True`` will make it log all duplicate requests.
@@ -635,7 +618,7 @@ Setting :setting:`DUPEFILTER_DEBUG` to ``True`` will make it log all duplicate r
 EDITOR
 ------
 
-Default: `depends on the environment`
+デフォルト: `depends on the environment`
 
 The editor to use for editing spiders with the :command:`edit` command. It
 defaults to the ``EDITOR`` environment variable, if set. Otherwise, it defaults
@@ -646,7 +629,7 @@ to ``vi`` (on Unix systems) or the IDLE editor (on Windows).
 EXTENSIONS
 ----------
 
-Default:: ``{}``
+デフォルト:: ``{}``
 
 A dict containing the extensions enabled in your project, and their orders.
 
@@ -655,7 +638,7 @@ A dict containing the extensions enabled in your project, and their orders.
 EXTENSIONS_BASE
 ---------------
 
-Default::
+デフォルト::
 
     {
         'scrapy.extensions.corestats.CoreStats': 0,
@@ -692,7 +675,7 @@ temporary files before uploading with :ref:`FTP feed storage <topics-feed-storag
 ITEM_PIPELINES
 --------------
 
-Default: ``{}``
+デフォルト: ``{}``
 
 A dict containing the item pipelines to use, and their orders. Order values are
 arbitrary, but it is customary to define them in the 0-1000 range. Lower orders
@@ -710,7 +693,7 @@ Example::
 ITEM_PIPELINES_BASE
 -------------------
 
-Default: ``{}``
+デフォルト: ``{}``
 
 A dict containing the pipelines enabled by default in Scrapy. You should never
 modify this setting in your project, modify :setting:`ITEM_PIPELINES` instead.
@@ -720,7 +703,7 @@ modify this setting in your project, modify :setting:`ITEM_PIPELINES` instead.
 LOG_ENABLED
 -----------
 
-Default: ``True``
+デフォルト: ``True``
 
 Whether to enable logging.
 
@@ -729,7 +712,7 @@ Whether to enable logging.
 LOG_ENCODING
 ------------
 
-Default: ``'utf-8'``
+デフォルト: ``'utf-8'``
 
 The encoding to use for logging.
 
@@ -738,7 +721,7 @@ The encoding to use for logging.
 LOG_FILE
 --------
 
-Default: ``None``
+デフォルト: ``None``
 
 File name to use for logging output. If ``None``, standard error will be used.
 
@@ -747,7 +730,7 @@ File name to use for logging output. If ``None``, standard error will be used.
 LOG_FORMAT
 ----------
 
-Default: ``'%(asctime)s [%(name)s] %(levelname)s: %(message)s'``
+デフォルト: ``'%(asctime)s [%(name)s] %(levelname)s: %(message)s'``
 
 String for formatting log messsages. Refer to the `Python logging documentation`_ for the whole list of available
 placeholders.
@@ -759,7 +742,7 @@ placeholders.
 LOG_DATEFORMAT
 --------------
 
-Default: ``'%Y-%m-%d %H:%M:%S'``
+デフォルト: ``'%Y-%m-%d %H:%M:%S'``
 
 String for formatting date/time, expansion of the ``%(asctime)s`` placeholder
 in :setting:`LOG_FORMAT`. Refer to the `Python datetime documentation`_ for the whole list of available
@@ -772,7 +755,7 @@ directives.
 LOG_LEVEL
 ---------
 
-Default: ``'DEBUG'``
+デフォルト: ``'DEBUG'``
 
 Minimum level to log. Available levels are: CRITICAL, ERROR, WARNING,
 INFO, DEBUG. For more info see :ref:`topics-logging`.
@@ -782,7 +765,7 @@ INFO, DEBUG. For more info see :ref:`topics-logging`.
 LOG_STDOUT
 ----------
 
-Default: ``False``
+デフォルト: ``False``
 
 If ``True``, all standard output (and error) of your process will be redirected
 to the log. For example if you ``print 'hello'`` it will appear in the Scrapy
@@ -793,7 +776,7 @@ log.
 MEMDEBUG_ENABLED
 ----------------
 
-Default: ``False``
+デフォルト: ``False``
 
 Whether to enable memory debugging.
 
@@ -802,7 +785,7 @@ Whether to enable memory debugging.
 MEMDEBUG_NOTIFY
 ---------------
 
-Default: ``[]``
+デフォルト: ``[]``
 
 When memory debugging is enabled a memory report will be sent to the specified
 addresses if this setting is not empty, otherwise the report will be written to
@@ -817,7 +800,7 @@ Example::
 MEMUSAGE_ENABLED
 ----------------
 
-Default: ``False``
+デフォルト: ``False``
 
 Scope: ``scrapy.extensions.memusage``
 
@@ -832,7 +815,7 @@ See :ref:`topics-extensions-ref-memusage`.
 MEMUSAGE_LIMIT_MB
 -----------------
 
-Default: ``0``
+デフォルト: ``0``
 
 Scope: ``scrapy.extensions.memusage``
 
@@ -848,7 +831,7 @@ MEMUSAGE_CHECK_INTERVAL_SECONDS
 
 .. versionadded:: 1.1
 
-Default: ``60.0``
+デフォルト: ``60.0``
 
 Scope: ``scrapy.extensions.memusage``
 
@@ -866,7 +849,7 @@ See :ref:`topics-extensions-ref-memusage`.
 MEMUSAGE_NOTIFY_MAIL
 --------------------
 
-Default: ``False``
+デフォルト: ``False``
 
 Scope: ``scrapy.extensions.memusage``
 
@@ -883,7 +866,7 @@ See :ref:`topics-extensions-ref-memusage`.
 MEMUSAGE_REPORT
 ---------------
 
-Default: ``False``
+デフォルト: ``False``
 
 Scope: ``scrapy.extensions.memusage``
 
@@ -896,7 +879,7 @@ See :ref:`topics-extensions-ref-memusage`.
 MEMUSAGE_WARNING_MB
 -------------------
 
-Default: ``0``
+デフォルト: ``0``
 
 Scope: ``scrapy.extensions.memusage``
 
@@ -908,7 +891,7 @@ email notifying about it. If zero, no warning will be produced.
 NEWSPIDER_MODULE
 ----------------
 
-Default: ``''``
+デフォルト: ``''``
 
 Module where to create new spiders using the :command:`genspider` command.
 
@@ -921,7 +904,7 @@ Example::
 RANDOMIZE_DOWNLOAD_DELAY
 ------------------------
 
-Default: ``True``
+デフォルト: ``True``
 
 If enabled, Scrapy will wait a random amount of time (between 0.5 * :setting:`DOWNLOAD_DELAY` and 1.5 * :setting:`DOWNLOAD_DELAY`) while fetching requests from the same
 website.
@@ -941,7 +924,7 @@ If :setting:`DOWNLOAD_DELAY` is zero (default) this option has no effect.
 REACTOR_THREADPOOL_MAXSIZE
 --------------------------
 
-Default: ``10``
+デフォルト: ``10``
 
 The maximum limit for Twisted Reactor thread pool size. This is common
 multi-purpose thread pool used by various Scrapy components. Threaded
@@ -953,7 +936,7 @@ this value if you're experiencing problems with insufficient blocking IO.
 REDIRECT_MAX_TIMES
 ------------------
 
-Default: ``20``
+デフォルト: ``20``
 
 Defines the maximum times a request can be redirected. After this maximum the
 request's response is returned as is. We used Firefox default value for the
@@ -964,7 +947,7 @@ same task.
 REDIRECT_PRIORITY_ADJUST
 ------------------------
 
-Default: ``+2``
+デフォルト: ``+2``
 
 Scope: ``scrapy.downloadermiddlewares.redirect.RedirectMiddleware``
 
@@ -978,7 +961,7 @@ Adjust redirect request priority relative to original request:
 RETRY_PRIORITY_ADJUST
 ---------------------
 
-Default: ``-1``
+デフォルト: ``-1``
 
 Scope: ``scrapy.downloadermiddlewares.retry.RetryMiddleware``
 
@@ -992,7 +975,7 @@ Adjust retry request priority relative to original request:
 ROBOTSTXT_OBEY
 --------------
 
-Default: ``False``
+デフォルト: ``False``
 
 Scope: ``scrapy.downloadermiddlewares.robotstxt``
 
@@ -1010,7 +993,7 @@ If enabled, Scrapy will respect robots.txt policies. For more information see
 SCHEDULER
 ---------
 
-Default: ``'scrapy.core.scheduler.Scheduler'``
+デフォルト: ``'scrapy.core.scheduler.Scheduler'``
 
 The scheduler to use for crawling.
 
@@ -1019,7 +1002,7 @@ The scheduler to use for crawling.
 SCHEDULER_DEBUG
 ---------------
 
-Default: ``False``
+デフォルト: ``False``
 
 Setting to ``True`` will log debug information about the requests scheduler.
 This currently logs (only once) if the requests cannot be serialized to disk.
@@ -1038,7 +1021,7 @@ Example entry in logs::
 SCHEDULER_DISK_QUEUE
 --------------------
 
-Default: ``'scrapy.squeues.PickleLifoDiskQueue'``
+デフォルト: ``'scrapy.squeues.PickleLifoDiskQueue'``
 
 Type of disk queue that will be used by scheduler. Other available types are
 ``scrapy.squeues.PickleFifoDiskQueue``, ``scrapy.squeues.MarshalFifoDiskQueue``,
@@ -1048,7 +1031,7 @@ Type of disk queue that will be used by scheduler. Other available types are
 
 SCHEDULER_MEMORY_QUEUE
 ----------------------
-Default: ``'scrapy.squeues.LifoMemoryQueue'``
+デフォルト: ``'scrapy.squeues.LifoMemoryQueue'``
 
 Type of in-memory queue used by scheduler. Other available type is:
 ``scrapy.squeues.FifoMemoryQueue``.
@@ -1057,7 +1040,7 @@ Type of in-memory queue used by scheduler. Other available type is:
 
 SCHEDULER_PRIORITY_QUEUE
 ------------------------
-Default: ``'queuelib.PriorityQueue'``
+デフォルト: ``'queuelib.PriorityQueue'``
 
 Type of priority queue used by scheduler.
 
@@ -1066,7 +1049,7 @@ Type of priority queue used by scheduler.
 SPIDER_CONTRACTS
 ----------------
 
-Default:: ``{}``
+デフォルト:: ``{}``
 
 A dict containing the spider contracts enabled in your project, used for
 testing spiders. For more info see :ref:`topics-contracts`.
@@ -1076,7 +1059,7 @@ testing spiders. For more info see :ref:`topics-contracts`.
 SPIDER_CONTRACTS_BASE
 ---------------------
 
-Default::
+デフォルト::
 
     {
         'scrapy.contracts.default.UrlContract' : 1,
@@ -1101,7 +1084,7 @@ path in :setting:`SPIDER_CONTRACTS`. E.g., to disable the built-in
 SPIDER_LOADER_CLASS
 -------------------
 
-Default: ``'scrapy.spiderloader.SpiderLoader'``
+デフォルト: ``'scrapy.spiderloader.SpiderLoader'``
 
 The class that will be used for loading spiders, which must implement the
 :ref:`topics-api-spiderloader`.
@@ -1111,7 +1094,7 @@ The class that will be used for loading spiders, which must implement the
 SPIDER_MIDDLEWARES
 ------------------
 
-Default:: ``{}``
+デフォルト:: ``{}``
 
 A dict containing the spider middlewares enabled in your project, and their
 orders. For more info see :ref:`topics-spider-middleware-setting`.
@@ -1121,7 +1104,7 @@ orders. For more info see :ref:`topics-spider-middleware-setting`.
 SPIDER_MIDDLEWARES_BASE
 -----------------------
 
-Default::
+デフォルト::
 
     {
         'scrapy.spidermiddlewares.httperror.HttpErrorMiddleware': 50,
@@ -1140,7 +1123,7 @@ the spider. For more info see :ref:`topics-spider-middleware-setting`.
 SPIDER_MODULES
 --------------
 
-Default: ``[]``
+デフォルト: ``[]``
 
 A list of modules where Scrapy will look for spiders.
 
@@ -1153,7 +1136,7 @@ Example::
 STATS_CLASS
 -----------
 
-Default: ``'scrapy.statscollectors.MemoryStatsCollector'``
+デフォルト: ``'scrapy.statscollectors.MemoryStatsCollector'``
 
 The class to use for collecting stats, who must implement the
 :ref:`topics-api-stats`.
@@ -1163,7 +1146,7 @@ The class to use for collecting stats, who must implement the
 STATS_DUMP
 ----------
 
-Default: ``True``
+デフォルト: ``True``
 
 Dump the :ref:`Scrapy stats <topics-stats>` (to the Scrapy log) once the spider
 finishes.
@@ -1175,7 +1158,7 @@ For more info see: :ref:`topics-stats`.
 STATSMAILER_RCPTS
 -----------------
 
-Default: ``[]`` (empty list)
+デフォルト: ``[]`` (empty list)
 
 Send Scrapy stats after spiders finish scraping. See
 :class:`~scrapy.extensions.statsmailer.StatsMailer` for more info.
@@ -1185,7 +1168,7 @@ Send Scrapy stats after spiders finish scraping. See
 TELNETCONSOLE_ENABLED
 ---------------------
 
-Default: ``True``
+デフォルト: ``True``
 
 A boolean which specifies if the :ref:`telnet console <topics-telnetconsole>`
 will be enabled (provided its extension is also enabled).
@@ -1195,7 +1178,7 @@ will be enabled (provided its extension is also enabled).
 TELNETCONSOLE_PORT
 ------------------
 
-Default: ``[6023, 6073]``
+デフォルト: ``[6023, 6073]``
 
 The port range to use for the telnet console. If set to ``None`` or ``0``, a
 dynamically assigned port is used. For more info see
@@ -1206,7 +1189,7 @@ dynamically assigned port is used. For more info see
 TEMPLATES_DIR
 -------------
 
-Default: ``templates`` dir inside scrapy module
+デフォルト: ``templates`` dir inside scrapy module
 
 The directory where to look for templates when creating new projects with
 :command:`startproject` command and new spiders with :command:`genspider`
@@ -1221,7 +1204,7 @@ in the ``project`` subdirectory.
 URLLENGTH_LIMIT
 ---------------
 
-Default: ``2083``
+デフォルト: ``2083``
 
 Scope: ``spidermiddlewares.urllength``
 
@@ -1233,7 +1216,7 @@ the default value for this setting see: http://www.boutell.com/newfaq/misc/urlle
 USER_AGENT
 ----------
 
-Default: ``"Scrapy/VERSION (+http://scrapy.org)"``
+デフォルト: ``"Scrapy/VERSION (+http://scrapy.org)"``
 
 The default User-Agent to use when crawling, unless overridden.
 

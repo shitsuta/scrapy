@@ -381,10 +381,10 @@ CrawlSpider
    every request extracted by this rule, and must return a request or None (to
    filter out the request).
 
-CrawlSpider 設定
+CrawlSpider の設定例
 ~~~~~~~~~~~~~~~~~~~
 
-Let's now take a look at an example CrawlSpider with rules::
+ルールを使用したCrawlSpiderの例を見てみましょう::
 
     import scrapy
     from scrapy.spiders import CrawlSpider, Rule
@@ -451,7 +451,7 @@ XMLFeedSpider
 
     .. attribute:: itertag
 
-        A string with the name of the node (or element) to iterate in. Example::
+        反復処理するノード（または要素）の名前の文字列. 例::
 
             itertag = 'product'
 
@@ -466,7 +466,7 @@ XMLFeedSpider
         You can then specify nodes with namespaces in the :attr:`itertag`
         attribute.
 
-        Example::
+        例::
 
             class YourSpider(XMLFeedSpider):
 
@@ -503,10 +503,10 @@ XMLFeedSpider
         those results. It must return a list of results (Items or Requests).
 
 
-XMLFeedSpider 例
+XMLFeedSpider の例
 ~~~~~~~~~~~~~~~~~~~~~
 
-These spiders are pretty easy to use, let's have a look at one example::
+これらのスパイダーはかなり使いやすくいです. 一例を見てみましょう::
 
     from scrapy.spiders import XMLFeedSpider
     from myproject.items import TestItem
@@ -542,8 +542,7 @@ CSVFeedSpider
 
    .. attribute:: delimiter
 
-       A string with the separator character for each field in the CSV file
-       Defaults to ``','`` (comma).
+       CSVファイルの各フィールドの区切り文字を含む文字列. デフォルトは ``','`` (コンマ).
 
    .. attribute:: quotechar
 
@@ -552,8 +551,7 @@ CSVFeedSpider
 
    .. attribute:: headers
 
-       A list of the rows contained in the file CSV feed which will be used to
-       extract fields from it.
+       ファイルからフィールドを抽出するために使用されるCSVファイルのフィードに含まれる行のリスト.
 
    .. method:: parse_row(response, row)
 
@@ -562,11 +560,10 @@ CSVFeedSpider
        opportunity to override ``adapt_response`` and ``process_results`` methods
        for pre- and post-processing purposes.
 
-CSVFeedSpider 例
+CSVFeedSpider の例
 ~~~~~~~~~~~~~~~~~~~~~
 
-Let's see an example similar to the previous one, but using a
-:class:`CSVFeedSpider`::
+:class:`CSVFeedSpider` を使用した, 前の例に似た例を見てみましょう::
 
     from scrapy.spiders import CSVFeedSpider
     from myproject.items import TestItem
@@ -594,18 +591,15 @@ SitemapSpider
 
 .. class:: SitemapSpider
 
-    SitemapSpider allows you to crawl a site by discovering the URLs using
-    `Sitemaps`_.
+    SitemapSpider では,  `Sitemaps`_ を使ってURLを発見することでサイトをクロールできます.
 
-    It supports nested sitemaps and discovering sitemap urls from
-    `robots.txt`_.
+    これはネストされたサイトマップをサポートし,  `robots.txt`_ からサイトマップのURLを見つけることもできます.
 
     .. attribute:: sitemap_urls
 
-        A list of urls pointing to the sitemaps whose urls you want to crawl.
+        クロールしたいサイトマップを指すURLのリスト.
 
-        You can also point to a `robots.txt`_ and it will be parsed to extract
-        sitemap urls from it.
+        サイトマップのURLを抽出するために `robots.txt`_ を指定することもできます.
 
     .. attribute:: sitemap_rules
 
@@ -618,12 +612,11 @@ SitemapSpider
           the regular expression. ``callback`` can be a string (indicating the
           name of a spider method) or a callable.
 
-        For example::
+        例えば::
 
             sitemap_rules = [('/product/', 'parse_product')]
 
-        Rules are applied in order, and only the first one that matches will be
-        used.
+        ルールは順番に適用され, 一致する最初のルールのみが使用されます.
 
         If you omit this attribute, all urls found in sitemaps will be
         processed with the ``parse`` callback.
@@ -634,7 +627,7 @@ SitemapSpider
         for sites that use `Sitemap index files`_ that point to other sitemap
         files.
 
-        By default, all sitemaps are followed.
+        デフォルトでは, すべてのサイトマップに従います.
 
     .. attribute:: sitemap_alternate_links
 
@@ -642,7 +635,7 @@ SitemapSpider
         are links for the same website in another language passed within
         the same ``url`` block.
 
-        For example::
+        例えば::
 
             <url>
                 <loc>http://example.com/</loc>
@@ -653,10 +646,10 @@ SitemapSpider
         ``sitemap_alternate_links`` disabled, only ``http://example.com/`` would be
         retrieved.
 
-        Default is ``sitemap_alternate_links`` disabled.
+        デフォルトでは ``sitemap_alternate_links`` は無効化されています.
 
 
-SitemapSpider 例
+SitemapSpider の例
 ~~~~~~~~~~~~~~~~~~~~~~
 
 かんたんな例: サイトマップを利用して見つけたURLを, すべて ``parse`` コールバックによって処理する::

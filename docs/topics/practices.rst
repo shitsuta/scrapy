@@ -67,8 +67,8 @@ Twisted リアクターを開始し, ロギング・シャットダウンハン�
 
 このクラスを使用して, リアクターはスパイダーをスケジュールした後に明示的に実行する必要があります. 
 アプリケーションがすでにTwistedを使用していて, 同じリアクターでScrapyを実行する場合は, 
- :class:`~scrapy.crawler.CrawlerProcess` ではなく, 
- :class:`~scrapy.crawler.CrawlerRunner` を使用することをお勧めします.
+:class:`~scrapy.crawler.CrawlerProcess` ではなく, 
+:class:`~scrapy.crawler.CrawlerRunner` を使用することをお勧めします.
 
 スパイダーが完成した後, Twistedリアクターを手動でシャットダウンする必要があります. 
 これは, :meth:`CrawlerRunner.crawl <scrapy.crawler.CrawlerRunner.crawl>` 

@@ -1,7 +1,7 @@
 .. _topics-downloader-middleware:
 
 =====================
-ダウンローダミドルウェア
+ダウンローダーミドルウェア
 =====================
 
 The downloader middleware is a framework of hooks into Scrapy's
@@ -10,7 +10,7 @@ altering Scrapy's requests and responses.
 
 .. _topics-downloader-middleware-setting:
 
-ダウンローダミドルウェアの有効化
+ダウンローダーミドルウェアの有効化
 ==================================
 
 To activate a downloader middleware component, add it to the
@@ -52,7 +52,7 @@ as its value.  For example, if you want to disable the user-agent middleware::
 Finally, keep in mind that some middlewares may need to be enabled through a
 particular setting. See each middleware documentation for more info.
 
-独自のダウンローダミドルウェアの作成
+独自のダウンローダーミドルウェアの作成
 ======================================
 
 Each middleware component is a Python class that defines one or
@@ -221,17 +221,16 @@ passing it along on subsequent requests. For example::
 COOKIES_ENABLED
 ~~~~~~~~~~~~~~~
 
-Default: ``True``
+デフォルト: ``True``
 
-Whether to enable the cookies middleware. If disabled, no cookies will be sent
-to web servers.
+クッキーミドルウェアを有効にするかどうか. 無効にすると, Webサーバーにクッキーは送信されません.
 
 .. setting:: COOKIES_DEBUG
 
 COOKIES_DEBUG
 ~~~~~~~~~~~~~
 
-Default: ``False``
+デフォルト: ``False``
 
 If enabled, Scrapy will log all cookies sent in requests (ie. ``Cookie``
 header) and all cookies received in responses (ie. ``Set-Cookie`` header).
@@ -292,7 +291,7 @@ HttpAuthMiddleware
     To enable HTTP authentication from certain spiders, set the ``http_user``
     and ``http_pass`` attributes of those spiders.
 
-    Example::
+    例::
 
         from scrapy.spiders import CrawlSpider
 
@@ -318,7 +317,7 @@ HttpCacheMiddleware
     This middleware provides low-level cache to all HTTP requests and responses.
     It has to be combined with a cache storage backend as well as a cache policy.
 
-    Scrapy ships with two HTTP cache storage backends:
+    2つのHTTPキャッシュストレージバックエンドを持つ Scrapy:
 
         * :ref:`httpcache-storage-fs`
         * :ref:`httpcache-storage-dbm`
@@ -326,7 +325,7 @@ HttpCacheMiddleware
     You can change the HTTP cache storage backend with the :setting:`HTTPCACHE_STORAGE`
     setting. Or you can also implement your own storage backend.
 
-    Scrapy ships with two HTTP cache policies:
+    2つのHTTPキャッシュポリシーを持つ Scrapy:
 
         * :ref:`httpcache-policy-rfc2616`
         * :ref:`httpcache-policy-dummy`
@@ -353,9 +352,9 @@ to wait for downloads every time) and for trying your spider offline,
 when an Internet connection is not available. The goal is to be able to
 "replay" a spider run *exactly as it ran before*.
 
-In order to use this policy, set:
+このポリシーを使用するには:
 
-* :setting:`HTTPCACHE_POLICY` to ``scrapy.extensions.httpcache.DummyPolicy``
+* :setting:`HTTPCACHE_POLICY` to ``scrapy.extensions.httpcache.DummyPolicy``
 
 
 .. _httpcache-policy-rfc2616:
@@ -367,7 +366,7 @@ This policy provides a RFC2616 compliant HTTP cache, i.e. with HTTP
 Cache-Control awareness, aimed at production and used in continuous
 runs to avoid downloading unmodified data (to save bandwidth and speed up crawls).
 
-what is implemented:
+実装されているもの:
 
 * Do not attempt to store responses/requests with `no-store` cache-control directive set
 * Do not serve responses from cache if `no-cache` cache-control directive is set even for fresh responses
@@ -385,7 +384,7 @@ what is implemented:
   but avoid revalidation on a request-by-request basis, while remaining
   conformant with the HTTP spec.
 
-  Example:
+  例:
 
   Add `Cache-Control: max-stale=600` to Request headers to accept responses that
   have exceeded their expiration time by no more than 600 seconds.
@@ -399,7 +398,7 @@ what is missing:
 * Invalidation after updates or deletes https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.10
 * ... probably others ..
 
-In order to use this policy, set:
+このポリシーを使用するには:
 
 * :setting:`HTTPCACHE_POLICY` to ``scrapy.extensions.httpcache.RFC2616Policy``
 
@@ -409,9 +408,9 @@ In order to use this policy, set:
 Filesystem storage backend (default)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-File system storage backend is available for the HTTP cache middleware.
+ファイルシステムストレージバックエンドは, HTTPキャッシュミドルウェアで使用できます.
 
-In order to use this storage backend, set:
+このストレージバックエンドを使用するには:
 
 * :setting:`HTTPCACHE_STORAGE` to ``scrapy.extensions.httpcache.FilesystemCacheStorage``
 
@@ -446,7 +445,7 @@ A DBM_ storage backend is also available for the HTTP cache middleware.
 By default, it uses the anydbm_ module, but you can change it with the
 :setting:`HTTPCACHE_DBM_MODULE` setting.
 
-In order to use this storage backend, set:
+このストレージバックエンドを使用するには:
 
 * :setting:`HTTPCACHE_STORAGE` to ``scrapy.extensions.httpcache.DbmCacheStorage``
 
@@ -485,7 +484,7 @@ HTTPCACHE_ENABLED
 
 .. versionadded:: 0.11
 
-Default: ``False``
+デフォルト: ``False``
 
 Whether the HTTP cache will be enabled.
 
@@ -497,7 +496,7 @@ Whether the HTTP cache will be enabled.
 HTTPCACHE_EXPIRATION_SECS
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Default: ``0``
+デフォルト: ``0``
 
 Expiration time for cached requests, in seconds.
 
@@ -512,7 +511,7 @@ requests will never expire.
 HTTPCACHE_DIR
 ^^^^^^^^^^^^^
 
-Default: ``'httpcache'``
+デフォルト: ``'httpcache'``
 
 The directory to use for storing the (low-level) HTTP cache. If empty, the HTTP
 cache will be disabled. If a relative path is given, is taken relative to the
@@ -525,18 +524,18 @@ HTTPCACHE_IGNORE_HTTP_CODES
 
 .. versionadded:: 0.10
 
-Default: ``[]``
+デフォルト: ``[]``
 
-Don't cache response with these HTTP codes.
+これらのHTTPコードでレスポンスをキャッシュしないでください.
 
 .. setting:: HTTPCACHE_IGNORE_MISSING
 
 HTTPCACHE_IGNORE_MISSING
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Default: ``False``
+デフォルト: ``False``
 
-If enabled, requests not found in the cache will be ignored instead of downloaded.
+有効にすると, キャッシュにないリクエストはダウンロードされずに無視されます.
 
 .. setting:: HTTPCACHE_IGNORE_SCHEMES
 
@@ -545,18 +544,18 @@ HTTPCACHE_IGNORE_SCHEMES
 
 .. versionadded:: 0.10
 
-Default: ``['file']``
+デフォルト: ``['file']``
 
-Don't cache responses with these URI schemes.
+これらのURIスキームでレスポンスをキャッシュしないでください.
 
 .. setting:: HTTPCACHE_STORAGE
 
 HTTPCACHE_STORAGE
 ^^^^^^^^^^^^^^^^^
 
-Default: ``'scrapy.extensions.httpcache.FilesystemCacheStorage'``
+デフォルト: ``'scrapy.extensions.httpcache.FilesystemCacheStorage'``
 
-The class which implements the cache storage backend.
+キャッシュストレージバックエンドを実装するクラス.
 
 .. setting:: HTTPCACHE_DBM_MODULE
 
@@ -565,7 +564,7 @@ HTTPCACHE_DBM_MODULE
 
 .. versionadded:: 0.13
 
-Default: ``'anydbm'``
+デフォルト: ``'anydbm'``
 
 The database module to use in the :ref:`DBM storage backend
 <httpcache-storage-dbm>`. This setting is specific to the DBM backend.
@@ -577,9 +576,9 @@ HTTPCACHE_POLICY
 
 .. versionadded:: 0.18
 
-Default: ``'scrapy.extensions.httpcache.DummyPolicy'``
+デフォルト: ``'scrapy.extensions.httpcache.DummyPolicy'``
 
-The class which implements the cache policy.
+キャッシュポリシーを実装するクラス.
 
 .. setting:: HTTPCACHE_GZIP
 
@@ -588,7 +587,7 @@ HTTPCACHE_GZIP
 
 .. versionadded:: 1.0
 
-Default: ``False``
+デフォルト: ``False``
 
 If enabled, will compress all cached data with gzip.
 This setting is specific to the Filesystem backend.
@@ -600,9 +599,9 @@ HTTPCACHE_ALWAYS_STORE
 
 .. versionadded:: 1.1
 
-Default: ``False``
+デフォルト: ``False``
 
-If enabled, will cache pages unconditionally.
+有効にすると, 無条件にページをキャッシュします.
 
 A spider may wish to have all responses available in the cache, for
 future use with `Cache-Control: max-stale`, for instance. The
@@ -620,9 +619,9 @@ HTTPCACHE_IGNORE_RESPONSE_CACHE_CONTROLS
 
 .. versionadded:: 1.1
 
-Default: ``[]``
+デフォルト: ``[]``
 
-List of Cache-Control directives in responses to be ignored.
+無視されるレスポンスのキャッシュ制御ディレクティブのリスト.
 
 Sites often set "no-store", "no-cache", "must-revalidate", etc., but get
 upset at the traffic a spider can generate if it respects those
@@ -652,9 +651,9 @@ HttpCompressionMiddleware Settings
 COMPRESSION_ENABLED
 ^^^^^^^^^^^^^^^^^^^
 
-Default: ``True``
+デフォルト: ``True``
 
-Whether the Compression middleware will be enabled.
+Compressionミドルウェアを有効にするかどうか.
 
 
 HttpProxyMiddleware
@@ -693,7 +692,7 @@ RedirectMiddleware
 
 .. class:: RedirectMiddleware
 
-   This middleware handles redirection of requests based on response status.
+   このミドルウェアは, 応答ステータスに基づいて要求のリダイレクトを処理します.
 
 .. reqmeta:: redirect_urls
 
@@ -737,25 +736,25 @@ REDIRECT_ENABLED
 
 .. versionadded:: 0.13
 
-Default: ``True``
+デフォルト: ``True``
 
-Whether the Redirect middleware will be enabled.
+リダイレクトミドルウェアを有効にするかどうか.
 
 .. setting:: REDIRECT_MAX_TIMES
 
 REDIRECT_MAX_TIMES
 ^^^^^^^^^^^^^^^^^^
 
-Default: ``20``
+デフォルト: ``20``
 
-The maximum number of redirections that will be follow for a single request.
+1回のリクエストで実行されるリダイレクトの最大数.
 
 MetaRefreshMiddleware
 ---------------------
 
 .. class:: MetaRefreshMiddleware
 
-   This middleware handles redirection of requests based on meta-refresh html tag.
+   このミドルウェアは, メタリフレッシュhtmlタグに基づいてリクエストのリダイレクトを処理します.
 
 The :class:`MetaRefreshMiddleware` can be configured through the following
 settings (see the settings documentation for more info):
@@ -777,16 +776,16 @@ METAREFRESH_ENABLED
 
 .. versionadded:: 0.17
 
-Default: ``True``
+デフォルト: ``True``
 
-Whether the Meta Refresh middleware will be enabled.
+Meta Refreshミドルウェアを有効にするかどうか.
 
 .. setting:: METAREFRESH_MAXDELAY
 
 METAREFRESH_MAXDELAY
 ^^^^^^^^^^^^^^^^^^^^
 
-Default: ``100``
+デフォルト: ``100``
 
 The maximum meta-refresh delay (in seconds) to follow the redirection.
 Some sites use meta-refresh for redirecting to a session expired page, so we
@@ -830,25 +829,25 @@ RETRY_ENABLED
 
 .. versionadded:: 0.13
 
-Default: ``True``
+デフォルト: ``True``
 
-Whether the Retry middleware will be enabled.
+リトライミドルウェアを有効にするかどうか.
 
 .. setting:: RETRY_TIMES
 
 RETRY_TIMES
 ^^^^^^^^^^^
 
-Default: ``2``
+デフォルト: ``2``
 
-Maximum number of times to retry, in addition to the first download.
+最初のダウンロードに加えて, 再試行の最大回数.
 
 .. setting:: RETRY_HTTP_CODES
 
 RETRY_HTTP_CODES
 ^^^^^^^^^^^^^^^^
 
-Default: ``[500, 502, 503, 504, 408]``
+デフォルト: ``[500, 502, 503, 504, 408]``
 
 Which HTTP response codes to retry. Other errors (DNS lookup issues,
 connections lost, etc) are always retried.
@@ -904,7 +903,7 @@ UserAgentMiddleware
 
 .. class:: UserAgentMiddleware
 
-   Middleware that allows spiders to override the default user agent.
+   スパイダーがデフォルトのユーザーエージェントをオーバーライドできるミドルウェア.
 
    In order for a spider to override the default user agent, its `user_agent`
    attribute must be set.
@@ -940,7 +939,7 @@ AJAXCRAWL_ENABLED
 
 .. versionadded:: 0.21
 
-Default: ``False``
+デフォルト: ``False``
 
 Whether the AjaxCrawlMiddleware will be enabled. You may want to
 enable it for :ref:`broad crawls <topics-broad-crawls>`.
@@ -953,7 +952,7 @@ HttpProxyMiddleware settings
 HTTPPROXY_AUTH_ENCODING
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Default: ``"latin-1"``
+デフォルト: ``"latin-1"``
 
 The default encoding for proxy authentication on :class:`HttpProxyMiddleware`.
 

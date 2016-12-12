@@ -138,6 +138,6 @@ AutoThrottle拡張機能が有効な場合,  :setting:`CONCURRENT_REQUESTS_PER_
 AUTOTHROTTLE_DEBUG
 ~~~~~~~~~~~~~~~~~~
 
-初期値: ``False``
+デフォルト: ``False``
 
 受信したすべてのレスポンスの統計情報を表示するAutoThrottleデバッグモードを有効にすると, 調整パラメータがリアルタイムでどのように調整されているかがわかります.

@@ -145,11 +145,7 @@ check how spiders are downloading pages.
 
     scrapy -h
 
-There are two kinds of commands, those that only work from inside a Scrapy
-project (Project-specific commands) and those that also work without an active
-Scrapy project (Global commands), though they may behave slightly different
-when running from inside a project (as they would use the project overridden
-settings).
+コマンドは, アクティブなScrapyプロジェクトなしでのみ動作するコマンド（グローバルコマンド）と, プロジェクト内から実行するコマンドの動作が若干異なる場合があります（プロジェクトオーバーライド設定を使用するため）.
 
 グローバルコマンド:
 

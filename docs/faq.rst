@@ -10,30 +10,26 @@ ScrapyとBeautifulSoupまたはlxmlとの比較
 
 `BeautifulSoup`_ と `lxml`_ はHTMLとXMLを解析するためのライブラリです. Scrapyは, Webサイトをクロールし, Webサイトからデータを抽出するWebスパイダーを作成するためのアプリケーションフレームワークです.
 
-Scrapy provides a built-in mechanism for extracting data (called
-:ref:`selectors <topics-selectors>`) but you can easily use `BeautifulSoup`_
-(or `lxml`_) instead, if you feel more comfortable working with them. After
-all, they're just parsing libraries which can be imported and used from any
-Python code.
+Scrapy には, データを抽出するためのメカニズム ( :ref:`selectors <topics-selectors>` と呼ばれる) が組み込まれていますが,
+使い方が分かりやすい場合は `BeautifulSoup`_
+(または `lxml`_) をかんたんに使用することができます. 
+結局のところ, Pythonコードからインポートして使用できるライブラリを用いて解析しているだけです.
 
-In other words, comparing `BeautifulSoup`_ (or `lxml`_) to Scrapy is like
-comparing `jinja2`_ to `Django`_.
+つまり,  `BeautifulSoup`_ (または `lxml`_) と Scrapy を比較するのは `jinja2`_ と `Django`_ を比較するのと同じことです.
 
 .. _BeautifulSoup: http://www.crummy.com/software/BeautifulSoup/
 .. _lxml: http://lxml.de/
 .. _jinja2: http://jinja.pocoo.org/
 .. _Django: https://www.djangoproject.com/
 
-私はBeautifulSoupでScrapyを使うことができますか?
+Scrapy で BeautifulSoup を使うことができますか?
 ------------------------------------
 
 使用できます.
-As mentioned :ref:`above <faq-scrapy-bs-cmp>`, `BeautifulSoup`_ can be used
-for parsing HTML responses in Scrapy callbacks.
-You just have to feed the response's body into a ``BeautifulSoup`` object
-and extract whatever data you need from it.
+:ref:`上記 <faq-scrapy-bs-cmp>` のように, `BeautifulSoup`_ を Scrapy のコールバックでHTMLレスポンスを解析するために使用できます.
+レスポンスのボディを ``BeautifulSoup`` オブジェクトにフィードし, そこから必要なデータを抽出するだけです.
 
-Here's an example spider using BeautifulSoup API, with ``lxml`` as the HTML parser::
+以下は, BeautifulSoup API を使用したスパイダーの例です. HTMLパーサーとして ``lxml`` を使用しています::
 
 
     from bs4 import BeautifulSoup
@@ -57,14 +53,14 @@ Here's an example spider using BeautifulSoup API, with ``lxml`` as the HTML pars
 
 .. note::
 
-    ``BeautifulSoup`` supports several HTML/XML parsers.
-    See `BeautifulSoup's official documentation`_ on which ones are available.
+    ``BeautifulSoup`` は複数の HTML/XML パーサーをサポートしています.
+    `BeautifulSoup 公式ドキュメント`_ を参照してください.
 
-.. _BeautifulSoup's official documentation: https://www.crummy.com/software/BeautifulSoup/bs4/doc/#specifying-the-parser-to-use
+.. _BeautifulSoup 公式ドキュメント: https://www.crummy.com/software/BeautifulSoup/bs4/doc/#specifying-the-parser-to-use
 
 .. _faq-python-versions:
 
-どのPythonのバージョンがScrapyサポートをしていますか?
+Scrapy がサポートしているのは Python のどのバージョンですか?
 -----------------------------------------
 
 Scrapy is supported under Python 2.7 and Python 3.3+.
@@ -91,31 +87,30 @@ focus on the real problems we need to solve.
 We'd be proud if Scrapy serves as an inspiration for other projects. Feel free
 to steal from us!
 
-ScrapyはHTTPプロキシで動作しますか?
+Scrapy はHTTPプロキシで動作しますか?
 -----------------------------------
 
-Yes. Support for HTTP proxies is provided (since Scrapy 0.8) through the HTTP
-Proxy downloader middleware. See
-:class:`~scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware`.
+はい. HTTPプロキシダウンローダミドルウェアを介してHTTPプロキシのサポートが提供されています（Scrapy 0.8以降）. 
+:class:`~scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware` を参照してください.
 
 異なるページの属性を持つアイテムをスクラップする方法はありますか?
 ------------------------------------------------------------
 
-See :ref:`topics-request-response-ref-request-callback-arguments`.
+:ref:`topics-request-response-ref-request-callback-arguments` を参照してください.
 
 
-Scrapyがクラッシュする: No module named win32api
+Scrapy がクラッシュする: No module named win32api
 ----------------------------------------------------------
 
-You need to install `pywin32`_ because of `this Twisted bug`_.
+ `Twisted のバグ`_ のために, `pywin32`_ をインストールする必要があります.
 
 .. _pywin32: https://sourceforge.net/projects/pywin32/
-.. _this Twisted bug: https://twistedmatrix.com/trac/ticket/3707
+.. _Twisted のバグ: https://twistedmatrix.com/trac/ticket/3707
 
 スパイダーでユーザーログインをシミュレートする方法はありますか?
 ---------------------------------------------
 
-:ref:`topics-request-response-ref-request-userlogin` を確認してください.
+:ref:`topics-request-response-ref-request-userlogin` 参照してください.
 
 .. _faq-bfo-dfo:
 
@@ -134,15 +129,16 @@ setting the following settings::
 私の Scrapy のクローラにはメモリリークがあります。どうしたら良いですか?
 --------------------------------------------------
 
-See :ref:`topics-leaks`.
+:ref:`topics-leaks` を参照してください.
 
-Also, Python has a builtin memory leak issue which is described in
-:ref:`topics-leaks-without-leaks`.
+また, Pythonには, 
+:ref:`topics-leaks-without-leaks` 
+で説明されているメモリリークの問題があります.
 
 どうしたらScrapyの消費メモリを少なくすることができますか?
 ------------------------------------------
 
-直前の質問を見てください.
+直前の質問を参照してください.
 
 スパイダーで基本的なHTTP認証を使用することはできますか?
 --------------------------------------------------
@@ -160,17 +156,16 @@ Try changing the default `Accept-Language`_ request header by overriding the
 Scrapyプロジェクトの例はどこにありますか?
 ----------------------------------------------
 
-:ref:`intro-examples` を確認してください.
+:ref:`intro-examples` を参照してください.
 
-プロジェクトを作成せずにスパイダーを動かすことはできますか?
+プロジェクトを作成せずにスパイダーを実行することはできますか?
 ----------------------------------------------
 
-はい. You can use the :command:`runspider` command. For example, if you have a
-spider written in a ``my_spider.py`` file you can run it with::
+はい.  :command:`runspider` コマンドを使用することで可能です. 例えば,  ``my_spider.py`` ファイルがすでに作成されているのであれば, 以下のように実行することができます::
 
     scrapy runspider my_spider.py
 
-See :command:`runspider` command for more info.
+詳細は, :command:`runspider` コマンドを参照してください.
 
  "Filtered offsite request"メッセージが表示されます. どうすれば修正できますか?
 --------------------------------------------------------------
@@ -182,13 +177,12 @@ Those messages are thrown by the Offsite Spider Middleware, which is a spider
 middleware (enabled by default) whose purpose is to filter out requests to
 domains outside the ones covered by the spider.
 
-For more info see:
-:class:`~scrapy.spidermiddlewares.offsite.OffsiteMiddleware`.
+詳細については, :class:`~scrapy.spidermiddlewares.offsite.OffsiteMiddleware` を参照してください.
 
 プロダクションでScrapyクローラーを導入するための推奨される方法はなんですか?
 ---------------------------------------------------------------------
 
-:ref:`topics-deploy` を確認してください.
+:ref:`topics-deploy` 参照してください.
 
 大量のエクスポートにJSONを使用することはできますか?
 ---------------------------------
@@ -221,33 +215,33 @@ higher) in your spider::
 Or by setting a global download delay in your project with the
 :setting:`DOWNLOAD_DELAY` setting.
 
-Can I call ``pdb.set_trace()`` from my spiders to debug them?
+スパイダーのデバッグで ``pdb.set_trace()`` メソッドを呼ぶことはできますか?
 -------------------------------------------------------------
 
 Yes, but you can also use the Scrapy shell which allows you to quickly analyze
 (and even modify) the response being processed by your spider, which is, quite
 often, more useful than plain old ``pdb.set_trace()``.
 
-For more info see :ref:`topics-shell-inspect-response`.
+詳細については,  :ref:`topics-shell-inspect-response` を参照してください.
 
-Simplest way to dump all my scraped items into a JSON/CSV/XML file?
+スクレイピングしたデータを JSON/CSV/XML ファイルとして出力する簡単な方法はなんですか?
 -------------------------------------------------------------------
 
-To dump into a JSON file::
+JSONファイルで出力する::
 
     scrapy crawl myspider -o items.json
 
-To dump into a CSV file::
+CSVファイルで出力する::
 
     scrapy crawl myspider -o items.csv
 
-To dump into a XML file::
+XMLファイルで出力する::
 
     scrapy crawl myspider -o items.xml
 
-For more information see :ref:`topics-feed-exports`
+より詳細な情報は :ref:`topics-feed-exports` を参照してください.
 
-What's this huge cryptic ``__VIEWSTATE`` parameter used in some forms?
+いくつかのフォームで使用される ``__VIEWSTATE`` パラメーターは一体何ですか?
 ----------------------------------------------------------------------
 
 The ``__VIEWSTATE`` parameter is used in sites built with ASP.NET/VB.NET. For
@@ -257,7 +251,7 @@ which scrapes one of these sites.
 .. _this page: http://search.cpan.org/~ecarroll/HTML-TreeBuilderX-ASP_NET-0.09/lib/HTML/TreeBuilderX/ASP_NET.pm
 .. _example spider: https://github.com/AmbientLighter/rpn-fas/blob/master/fas/spiders/rnp.py
 
-大きなXML / CSVデータフィードを解析する最適な方法は何ですか?
+大きな XML/CSV データフィードを解析する最適な方法は何ですか?
 ----------------------------------------------------
 
 Parsing big feeds with XPath selectors can be problematic since they need to
@@ -269,29 +263,27 @@ the functions ``xmliter`` and ``csviter`` from ``scrapy.utils.iterators``
 module. In fact, this is what the feed spiders (see :ref:`topics-spiders`) use
 under the cover.
 
-Scrapyは自動的にクッキーを管理しますか？
+Scrapy は自動的にクッキーを管理しますか？
 -----------------------------------------
 
-Yes, Scrapy receives and keeps track of cookies sent by servers, and sends them
-back on subsequent requests, like any regular web browser does.
+はい, Scrapy はサーバーから送信されたCookieを受信して追跡し, 通常のWebブラウザーと同様に後続のリクエストでそれらを送信します.
 
-For more info see :ref:`topics-request-response` and :ref:`cookies-mw`.
+詳細については,  :ref:`topics-request-response` と :ref:`cookies-mw` を参照してください.
 
 Scrapyから送受信されるクッキーを確認するにはどうすればよいですか？
 --------------------------------------------------------------
 
-Enable the :setting:`COOKIES_DEBUG` setting.
+:setting:`COOKIES_DEBUG` 設定を有効化してください.
 
 スパイダーに止めるように指示するにはどうすればよいですか？
 -------------------------------------------
 
-Raise the :exc:`~scrapy.exceptions.CloseSpider` exception from a callback. For
-more info see: :exc:`~scrapy.exceptions.CloseSpider`.
+:exc:`~scrapy.exceptions.CloseSpider` エクセプションをコールバックから発生させます. 詳細については :exc:`~scrapy.exceptions.CloseSpider` を参照してください.
 
 私のScrapyボットが禁止されるのを防ぐには？
 ----------------------------------------------------
 
-:ref:`bans` を確認してください.
+:ref:`bans` 参照してください.
 
 スパイダーの引数や設定を使用してスパイダーを構成する必要がありますか?
 -----------------------------------------------------------------
@@ -312,7 +304,7 @@ spider argument.
 XML文書をスクラップしていて、XPathセレクタがアイテムを返さない
 --------------------------------------------------------------------------
 
-ネームスペースを削除する必要があるかもしれません. :ref:`removing-namespaces` を確認してください.
+ネームスペースを削除する必要があるかもしれません. :ref:`removing-namespaces` 参照してください.
 
 .. _user agents: https://en.wikipedia.org/wiki/User_agent
 .. _LIFO: https://en.wikipedia.org/wiki/Stack_(abstract_data_type)

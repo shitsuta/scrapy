@@ -30,15 +30,15 @@ Twisted リアクターを開始し, ロギング・シャットダウンハン�
     from scrapy.crawler import CrawlerProcess
 
     class MySpider(scrapy.Spider):
-        # Your spider definition
-        ...
+        # 独自のスパイダー定義
+        ...
 
     process = CrawlerProcess({
         'USER_AGENT': 'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)'
     })
 
     process.crawl(MySpider)
-    process.start() # the script will block here until the crawling is finished
+    process.start() # クロールが終了するまでスクリプトはここでブロックされます
 
 :class:`~scrapy.crawler.CrawlerProcess` ドキュメントをチェックして, 使用法の詳細を確認してください.
 

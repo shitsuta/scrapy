@@ -6,18 +6,17 @@
 
 .. versionadded:: 0.15
 
-This section documents the Scrapy core API, and it's intended for developers of
-extensions and middlewares.
+このセクションでは, ScrapyコアAPIについて説明します. 拡張APIやミドルウェアの開発者向けです.
 
 .. _topics-api-crawler:
 
 クローラー API
 ===========
 
-The main entry point to Scrapy API is the :class:`~scrapy.crawler.Crawler`
-object, passed to extensions through the ``from_crawler`` class method. This
-object provides access to all Scrapy core components, and it's the only way for
-extensions to access them and hook their functionality into Scrapy.
+Scrapy API の主なエントリポイントは,  ``from_crawler`` メソッドを使用して拡張機能に渡される 
+:class:`~scrapy.crawler.Crawler` オブジェクトです. 
+このオブジェクトはすべての Scrapy コアコンポーネントへのアクセスを提供し, 
+拡張機能がそれらにアクセスして機能を Scrapy に引き込む唯一の方法です.
 
 .. module:: scrapy.crawler
    :synopsis: The Scrapy crawler
@@ -30,74 +29,66 @@ how you :ref:`configure the downloader middlewares
 
 .. class:: Crawler(spidercls, settings)
 
-    The Crawler object must be instantiated with a
-    :class:`scrapy.spiders.Spider` subclass and a
-    :class:`scrapy.settings.Settings` object.
+    Crawler オブジェクトは, 
+    :class:`scrapy.spiders.Spider` サブクラスと
+    :class:`scrapy.settings.Settings` オブジェクトでインスタンス化する必要があります.
 
     .. attribute:: settings
 
-        The settings manager of this crawler.
+        クローラの設定マネージャ.
 
-        This is used by extensions & middlewares to access the Scrapy settings
-        of this crawler.
+        これは, このクローラーのScrapy設定にアクセスするために拡張機能とミドルウェアによって使用されます.
 
-        For an introduction on Scrapy settings see :ref:`topics-settings`.
+        詳細については,  :ref:`topics-settings` を参照してください.
 
-        For the API see :class:`~scrapy.settings.Settings` class.
+        APIについては, :class:`~scrapy.settings.Settings` クラスを参照してください.
 
     .. attribute:: signals
 
-        The signals manager of this crawler.
+        クローラーの信号マネージャ.
 
-        This is used by extensions & middlewares to hook themselves into Scrapy
-        functionality.
+        これは, 拡張機能とミドルウェアがScrapy機能にフックするために使用されます.
 
-        For an introduction on signals see :ref:`topics-signals`.
+        詳細については, :ref:`topics-signals` を参照してください.
 
-        For the API see :class:`~scrapy.signalmanager.SignalManager` class.
+        APIについては, :class:`~scrapy.signalmanager.SignalManager` クラスを参照してください.
 
     .. attribute:: stats
 
-        The stats collector of this crawler.
+        クローラーの統計コレクタ.
 
-        This is used from extensions & middlewares to record stats of their
-        behaviour, or access stats collected by other extensions.
+        これは, エクステンションとミドルウェアから自分の行動の統計情報を記録したり, 
+        他の拡張機能によって収集された統計情報にアクセスするために使用されます.
 
-        For an introduction on stats collection see :ref:`topics-stats`.
+        詳細については :ref:`topics-stats` を参照してください.
 
-        For the API see :class:`~scrapy.statscollectors.StatsCollector` class.
+        API については :class:`~scrapy.statscollectors.StatsCollector` クラスを参照してください.
 
     .. attribute:: extensions
 
-        The extension manager that keeps track of enabled extensions.
+        有効な拡張機能を追跡する拡張マネージャー.
 
-        Most extensions won't need to access this attribute.
+        ほとんどの拡張機能はこの属性にアクセスする必要はありません.
 
-        For an introduction on extensions and a list of available extensions on
-        Scrapy see :ref:`topics-extensions`.
+        拡張機能の紹介とScrapyの利用可能な拡張機能のリストについては, :ref:`topics-extensions` を参照してください.
 
     .. attribute:: engine
 
-        The execution engine, which coordinates the core crawling logic
-        between the scheduler, downloader and spiders.
+        実行エンジン. スケジューラ, ダウンローダ, およびスパイダ間のコアクロールロジックを調整します.
 
-        Some extension may want to access the Scrapy engine, to inspect  or 
-        modify the downloader and scheduler behaviour, although this is an
-        advanced use and this API is not yet stable.
+        Scrapy エンジンにアクセスして, ダウンローダとスケジューラの動作を検査または変更したい場合にしようできます. 
+        ただし, これは高度な使い方であり, APIはまだ安定していません.
+        
+    .. attribute:: spider
 
-    .. attribute:: spider
-
-        Spider currently being crawled. This is an instance of the spider class
-        provided while constructing the crawler, and it is created after the
-        arguments given in the :meth:`crawl` method.
+        Spider currently being crawled. 
+        クローラの構築中に提供されるspiderクラスのインスタンスであり, :meth:`crawl` メソッドで指定された引数の後に作成されます.
 
     .. method:: crawl(\*args, \**kwargs)
 
-        Starts the crawler by instantiating its spider class with the given
-        `args` and `kwargs` arguments, while setting the execution engine in
-        motion.
+        クローラー開始時に, 指定された `args` および `kwargs` 引数を使用してスパイダーをインスタンス化し, 実行エンジンの動作を設定します.
 
-        Returns a deferred that is fired when the crawl is finished.
+        クロールが終了したときに発生する遅延を返します.
 
 .. autoclass:: CrawlerRunner
    :members:
@@ -225,19 +216,19 @@ class (which they all inherit from).
 
     .. method:: get_value(key, default=None)
 
-        Return the value for the given stats key or default if it doesn't exist.
+        指定されたstatsキーの値を返します. 存在しない場合はdefaultを返します.
 
     .. method:: get_stats()
 
-        Get all stats from the currently running spider as a dict.
+        現在実行中のスパイダーからすべての統計情報を dict として取得します.
 
     .. method:: set_value(key, value)
 
-        Set the given value for the given stats key.
+        与えられた stats キーに与えられた値を設定する.
 
     .. method:: set_stats(stats)
 
-        Override the current stats with the dict passed in ``stats`` argument.
+        ``stats`` 引数に渡された dict で現在の統計をオーバーライドします.
 
     .. method:: inc_value(key, count=1, start=0)
 
@@ -258,18 +249,16 @@ class (which they all inherit from).
 
     .. method:: clear_stats()
 
-        Clear all stats.
+        すべての統計情報をクリアします.
 
-    The following methods are not part of the stats collection api but instead
-    used when implementing custom stats collectors:
+    次のメソッドは, 統計収集APIの一部ではなく, カスタム統計コレクタを実装するときに使用されます:
 
     .. method:: open_spider(spider)
 
-        Open the given spider for stats collection.
+        統計収集のために指定されたスパイダーを開きます.
 
     .. method:: close_spider(spider)
 
-        Close the given spider. After this is called, no more specific stats
-        can be accessed or collected.
-
+        指定されたスパイダーを閉じます。これが呼び出された後, 特定の統計情報にアクセスまたは収集することはできません.
+        
 .. _reactor: https://twistedmatrix.com/documents/current/core/howto/reactor-basics.html

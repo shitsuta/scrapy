@@ -4,26 +4,25 @@
 一般的なプラクティス
 ================
 
-This section documents common practices when using Scrapy. These are things
-that cover many topics and don't often fall into any other specific section.
+このセクションでは, Scrapyを使用する際の一般的な方法について説明します. 
+これらは, 多くの話題を網羅しており, 他の特定のセクションにはいるのはよくありません.
 
 .. _run-from-script:
 
-スクリプトからScrapyを実行する
+スクリプトから Scrapy を実行する
 ========================
 
-You can use the :ref:`API <topics-api>` to run Scrapy from a script, instead of
-the typical way of running Scrapy via ``scrapy crawl``.
+``scrapy crawl`` コマンドで Scrapy を実行する従来の方法に加え, 
+:ref:`API <topics-api>` を利用してスクリプトから Scrapy を実行することができます.
 
-Remember that Scrapy is built on top of the Twisted
-asynchronous networking library, so you need to run it inside the Twisted reactor.
+Scrapy は Twisted 非同期ネットワーキングライブラリの上に構築されているので, Twisted リアクタ内で実行する必要があります.
 
-The first utility you can use to run your spiders is
-:class:`scrapy.crawler.CrawlerProcess`. This class will start a Twisted reactor
-for you, configuring the logging and setting shutdown handlers. This class is
-the one used by all Scrapy commands.
+スパイダーを実行するために使用できる最初のユーティリティーは
+:class:`scrapy.crawler.CrawlerProcess` です. このクラスは, 
+Twisted リアクターを開始し, ロギング・シャットダウンハンドラを設定します. 
+このクラスは, すべてのScrapyコマンドで使用されるクラスです.
 
-Here's an example showing how to run a single spider with it.
+ここで, 1つのスパイダーを実行する方法の例を示します.
 
 ::
 
@@ -41,17 +40,15 @@ Here's an example showing how to run a single spider with it.
     process.crawl(MySpider)
     process.start() # the script will block here until the crawling is finished
 
-Make sure to check :class:`~scrapy.crawler.CrawlerProcess` documentation to get
-acquainted with its usage details.
+:class:`~scrapy.crawler.CrawlerProcess` ドキュメントをチェックして, 使用法の詳細を確認してください.
 
-If you are inside a Scrapy project there are some additional helpers you can
-use to import those components within the project. You can automatically import
-your spiders passing their name to :class:`~scrapy.crawler.CrawlerProcess`, and
-use ``get_project_settings`` to get a :class:`~scrapy.settings.Settings`
-instance with your project settings.
+プロジェクトの内部にいる場合は, プロジェクト内のコンポーネントをインポートするために使用できる追加のヘルパーがいくつかあります. 
+名前を渡すスパイダーを
+:class:`~scrapy.crawler.CrawlerProcess` に自動的にインポートし,  
+``get_project_settings`` を使用してプロジェクト設定で :class:`~scrapy.settings.Settings`
+インスタンスを取得することができます.
 
-What follows is a working example of how to do that, using the `testspiders`_
-project as example.
+これは,  `testspiders`_ プロジェクトを例とし, 実行する方法の実例です.
 
 ::
 
@@ -60,27 +57,24 @@ project as example.
 
     process = CrawlerProcess(get_project_settings())
 
-    # 'followall' is the name of one of the spiders of the project.
+    # 'followall' はプロジェクトのスパイダーの名前です.
     process.crawl('followall', domain='scrapinghub.com')
-    process.start() # the script will block here until the crawling is finished
+    process.start() # クロールが終了するまでスクリプトはここでブロックされます
 
-There's another Scrapy utility that provides more control over the crawling
-process: :class:`scrapy.crawler.CrawlerRunner`. This class is a thin wrapper
-that encapsulates some simple helpers to run multiple crawlers, but it won't
-start or interfere with existing reactors in any way.
+クロールプロセスをより詳細に制御できるScrapyユーティリティとして :class:`scrapy.crawler.CrawlerRunner` があります. 
+このクラスは, いくつかのヘルパーをカプセル化して複数のクローラーを実行するかんたんなラッパーですが, 
+既存のリアクターを開始したり干渉したりすることはありません.
 
-Using this class the reactor should be explicitly run after scheduling your
-spiders. It's recommended you use :class:`~scrapy.crawler.CrawlerRunner`
-instead of :class:`~scrapy.crawler.CrawlerProcess` if your application is
-already using Twisted and you want to run Scrapy in the same reactor.
+このクラスを使用して, リアクターはスパイダーをスケジュールした後に明示的に実行する必要があります. 
+アプリケーションがすでにTwistedを使用していて, 同じリアクターでScrapyを実行する場合は, 
+ :class:`~scrapy.crawler.CrawlerProcess` ではなく, 
+ :class:`~scrapy.crawler.CrawlerRunner` を使用することをお勧めします.
 
-Note that you will also have to shutdown the Twisted reactor yourself after the
-spider is finished. This can be achieved by adding callbacks to the deferred
-returned by the :meth:`CrawlerRunner.crawl
-<scrapy.crawler.CrawlerRunner.crawl>` method.
+スパイダーが完成した後, Twistedリアクターを手動でシャットダウンする必要があります. 
+これは, :meth:`CrawlerRunner.crawl <scrapy.crawler.CrawlerRunner.crawl>` 
+メソッドによって返された遅延にコールバックを追加することで実現できます.
 
-Here's an example of its usage, along with a callback to manually stop the
-reactor after `MySpider` has finished running.
+MySpiderの実行が終了した後, コールバックとともにリアクターを手動で停止する, 使用例を示します.
 
 ::
 
@@ -90,15 +84,15 @@ reactor after `MySpider` has finished running.
     from scrapy.utils.log import configure_logging
 
     class MySpider(scrapy.Spider):
-        # Your spider definition
-        ...
+        # 独自のスパイダー定義
+        ...
 
     configure_logging({'LOG_FORMAT': '%(levelname)s: %(message)s'})
     runner = CrawlerRunner()
 
     d = runner.crawl(MySpider)
     d.addBoth(lambda _: reactor.stop())
-    reactor.run() # the script will block here until the crawling is finished
+    reactor.run() # クロールが終了するまでスクリプトはここでブロックされます
 
 .. seealso:: `Twisted Reactor Overview`_.
 
@@ -107,11 +101,10 @@ reactor after `MySpider` has finished running.
 同じプロセスで複数のスパイダーを実行する
 ============================================
 
-By default, Scrapy runs a single spider per process when you run ``scrapy
-crawl``. However, Scrapy supports running multiple spiders per process using
-the :ref:`internal API <topics-api>`.
+デフォルトでは, Scrapy は ``scrapy crawl`` を実行するときにプロセスごとに1つのスパイダーを実行します. 
+ただし, Scrapy は :ref:`内部 API <topics-api>` を使用することでプロセスごとに複数のスパイダーを実行できます.
 
-Here is an example that runs multiple spiders simultaneously:
+以下は, 複数のスパイダーを同時に実行する例です:
 
 ::
 
@@ -119,19 +112,19 @@ Here is an example that runs multiple spiders simultaneously:
     from scrapy.crawler import CrawlerProcess
 
     class MySpider1(scrapy.Spider):
-        # Your first spider definition
+        # 一番目の独自のスパイダーの定義
         ...
 
     class MySpider2(scrapy.Spider):
-        # Your second spider definition
-        ...
+        # 二番目の独自のスパイダーの定義
+        ...
 
     process = CrawlerProcess()
     process.crawl(MySpider1)
     process.crawl(MySpider2)
-    process.start() # the script will block here until all crawling jobs are finished
+    process.start() # すべてのクロールジョブが終了するまでスクリプトはここでブロックされます
 
-Same example using :class:`~scrapy.crawler.CrawlerRunner`:
+:class:`~scrapy.crawler.CrawlerRunner` を使用した同様の例です:
 
 ::
 
@@ -141,11 +134,11 @@ Same example using :class:`~scrapy.crawler.CrawlerRunner`:
     from scrapy.utils.log import configure_logging
 
     class MySpider1(scrapy.Spider):
-        # Your first spider definition
+        # 一番目の独自のスパイダーの定義
         ...
 
     class MySpider2(scrapy.Spider):
-        # Your second spider definition
+        # 二番目の独自のスパイダーの定義
         ...
 
     configure_logging()
@@ -155,9 +148,9 @@ Same example using :class:`~scrapy.crawler.CrawlerRunner`:
     d = runner.join()
     d.addBoth(lambda _: reactor.stop())
 
-    reactor.run() # the script will block here until all crawling jobs are finished
+    reactor.run() # すべてのクロールジョブが終了するまで, スクリプトはここでブロックされます
 
-Same example but running the spiders sequentially by chaining the deferreds:
+同様の例ですが, 遅延を連鎖させてスパイダーを順番に実行しています:
 
 ::
 
@@ -166,11 +159,11 @@ Same example but running the spiders sequentially by chaining the deferreds:
     from scrapy.utils.log import configure_logging
 
     class MySpider1(scrapy.Spider):
-        # Your first spider definition
+        # 一番目の独自のスパイダーの定義
         ...
 
     class MySpider2(scrapy.Spider):
-        # Your second spider definition
+        # 二番目の独自のスパイダーの定義
         ...
 
     configure_logging()
@@ -183,8 +176,8 @@ Same example but running the spiders sequentially by chaining the deferreds:
         reactor.stop()
 
     crawl()
-    reactor.run() # the script will block here until the last crawl call is finished
-
+    reactor.run() # 最後のクロールコールが終了するまで, スクリプトはここでブロックされます
+    
 .. seealso:: :ref:`run-from-script`.
 
 .. _distributed-crawls:
@@ -192,27 +185,22 @@ Same example but running the spiders sequentially by chaining the deferreds:
 分散クロール
 ==================
 
-Scrapy doesn't provide any built-in facility for running crawls in a distribute
-(multi-server) manner. However, there are some ways to distribute crawls, which
-vary depending on how you plan to distribute them.
+Scrapy は, 配布（マルチサーバー）方式でクロールを実行するための組み込み機能を提供していません. 
+ただし, クロールを配布する方法はいくつかあり, その方法は配布方法によって異なります.
 
-If you have many spiders, the obvious way to distribute the load is to setup
-many Scrapyd instances and distribute spider runs among those.
+スパイダーがたくさんある場合, 負荷を分散させる明白な方法は, 多くのScrapydインスタンスをセットアップし, スパイダーをその中で実行することです.
 
-If you instead want to run a single (big) spider through many machines, what
-you usually do is partition the urls to crawl and send them to each separate
-spider. Here is a concrete example:
+多くのマシンで単一の（大きな）スパイダーを実行する場合は, 通常はクロールするURLを分割して別々のスパイダーに送信します. 
+具体的な例を次に示します:
 
-First, you prepare the list of urls to crawl and put them into separate
-files/urls::
+まず, クロールするURLのリストを用意して, 別々のファイル/URLに入れます::
 
     http://somedomain.com/urls-to-crawl/spider1/part1.list
     http://somedomain.com/urls-to-crawl/spider1/part2.list
     http://somedomain.com/urls-to-crawl/spider1/part3.list
 
-Then you fire a spider run on 3 different Scrapyd servers. The spider would
-receive a (spider) argument ``part`` with the number of the partition to
-crawl::
+次に, 3つのScrapydサーバーでスパイダーを実行します. スパイダーは,
+(spider) 引数 ``part`` にクロールするパーティションの番号を渡します::
 
     curl http://scrapy1.mycompany.com:6800/schedule.json -d project=myproject -d spider=spider1 -d part=1
     curl http://scrapy2.mycompany.com:6800/schedule.json -d project=myproject -d spider=spider1 -d part=2
@@ -223,32 +211,25 @@ crawl::
 BANされることを回避する
 =======================
 
-Some websites implement certain measures to prevent bots from crawling them,
-with varying degrees of sophistication. Getting around those measures can be
-difficult and tricky, and may sometimes require special infrastructure. Please
-consider contacting `commercial support`_ if in doubt.
+いくつかのウェブサイトでは, ボットがWebサイトをクロールするのを防ぐために, さまざまな洗練された手段を実装しています. 
+これらの措置を回避することは非常に困難なことがあり, 特別なインフラストラクチャが必要な場合があります. 
+ご不明な点がある場合は, `商用サポート`_ にお問い合わせください.
 
-Here are some tips to keep in mind when dealing with these kinds of sites:
+ これらの種類のサイトを扱う際に留意すべきヒントをいくつか紹介します:
 
-* rotate your user agent from a pool of well-known ones from browsers (google
-  around to get a list of them)
-* disable cookies (see :setting:`COOKIES_ENABLED`) as some sites may use
-  cookies to spot bot behaviour
-* use download delays (2 or higher). See :setting:`DOWNLOAD_DELAY` setting.
-* if possible, use `Google cache`_ to fetch pages, instead of hitting the sites
-  directly
-* use a pool of rotating IPs. For example, the free `Tor project`_ or paid
-  services like `ProxyMesh`_. An open source alterantive is `scrapoxy`_, a
-  super proxy that you can attach your own proxies to.
-* use a highly distributed downloader that circumvents bans internally, so you
-  can just focus on parsing clean pages. One example of such downloaders is
-  `Crawlera`_
-
-If you are still unable to prevent your bot getting banned, consider contacting
-`commercial support`_.
+* ユーザーエージェントを, よく知られているブラウザのプールからローテーションします（Googleのリストを取得するにはGoogleを使用します）
+* 一部のサイトでは, クッキーを使用してボットの動作を特定する場合があるため, クッキーを無効にする ( :setting:`COOKIES_ENABLED` を参照してください).
+* ダウンロード遅延 (2 or higher) を使用する.  :setting:`DOWNLOAD_DELAY` 設定を参照してください.
+* 可能であれば, サイトに直接アクセスするのではなく, `Google cache`_ を使用してページを取得する
+* IPプールをローテーションさせ使用します。たとえば, 無料の `Tor project`_ や
+  `ProxyMesh`_ のような有料サービスです. また, あなた自身のプロキシを添付できるスーパープロキシである `scrapoxy`_ のようなオープンソースのプロジェクトが有ります.
+* 内部的に禁止を回避する高度に分散されたダウンローダを使用するので, クリーンなページの解析に集中することができます. 
+  そのようなダウンローダの一例に `Crawlera`_ があります.
+  
+それでもあなたのボットが禁止されるのを防ぐことができない場合は,  `商用サポート`_ に連絡することを検討してください.
 
 .. _Tor project: https://www.torproject.org/
-.. _commercial support: http://scrapy.org/support/
+.. _商用サポート: http://scrapy.org/support/
 .. _ProxyMesh: http://proxymesh.com/
 .. _Google cache: http://www.googleguide.com/cached_pages.html
 .. _testspiders: https://github.com/scrapinghub/testspiders

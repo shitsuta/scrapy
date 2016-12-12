@@ -25,20 +25,15 @@ AutoThrottle拡張機能はダウンロード遅延を動的に調整して、�
 主な考え方は次のとおりです: サーバが応答するのに ``待ち時間`` が必要な場合, クライアントは
 ``N`` 個の要求を並行して処理するために, 各 ``待ち時間/ N`` 秒間に要求を送信する必要があります.
 
-Instead of adjusting the delays one can just set a small fixed
-download delay and impose hard limits on concurrency using
-:setting:`CONCURRENT_REQUESTS_PER_DOMAIN` or
-:setting:`CONCURRENT_REQUESTS_PER_IP` options. It will provide a similar
-effect, but there are some important differences:
+遅延を調整する代わりに, 一定のダウンロード遅延を設定し, 
+:setting:`CONCURRENT_REQUESTS_PER_DOMAIN` または
+:setting:`CONCURRENT_REQUESTS_PER_IP` オプションを使用して並行性に厳しい制限を課すことができます. 
+同様の効果が得られますが, いくつかの重要な違いがあります:
 
-* because the download delay is small there will be occasional bursts
-  of requests;
-* often non-200 (error) responses can be returned faster than regular
-  responses, so with a small download delay and a hard concurrency limit
-  crawler will be sending requests to server faster when server starts to
-  return errors. But this is an opposite of what crawler should do - in case
-  of errors it makes more sense to slow down: these errors may be caused by
-  the high request rate.
+* ダウンロードの遅延が小さいため, 時折リクエストが激しくなります.
+* 多くの場合、non-200 (エラー) レスポンスは通常の応答より速く返される可能性があるため, 
+  サーバーがエラーを返すようになると, ダウンロードの遅延が少なく, 並行処理の制限が厳しいため, クローラはサーバーに要求を高速に送信します. 
+  しかし, これはクローラが行うべきこととは反対です. エラーの場合, 遅くするのがより理にかなっています.
 
 オートスロットルにはこれらの問題はありません.
 
@@ -47,33 +42,30 @@ effect, but there are some important differences:
 
 オートスロットルアルゴリズムは、次のルールに基づいてダウンロードの遅延を調整します:
 
-1. spiders always start with a download delay of
-   :setting:`AUTOTHROTTLE_START_DELAY`;
-2. when a response is received, the target download delay is calculated as
-   ``latency / N`` where ``latency`` is a latency of the response,
-   and ``N`` is :setting:`AUTOTHROTTLE_TARGET_CONCURRENCY`.
-3. download delay for next requests is set to the average of previous
-   download delay and the target download delay;
-4. latencies of non-200 responses are not allowed to decrease the delay;
-5. download delay can't become less than :setting:`DOWNLOAD_DELAY` or greater
-   than :setting:`AUTOTHROTTLE_MAX_DELAY`
-
-.. note:: The AutoThrottle extension honours the standard Scrapy settings for
-   concurrency and delay. This means that it will respect
-   :setting:`CONCURRENT_REQUESTS_PER_DOMAIN` and
-   :setting:`CONCURRENT_REQUESTS_PER_IP` options and
-   never set a download delay lower than :setting:`DOWNLOAD_DELAY`.
+1. スパイダーは常に 
+   :setting:`AUTOTHROTTLE_START_DELAY` のダウンロード遅延で始まります.
+2. レスポンスが受信されると、ターゲットダウンロード遅延は,  ``latency`` がレスポンスのレイテンシである
+   ``latency / N``として計算され, 
+   ``N`` は :setting:`AUTOTHROTTLE_TARGET_CONCURRENCY` です.
+3. 次の要求のダウンロード遅延は、前回のダウンロード遅延と目標のダウンロード遅延の平均値に設定されます.
+4. レイテンシの non-200 レスポンス待ち時間は遅延を減少させることができない.
+5. ダウンロードの遅延が :setting:`DOWNLOAD_DELAY` より小さくなることも,
+    :setting:`AUTOTHROTTLE_MAX_DELAY` より大きくなることもできません.
+    
+.. note:: AutoThrottle拡張機能は, 標準的なScrapyの設定の並行性と遅延を優先します. 
+   This means that it will respect
+   :setting:`CONCURRENT_REQUESTS_PER_DOMAIN` オプションと, 
+   :setting:`CONCURRENT_REQUESTS_PER_IP` オプションを尊重し, ダウンロード遅延を
+   :setting:`DOWNLOAD_DELAY` よりも低く設定しないことを意味します.
 
 .. _download-latency:
 
-In Scrapy, the download latency is measured as the time elapsed between
-establishing the TCP connection and receiving the HTTP headers.
+Scrapyでは, ダウンロードの待ち時間は, TCP接続を確立してからHTTPヘッダーを受信するまでの経過時間として測定されます.
 
-Note that these latencies are very hard to measure accurately in a cooperative
-multitasking environment because Scrapy may be busy processing a spider
-callback, for example, and unable to attend downloads. However, these latencies
-should still give a reasonable estimate of how busy Scrapy (and ultimately, the
-server) is, and this extension builds on that premise.
+これらのレイテンシは, Scrapyがスパイダーコールバックを処理するのに忙しく, 
+ダウンロードに参加できないために, 協調的なマルチタスク環境では正確に測定することが非常に難しいことに注意してください. 
+しかし, これらのレイテンシは, Scrapy（そして最終的にはサーバー）がどの程度忙しいかについての妥当な見積もりを与えるはずであり, 
+この拡張はその前提に基づいています.
 
 設定
 ========
@@ -88,34 +80,34 @@ server) is, and this extension builds on that premise.
 * :setting:`CONCURRENT_REQUESTS_PER_IP`
 * :setting:`DOWNLOAD_DELAY`
 
-より多くの情報は :ref:`autothrottle-algorithm` を確認してください.
+詳細については,  :ref:`autothrottle-algorithm` を参照してください.
 
 .. setting:: AUTOTHROTTLE_ENABLED
 
 AUTOTHROTTLE_ENABLED
 ~~~~~~~~~~~~~~~~~~~~
 
-初期値: ``False``
+デフォルト: ``False``
 
-Enables the AutoThrottle extension.
+オートスロットル拡張機能を有効にする.
 
 .. setting:: AUTOTHROTTLE_START_DELAY
 
 AUTOTHROTTLE_START_DELAY
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-初期値: ``5.0``
+デフォルト: ``5.0``
 
-The initial download delay (in seconds).
+最初のダウンロードの遅延（秒単位）
 
 .. setting:: AUTOTHROTTLE_MAX_DELAY
 
 AUTOTHROTTLE_MAX_DELAY
 ~~~~~~~~~~~~~~~~~~~~~~
 
-初期値: ``60.0``
+デフォルト: ``60.0``
 
-The maximum download delay (in seconds) to be set in case of high latencies.
+レイテンシが高い場合に設定される最大ダウンロード遅延（秒単位）
 
 .. setting:: AUTOTHROTTLE_TARGET_CONCURRENCY
 
@@ -124,28 +116,22 @@ AUTOTHROTTLE_TARGET_CONCURRENCY
 
 .. versionadded:: 1.1
 
-初期値: ``1.0``
+デフォルト: ``1.0``
 
-Average number of requests Scrapy should be sending in parallel to remote
-websites.
+リモートWebサイトと並行して送信する必要があるリクエストの平均数.
 
-By default, AutoThrottle adjusts the delay to send a single
-concurrent request to each of the remote websites. Set this option to
-a higher value (e.g. ``2.0``) to increase the throughput and the load on remote
-servers. A lower ``AUTOTHROTTLE_TARGET_CONCURRENCY`` value
-(e.g. ``0.5``) makes the crawler more conservative and polite.
+デフォルトでは, AutoThrottleは, 1つの同時リクエストを各リモートWebサイトに送信する遅延を調整します. 
+このオプションをより高い値（たとえば ``2.0`` ）に設定すると, リモートサーバーのスループットと負荷が増加します. 
+``AUTOTHROTTLE_TARGET_CONCURRENCY`` が小さいほど（ ``0.5`` など）, クローラはより控えめで丁寧なものになります.
 
-Note that :setting:`CONCURRENT_REQUESTS_PER_DOMAIN`
-and :setting:`CONCURRENT_REQUESTS_PER_IP` options are still respected
-when AutoThrottle extension is enabled. This means that if
-``AUTOTHROTTLE_TARGET_CONCURRENCY`` is set to a value higher than
-:setting:`CONCURRENT_REQUESTS_PER_DOMAIN` or
-:setting:`CONCURRENT_REQUESTS_PER_IP`, the crawler won't reach this number
-of concurrent requests.
+AutoThrottle拡張機能が有効な場合,  :setting:`CONCURRENT_REQUESTS_PER_DOMAIN`
+および :setting:`CONCURRENT_REQUESTS_PER_IP` oオプションは引き続き考慮されます. This means that if
+``AUTOTHROTTLE_TARGET_CONCURRENCY`` が 
+:setting:`CONCURRENT_REQUESTS_PER_DOMAIN` または
+:setting:`CONCURRENT_REQUESTS_PER_IP` より高い値に設定されていると, クローラはこの数の同時要求に達しません.
 
-At every given time point Scrapy can be sending more or less concurrent
-requests than ``AUTOTHROTTLE_TARGET_CONCURRENCY``; it is a suggested
-value the crawler tries to approach, not a hard limit.
+与えられたすべての時点で, Scrapyは ``AUTOTHROTTLE_TARGET_CONCURRENCY`` よりも多かれ少なかれ並行した要求を送ることができます. 
+クローラがアプローチしようとする推奨値であり, ハードな制限ではありません.
 
 .. setting:: AUTOTHROTTLE_DEBUG
 
@@ -154,6 +140,4 @@ AUTOTHROTTLE_DEBUG
 
 初期値: ``False``
 
-Enable AutoThrottle debug mode which will display stats on every response
-received, so you can see how the throttling parameters are being adjusted in
-real time.
+受信したすべてのレスポンスの統計情報を表示するAutoThrottleデバッグモードを有効にすると, 調整パラメータがリアルタイムでどのように調整されているかがわかります.

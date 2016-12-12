@@ -6,9 +6,8 @@
 
 .. versionadded:: 0.15
 
-.. note:: This is a new feature (introduced in Scrapy 0.15) and may be subject
-   to minor functionality/API updates. Check the :ref:`release notes <news>` to
-   be notified of updates.
+.. note:: これは新機能（Scrapy 0.15で導入されました）であり、機能/ APIの軽微な更新の対象となる可能性があります. 
+          :ref:`リリースノート <news>` を確認してください.
 
 Testing spiders can get particularly annoying and while nothing prevents you
 from writing unit tests the task gets cumbersome quickly. Scrapy offers an
@@ -29,7 +28,7 @@ following example::
         @scrapes Title Author Year Price
         """
 
-This callback is tested using three built-in contracts:
+このコールバックは, 次の3つの組み込みコントラクトを使用してテストされます:
 
 .. module:: scrapy.contracts.default
 

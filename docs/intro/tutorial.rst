@@ -1,51 +1,47 @@
 .. _intro-tutorial:
 
-===============
-Scrapy Tutorial
-===============
+=================
+Scrapy チュートリアル
+=================
 
-In this tutorial, we'll assume that Scrapy is already installed on your system.
-If that's not the case, see :ref:`intro-install`.
+このチュートリアルでは, Scrapyが既にシステムにインストールされていると仮定します.
+もしまだインストールしていない場合は,  :ref:`intro-install` を参照してください.
 
-We are going to scrape `quotes.toscrape.com <http://quotes.toscrape.com/>`_, a website
-that lists quotes from famous authors.
+ここでは, 有名な著者からの引用を掲載しているウェブサイト `quotes.toscrape.com <http://quotes.toscrape.com/>`_ からデータを集めてきます.
 
-This tutorial will walk you through these tasks:
+このチュートリアルでは, これらのタスクについて説明します:
 
-1. Creating a new Scrapy project
-2. Writing a :ref:`spider <topics-spiders>` to crawl a site and extract data
-3. Exporting the scraped data using the command line
-4. Changing spider to recursively follow links
-5. Using spider arguments
+1. 新しい Scrapy を作成する.
+2. サイトをクロールし, データを集めるための :ref:`スパイダー <topics-spiders>` を作成する.
+3. コマンドラインを使用してスクラップしたデータをエクスポートする.
+4. 再帰的にリンクをたどるためにスパイダーを更新する.
+5. スパイダーの引数を使用する
 
-Scrapy is written in Python_. If you're new to the language you might want to
-start by getting an idea of what the language is like, to get the most out of
-Scrapy.
+Scrapy は Python_ で書かれています. 言語に慣れていない場合は, 言語がどのようなものかを知ることで, Scrapyを最大限に活用することができるかもしれません.
 
-If you're already familiar with other languages, and want to learn Python
-quickly, we recommend reading through `Dive Into Python 3`_.  Alternatively,
-you can follow the `Python Tutorial`_.
+でに他の言語に精通していて, Pythonを素早く学びたい場合は `Dive Into Python 3`_ を読むことをお勧めします.  
+あるいは, `Python Tutorial`_ を読むのもおすすめです.
 
-If you're new to programming and want to start with Python, you may find useful
-the online book `Learn Python The Hard Way`_. You can also take a look at `this
-list of Python resources for non-programmers`_.
+あなたがプログラミングに慣れていなくてもPythonを使いたいのであれば, 
+オンラインの本 `Learn Python The Hard Way`_ が役立ちます.
+また,  `非プログラマーのためのこのPythonリソースのリスト`_ も役立ちます.
 
 .. _Python: https://www.python.org/
-.. _this list of Python resources for non-programmers: https://wiki.python.org/moin/BeginnersGuide/NonProgrammers
+.. _非プログラマーのためのこのPythonリソースのリスト: https://wiki.python.org/moin/BeginnersGuide/NonProgrammers
 .. _Dive Into Python 3: http://www.diveintopython3.net
 .. _Python Tutorial: https://docs.python.org/3/tutorial
 .. _Learn Python The Hard Way: http://learnpythonthehardway.org/book/
 
 
-Creating a project
+プロジェクトの作成
 ==================
 
-Before you start scraping, you will have to set up a new Scrapy project. Enter a
-directory where you'd like to store your code and run::
+スクレイピングを開始する前に, 新しいScrapyプロジェクトをセットアップする必要があります. 
+コードを保存して実行するディレクトリ下に移動し, 以下を実行します::
 
     scrapy startproject tutorial
 
-This will create a ``tutorial`` directory with the following contents::
+これにより、次の内容の ``tutorial`` ディレクトリが作成されます::
 
     tutorial/
         scrapy.cfg            # deploy configuration file
@@ -63,7 +59,7 @@ This will create a ``tutorial`` directory with the following contents::
                 __init__.py
 
 
-Our first Spider
+最初のスパイダー
 ================
 
 Spiders are classes that you define and that Scrapy uses to scrape information
@@ -118,7 +114,7 @@ and defines some attributes and methods:
   the scraped data as dicts and also finding new URLs to
   follow and creating new requests (:class:`~scrapy.http.Request`) from them.
 
-How to run our spider
+スパイダーの実行方法
 ---------------------
 
 To put our spider to work, go to the project's top level directory and run::
@@ -149,7 +145,7 @@ for the respective URLs, as our ``parse`` method instructs.
   on, we will cover that soon.
 
 
-What just happened under the hood?
+何が起こったのですか?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Scrapy schedules the :class:`scrapy.Request <scrapy.http.Request>` objects
@@ -159,7 +155,7 @@ and calls the callback method associated with the request (in this case, the
 ``parse`` method) passing the response as argument.
 
 
-A shortcut to the start_requests method
+start_requests メソッドを省略する
 ---------------------------------------
 Instead of implementing a :meth:`~scrapy.spiders.Spider.start_requests` method
 that generates :class:`scrapy.Request <scrapy.http.Request>` objects from URLs,
@@ -191,7 +187,7 @@ default callback method, which is called for requests without an explicitly
 assigned callback.
 
 
-Extracting data
+データの抽出
 ---------------
 
 The best way to learn how to extract data with Scrapy is trying selectors
@@ -295,7 +291,7 @@ visually selected elements, which works in many browsers.
 .. _Selector Gadget: http://selectorgadget.com/
 
 
-XPath: a brief intro
+XPath: かんたんな紹介
 ^^^^^^^^^^^^^^^^^^^^
 
 Besides `CSS`_, Scrapy selectors also support using `XPath`_ expressions::
@@ -326,7 +322,7 @@ to think in XPath" <http://plasmasturm.org/log/xpath101/>`_.
 .. _XPath: https://www.w3.org/TR/xpath
 .. _CSS: https://www.w3.org/TR/selectors
 
-Extracting quotes and authors
+引用と著者の抽出
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Now that you know a bit about selection and extraction, let's complete our
@@ -398,7 +394,7 @@ quotes elements and put them together into a Python dictionary::
         ... a few more of these, omitted for brevity
     >>>
 
-Extracting data in our spider
+スパイダーのデータを抽出する
 ------------------------------
 
 Let's get back to our spider. Until now, it doesn't extract any data in
@@ -437,7 +433,7 @@ If you run this spider, it will output the extracted data with the log::
 
 .. _storing-data:
 
-Storing the scraped data
+スクレイピングしたデータの保存
 ========================
 
 The simplest way to store the scraped data is by using :ref:`Feed exports
@@ -473,7 +469,7 @@ pipelines if you just want to store the scraped items.
 .. _JQ: https://stedolan.github.io/jq
 
 
-Following links
+リンクを追う
 ===============
 
 Let's say, instead of just scraping the stuff from the first two pages
@@ -551,11 +547,10 @@ In our example, it creates a sort of loop, following all the links to the next p
 until it doesn't find one -- handy for crawling blogs, forums and other sites with
 pagination.
 
-More examples and patterns
+より多くの例とパターン
 --------------------------
 
-Here is another spider that illustrates callbacks and following links,
-this time for scraping author information::
+ここにコールバックを明示し, リンクをたどる別のスパイダーがあります. 今回は, 著者情報を集めます::
 
 
     import scrapy
@@ -615,7 +610,7 @@ using a :ref:`trick to pass additional data to the callbacks
 <topics-request-response-ref-request-callback-arguments>`.
 
 
-Using spider arguments
+スパイダー引数の使用
 ======================
 
 You can provide command line arguments to your spiders by using the ``-a``
@@ -662,7 +657,7 @@ will only visit URLs from the ``humor`` tag, such as
 
 You can :ref:`learn more about handling spider arguments here <spiderargs>`.
 
-Next steps
+次のステップ
 ==========
 
 This tutorial covered only the basics of Scrapy, but there's a lot of other

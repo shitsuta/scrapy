@@ -1,26 +1,21 @@
 .. _intro-overview:
 
 ==================
-Scrapy at a glance
+Scrapy について
 ==================
 
-Scrapy is an application framework for crawling web sites and extracting
-structured data which can be used for a wide range of useful applications, like
-data mining, information processing or historical archival.
+Scrapyは, Webサイトのクロール, データマイニング, 情報処理, アーカイブなどの幅広い有用なアプリケーションに使用できる構造化データを抽出するためのアプリケーションフレームワークです.
 
-Even though Scrapy was originally designed for `web scraping`_, it can also be
-used to extract data using APIs (such as `Amazon Associates Web Services`_) or
-as a general purpose web crawler.
+Scrapyはもともと `Webスクレイピング`_ 用に設計されていましたが, API( `Amazon Associates Web Services`_ のような)または汎用Webクローラーとしてデータを抽出するためにも使用できます.
 
 
-Walk-through of an example spider
+スパイダーの作成例
 =================================
 
-In order to show you what Scrapy brings to the table, we'll walk you through an
-example of a Scrapy Spider using the simplest way to run a spider.
+Scrapy がもたらすものを示すために、Scrapy Spiderの一例を、スパイダーを実行する最も簡単な方法を使って説明します.
 
-Here's the code for a spider that scrapes famous quotes from website
-http://quotes.toscrape.com, following the pagination::
+ここでは、ページングを追っていきながらウェブサイト
+http://quotes.toscrape.com から有名な引用を集めてくるスパイダーのコードを紹介します::
 
     import scrapy
 
@@ -44,15 +39,13 @@ http://quotes.toscrape.com, following the pagination::
                 yield scrapy.Request(next_page, callback=self.parse)
 
 
-Put this in a text file, name it to something like ``quotes_spider.py``
-and run the spider using the :command:`runspider` command::
+``quotes_spider.py`` のような名前をつけ, 上記のコードをテキストファイルに保存し,
+:command:`runspider` コマンドで実行してください::
 
     scrapy runspider quotes_spider.py -o quotes.json
 
 
-When this finishes you will have in the ``quotes.json`` file a list of the
-quotes in JSON format, containing text and author, looking like this (reformatted
-here for better readability)::
+実行完了後, ``quotes.json`` ファイルにJSON形式の引用リストができあがります. このファイルにはテキストと作者が含まれており、以下のようになっています (読みやすくするため, ココでは再フォーマットしています)::
 
     [{
         "author": "Jane Austen",
@@ -69,100 +62,75 @@ here for better readability)::
     ...]
 
 
-What just happened?
+今何が起きたの?
 -------------------
 
-When you ran the command ``scrapy runspider quotes_spider.py``, Scrapy looked for a
-Spider definition inside it and ran it through its crawler engine.
+``scrapy runspider quotes_spider.py`` コマンドが実行されると, Scrapyはその内部のSpider定義を探して, クローラ・エンジンを通して実行しました.
 
-The crawl started by making requests to the URLs defined in the ``start_urls``
-attribute (in this case, only the URL for quotes in *humor* category)
-and called the default callback method ``parse``, passing the response object as
-an argument. In the ``parse`` callback, we loop through the quote elements
-using a CSS Selector, yield a Python dict with the extracted quote text and author,
-look for a link to the next page and schedule another request using the same
-``parse`` method as callback.
+クロールが開始されると ``start_urls`` で定義されたURL（この場合はユーモアカテゴリの引用符のURLのみ）にリクエストを行い, 
+デフォルトのコールバックメソッドである ``parse`` に, Response オブジェクトを引数として渡します.
+``parse`` コールバックの内部では, CSSセレクタを使用して引用要素をループし, 
+抽出されたテキストと作成者でPythonディクテーションを生成し, 次のページへのリンクを探し, コールバックと同じ 
+``parse`` メソッドを使用して次のリクエストをスケジュールします.
 
-Here you notice one of the main advantages about Scrapy: requests are
-:ref:`scheduled and processed asynchronously <topics-architecture>`.  This
-means that Scrapy doesn't need to wait for a request to be finished and
-processed, it can send another request or do other things in the meantime. This
-also means that other requests can keep going even if some request fails or an
-error happens while handling it.
+ここで、Scrapyの主な利点を1つ: リクエストはスケジュールされ, 
+:ref:`非同期に処理されます <topics-architecture>`.  
+つまり, Scrapyはリクエストが処理されるのを待つ必要はなく, その間に別のリクエストを送信したり, 他の処理を行うことができます. 
+これは, リクエストが失敗した場合や, 処理中にエラーが発生した場合でも, 他のリクエストが続行できることを意味します.
 
-While this enables you to do very fast crawls (sending multiple concurrent
-requests at the same time, in a fault-tolerant way) Scrapy also gives you
-control over the politeness of the crawl through :ref:`a few settings
-<topics-settings-ref>`. You can do things like setting a download delay between
-each request, limiting amount of concurrent requests per domain or per IP, and
-even :ref:`using an auto-throttling extension <topics-autothrottle>` that tries
-to figure out these automatically.
+これにより、非常に高速なクロールが可能になります（同時に複数の同時要求をフォールトトレラントな方法で送信できます）
+また, Scrapyを使用すると, :ref:`いくつかの設定 <topics-settings-ref>` でクロールの公平性を制御できます. 
+ドメインごとまたはIPごとに並行要求の量を制限し, 自動的にこれらを把握しようとする :ref:`自動調整拡張機能を使用する <topics-autothrottle>` など, 
+各要求のダウンロード遅延を設定するなどの作業を行うことができます.
 
 .. note::
 
-    This is using :ref:`feed exports <topics-feed-exports>` to generate the
-    JSON file, you can easily change the export format (XML or CSV, for example) or the
-    storage backend (FTP or `Amazon S3`_, for example).  You can also write an
-    :ref:`item pipeline <topics-item-pipeline>` to store the items in a database.
+    これは :ref:`フィードのエクスポート <topics-feed-exports>` を使用してJSONファイルを生成し, 
+    エクスポート形式（XMLやCSVなど）やストレージバックエンド (例えば, FTP または `Amazon S3`_) を簡単に変更できます. 
+    :ref:`アイテムパイプライン <topics-item-pipeline>` 作成してアイテムをデータベースに格納することもできます.
 
 
 .. _topics-whatelse:
 
-What else?
+他には?
 ==========
 
-You've seen how to extract and store items from a website using Scrapy, but
-this is just the surface. Scrapy provides a lot of powerful features for making
-scraping easy and efficient, such as:
+YScrapyを使用してウェブサイトからアイテムを抽出して保存する方法を見てきましたが, これはごく表面的なものです. 
+Scrapyは, スクレイピングを簡単かつ効率的にするための多くの強力な機能を提供します:
 
-* Built-in support for :ref:`selecting and extracting <topics-selectors>` data
-  from HTML/XML sources using extended CSS selectors and XPath expressions,
-  with helper methods to extract using regular expressions.
+* 拡張CSSセレクタとXPath式を使用してHTML / XMLソースからデータを :ref:`選択して抽出する <topics-selectors>` 組み込みサポート, 正規表現を使用して抽出するヘルパーメソッド.
 
-* An :ref:`interactive shell console <topics-shell>` (IPython aware) for trying
-  out the CSS and XPath expressions to scrape data, very useful when writing or
-  debugging your spiders.
+* CSSやXPath式を試してデータを集める :ref:`インタラクティブシェルコンソール <topics-shell>` （IPython対応）. スパイダーの作成やデバッグに非常に便利です.
 
-* Built-in support for :ref:`generating feed exports <topics-feed-exports>` in
-  multiple formats (JSON, CSV, XML) and storing them in multiple backends (FTP,
-  S3, local filesystem)
+* 複数の形式（JSON、CSV、XML）で :ref:`フィードのエクスポートを生成 <topics-feed-exports>` し, 複数のバックエンド（FTP, S3, ローカルファイルシステム）に格納するための組み込みサポート.
 
-* Robust encoding support and auto-detection, for dealing with foreign,
-  non-standard and broken encoding declarations.
+* 外国語、非標準、壊れたエンコーディング宣言を処理するための強力なエンコーディングサポートと自動検出.
 
-* :ref:`Strong extensibility support <extending-scrapy>`, allowing you to plug
-  in your own functionality using :ref:`signals <topics-signals>` and a
-  well-defined API (middlewares, :ref:`extensions <topics-extensions>`, and
-  :ref:`pipelines <topics-item-pipeline>`).
+* :ref:`強力な拡張性サポートにより <extending-scrapy>`,  :ref:`シグナル <topics-signals>` と明確に定義されたAPI (ミドルウェア, :ref:`拡張機能 <topics-extensions>`, 
+  そして :ref:`パイプライン <topics-item-pipeline>`) を使用して独自の機能を作成することができます.
 
-* Wide range of built-in extensions and middlewares for handling:
+* さまざまな組み込み拡張機能とハンドリング用ミドルウェア:
 
-  - cookies and session handling
-  - HTTP features like compression, authentication, caching
-  - user-agent spoofing
+  - cookie と session の操作
+  - 圧縮, 認証, キャッシングなどのHTTP機能
+  - user-agent の操作
   - robots.txt
-  - crawl depth restriction
-  - and more
+  - クロールする深度制限
+  - などなど
+  
+* Scrapyプロセス内で動作するPythonコンソールにフックするための :ref:`Telnet コンソール <topics-telnetconsole>` , クローラのイントロスペクションとデバッグ.
 
-* A :ref:`Telnet console <topics-telnetconsole>` for hooking into a Python
-  console running inside your Scrapy process, to introspect and debug your
-  crawler
-
-* Plus other goodies like reusable spiders to crawl sites from `Sitemaps`_ and
-  XML/CSV feeds, a media pipeline for :ref:`automatically downloading images
-  <topics-media-pipeline>` (or any other media) associated with the scraped
-  items, a caching DNS resolver, and much more!
-
-What's next?
+* さらに,  `サイトマップ`_ やXML / CSVフィードからサイトをクロールするための再利用可能なスパイダー,  スクラップしたアイテムに関連付けられた画像を（またはその他のメディア）
+　:ref:`自動的にダウンロードするメディアパイプライン <topics-media-pipeline>`, キャッシングDNSリゾルバなど, 他にも機能がたくさんあります！
+ 
+次は?
 ============
 
-The next steps for you are to :ref:`install Scrapy <intro-install>`,
-:ref:`follow through the tutorial <intro-tutorial>` to learn how to create
-a full-blown Scrapy project and `join the community`_. Thanks for your
-interest!
+次のステップは, :ref:`Scrapy をインストール <intro-install>` し,
+:ref:`チュートリアルに従って <intro-tutorial>` 本格的なScrapyプロジェクトを作成し, `コミュニティに参加する`_ 方法を学びます. あなたの興味に感謝！
 
-.. _join the community: http://scrapy.org/community/
-.. _web scraping: https://en.wikipedia.org/wiki/Web_scraping
+.. _コミュニティに参加する: http://scrapy.org/community/
+.. _Webスクレイピング: https://en.wikipedia.org/wiki/Web_scraping
 .. _Amazon Associates Web Services: https://affiliate-program.amazon.com/gp/advertising/api/detail/main.html
 .. _Amazon S3: https://aws.amazon.com/s3/
-.. _Sitemaps: http://www.sitemaps.org
+.. _サイトマップ: http://www.sitemaps.org

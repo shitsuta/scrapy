@@ -7,37 +7,33 @@
 .. module:: scrapy.exporters
    :synopsis: Item Exporters
 
-Once you have scraped your items, you often want to persist or export those
-items, to use the data in some other application. That is, after all, the whole
-purpose of the scraping process.
+アイテムを集めたら, そのアイテムを永続化またはエクスポートして, 
+他のアプリケーションでデータを使用することがしばしばあります. 
+つまり, 結局のところ, スクレイピング工程の全目的です.
 
-For this purpose Scrapy provides a collection of Item Exporters for different
-output formats, such as XML, CSV or JSON.
+この目的のため, Scrapy は, XML, CSV, JSON などのさまざまな出力形式に対しアイテムエクスポーターのコレクションを提供します.
 
 アイテムエクスポーターを使う
 ====================
 
-If you are in a hurry, and just want to use an Item Exporter to output scraped
-data see the :ref:`topics-feed-exports`. Otherwise, if you want to know how
-Item Exporters work or need more custom functionality (not covered by the
-default exports), continue reading below.
+あなたが急いでいて, アイテムエクスポータを使用してスクレイピングしたデータを出力したい場合は, 
+:ref:`topics-feed-exports` を参照してください. 
+そうではなく, アイテムエクスポータがどのように機能するかを知りたい, もしくは
+（デフォルトのエクスポートでカバーされていない）カスタム機能をもっと必要とする場合は, 以下をお読みください.
 
-In order to use an Item Exporter, you  must instantiate it with its required
-args. Each Item Exporter requires different arguments, so check each exporter
-documentation to be sure, in :ref:`topics-exporters-reference`. After you have
-instantiated your exporter, you have to:
+アイテムエクスポーターを使用するには, 必要な引数でインスタンス化する必要があります. 
+各エクスポーターは異なる引数を必要とするため, 
+in :ref:`topics-exporters-reference` を参照してください. 
+エクスポーターのインスタンスを作成した後は, 以下の作業を行う必要があります:
 
-1. call the method :meth:`~BaseItemExporter.start_exporting` in order to
-signal the beginning of the exporting process
+1. エクスポートプロセスの開始を知らせるために :meth:`~BaseItemExporter.start_exporting` メソッドを呼び出します.
 
-2. call the :meth:`~BaseItemExporter.export_item` method for each item you want
-to export
+2. エクスポートする各アイテムの :meth:`~BaseItemExporter.export_item` メソッドを呼び出します.
 
-3. and finally call the :meth:`~BaseItemExporter.finish_exporting` to signal
-the end of the exporting process
+3. 最後に :meth:`~BaseItemExporter.finish_exporting` メソッドを呼び出してエクスポートプロセスの終了を知らせます.
 
-Here you can see an :doc:`Item Pipeline <item-pipeline>` which uses an Item
-Exporter to export scraped items to different files, one per spider::
+ここで :doc:`アイテムパイプライン <item-pipeline>` を使用して, 
+スクレイピングしたアイテムを異なるファイルにエクスポートするアイテムパイプライン（スパイダーごとに1つ）の例を紹介します::
 
    from scrapy import signals
    from scrapy.exporters import XmlItemExporter
@@ -75,26 +71,24 @@ Exporter to export scraped items to different files, one per spider::
 アイテムフィールドのシリアル化
 ============================
 
-By default, the field values are passed unmodified to the underlying
-serialization library, and the decision of how to serialize them is delegated
-to each particular serialization library.
+デフォルトでは, フィールド値は未変更のシリアル化ライブラリに渡され, 
+シリアル化する方法の決定権は各シリアル化ライブラリに委譲されます.
 
-However, you can customize how each field value is serialized *before it is
-passed to the serialization library*.
+ただし,  *各フィールドの値がシリアライゼーションライブラリに渡される前に*, 
+シリアライズされる方法をカスタマイズできます.
 
-There are two ways to customize how a field will be serialized, which are
-described next.
+フィールドのシリアル化方法をカスタマイズするには, 次の2つの方法があります.
 
 .. _topics-exporters-serializers:
 
 1. フィールド内のシリアライザの宣言
 --------------------------------------
 
-If you use :class:`~.Item` you can declare a serializer in the 
-:ref:`field metadata <topics-items-fields>`. The serializer must be 
-a callable which receives a value and returns its serialized form.
+:class:`~.Item` を使用する場合,  
+:ref:`フィールドメタデータ <topics-items-fields>` でシリアライザを宣言できます. 
+シリアライザは, 呼び出し可能な, 値を受け取ってシリアル化された値を返す形式でなければなりません.
 
-Example::
+例::
 
     import scrapy
 
@@ -109,13 +103,11 @@ Example::
 2. serialize_field() メソッドのオーバーライド
 ------------------------------------------
 
-You can also override the :meth:`~BaseItemExporter.serialize_field()` method to
-customize how your field value will be exported.
+:meth:`~BaseItemExporter.serialize_field()` メソッドをオーバーライドして、フィールド値のエクスポート方法をカスタマイズすることもできます.
 
-Make sure you call the base class :meth:`~BaseItemExporter.serialize_field()` method
-after your custom code.
+カスタムコードの後に, 基本クラスの :meth:`~BaseItemExporter.serialize_field()` メソッドを呼び出すようにしてください.
 
-Example::
+例::
 
       from scrapy.exporter import XmlItemExporter
 
@@ -128,11 +120,11 @@ Example::
 
 .. _topics-exporters-reference:
 
-ビルトインアイテムエクスポーターレファレンス
+ビルトインアイテムエクスポーターリファレンス
 =================================
 
-Here is a list of the Item Exporters bundled with Scrapy. Some of them contain
-output examples, which assume you're exporting these two items::
+以下に, Scrapy にバンドルされているアイテムエクスポータのリストがあります. 
+これらの中には, 2つのアイテムをエクスポートしていると仮定した出力例が含まれています::
 
     Item(name='Color TV', price='1200')
     Item(name='DVD player', price='200')
@@ -142,79 +134,71 @@ BaseItemExporter
 
 .. class:: BaseItemExporter(fields_to_export=None, export_empty_fields=False, encoding='utf-8')
 
-   This is the (abstract) base class for all Item Exporters. It provides
-   support for common features used by all (concrete) Item Exporters, such as
-   defining what fields to export, whether to export empty fields, or which
-   encoding to use.
+   これは, すべてのアイテムエクスポータの（抽象）基本クラスです. 
+   エクスポートするフィールドの定義, 空のフィールドのエクスポートの指定, 
+   使用するエンコーディングなど, すべての（具体的な）アイテムエクスポータで使用される共通の機能をサポートしています.
 
-   These features can be configured through the constructor arguments which
-   populate their respective instance attributes: :attr:`fields_to_export`,
-   :attr:`export_empty_fields`, :attr:`encoding`.
+   これらの機能は,  :attr:`fields_to_export`,
+   :attr:`export_empty_fields`, :attr:`encoding` のそれぞれのインスタンス属性を設定するコンストラクタ引数で設定できます.
 
    .. method:: export_item(item)
 
-      Exports the given item. This method must be implemented in subclasses.
+      指定された項目をエクスポートします. このメソッドはサブクラスで実装する必要があります.
 
    .. method:: serialize_field(field, name, value)
 
-      Return the serialized value for the given field. You can override this
-      method (in your custom Item Exporters) if you want to control how a
-      particular field or value will be serialized/exported.
+      指定されたフィールドの直列化された値を返します. 
+      特定のフィールドまたは値のシリアライズ/エクスポートの方法を制御する場合は, 
+      カスタムアイテムエクスポータでこのメソッドをオーバーライドできます.
 
-      By default, this method looks for a serializer :ref:`declared in the item
-      field <topics-exporters-serializers>` and returns the result of applying
-      that serializer to the value. If no serializer is found, it returns the
-      value unchanged except for ``unicode`` values which are encoded to
-      ``str`` using the encoding declared in the :attr:`encoding` attribute.
+      デフォルトでは、このメソッドは :ref:`フィールドで宣言された <topics-exporters-serializers>` シリアライザを検索し, 
+      そのシリアライザをその値に適用した結果を返します. 
+      シリアライザが見つからない場合,  :attr:`encoding` 属性で宣言されたエンコーディングを使用して 
+      エンコードされた ``str`` の ``unicode`` 値を除いて, 値は変更されません.
 
-      :param field: the field being serialized. If a raw dict is being 
-          exported (not :class:`~.Item`) *field* value is an empty dict.
-      :type field: :class:`~scrapy.item.Field` object or an empty dict 
+      :param field: フィールドはシリアル化されています。
+          生の dict がエクスポートされている場合（:class:`~.Item` ではなく）*フィールド* 値は空の dict です.
+      :type field: :class:`~scrapy.item.Field` オブジェクトまたは空の dict
 
-      :param name: the name of the field being serialized
+      :param name: シリアル化されているフィールドの名前
       :type name: str
 
-      :param value: the value being serialized
+      :param value: シリアル化された値
+  
+  .. method:: start_exporting()
 
-   .. method:: start_exporting()
-
-      Signal the beginning of the exporting process. Some exporters may use
-      this to generate some required header (for example, the
-      :class:`XmlItemExporter`). You must call this method before exporting any
-      items.
+      エクスポートプロセスの開始を知らせます. 
+      一部のエクスポーターは, これを使用して必要なヘッダー（たとえば, :class:`XmlItemExporter`）を生成することがあります. 
+      アイテムをエクスポートする前に, このメソッドを呼び出す必要があります.
 
    .. method:: finish_exporting()
 
-      Signal the end of the exporting process. Some exporters may use this to
-      generate some required footer (for example, the
-      :class:`XmlItemExporter`). You must always call this method after you
-      have no more items to export.
+      エクスポートプロセスの終了を知らせます. 
+      一部のエクスポーターは, これを使用して必要なフッター (たとえば, :class:`XmlItemExporter` のような)を生成することがあります. 
+      エクスポートする項目がなくなったら, 必ずこのメソッドを呼び出す必要があります.
 
    .. attribute:: fields_to_export
 
-      A list with the name of the fields that will be exported, or None if you
-      want to export all fields. Defaults to None.
+      エクスポートされるフィールドの名前を持つリスト, またはすべてのフィールドをエクスポートする場合は None です. 
+      デフォルトは None です.
+      
+      一部のエクスポーター ( :class:`CsvItemExporter` など) は, この属性で定義されたフィールドの順序を尊重します.
 
-      Some exporters (like :class:`CsvItemExporter`) respect the order of the
-      fields defined in this attribute.
-
-      Some exporters may require fields_to_export list in order to export the
-      data properly when spiders return dicts (not :class:`~Item` instances).
+      いくつかのエクスポーターは, スパイダーが ( :class:`~Item` インスタンスでない) dictsを返すとき, 
+      データを適切にエクスポートするために fields_to_export リストを要求することがあります.
 
    .. attribute:: export_empty_fields
 
-      Whether to include empty/unpopulated item fields in the exported data.
-      Defaults to ``False``. Some exporters (like :class:`CsvItemExporter`)
-      ignore this attribute and always export all empty fields.
-
-      This option is ignored for dict items.
+      エクスポートされたデータに空のフィールドフィールドまたは空になっていないアイテムフィールドを含めるかどうか.
+      デフォルトは ``False`` です. 一部のエクスポーター ( :class:`CsvItemExporter` など)
+      はこの属性を無視し、空のフィールドを常にエクスポートします. 
+      このオプションは dict 項目では無視されます.
 
    .. attribute:: encoding
 
-      The encoding that will be used to encode unicode values. This only
-      affects unicode values (which are always serialized to str using this
-      encoding). Other value types are passed unchanged to the specific
-      serialization library.
+      Unicode値をエンコードするために使用されるエンコード. 
+      これはUnicode値にのみ影響します（このエンコーディングを使用してstrに常にシリアル化されます）. 
+      他の値の型は, 変更されずに特定の直列化ライブラリに渡されます.
 
 .. highlight:: none
 

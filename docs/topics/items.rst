@@ -7,16 +7,15 @@
 .. module:: scrapy.item
    :synopsis: Item and Field classes
 
-The main goal in scraping is to extract structured data from unstructured
-sources, typically, web pages. Scrapy spiders can return the extracted data
-as Python dicts. While convenient and familiar, Python dicts lack structure:
-it is easy to make a typo in a field name or return inconsistent data,
-especially in a larger project with many spiders.
+スクレイピングの主な目的は, 構造化されていないソース（通常はWebページ）から構造化データを抽出することです. 
+Scrapy スパイダーは Python の dicts として抽出されたデータを返すことができます. 
+Python の dicts は便利で親しみがありますが, 構造が欠けています. 
+特に, 多くのスパイダーを持つ大規模なプロジェクトでは, フィールド名の入力ミスを起こしたり, 矛盾したデータを返すことがよく起こります.
 
-To define common output data format Scrapy provides the :class:`Item` class.
-:class:`Item` objects are simple containers used to collect the scraped data.
-They provide a `dictionary-like`_ API with a convenient syntax for declaring
-their available fields. 
+一般的な出力データフォーマットを定義するために, Scrapyは :class:`Item` クラスを提供しています.
+:class:`Item` オブジェクトは, スクラップされたデータを収集するために使用される単純なコンテナです.
+利用可能なフィールドを宣言するのに便利な構文を備えた
+`dictionary-like`_ なAPIを提供します. 
 
 Various Scrapy components use extra information provided by Items: 
 exporters look at declared fields to figure out columns to export,
@@ -147,7 +146,7 @@ notice the API is very similar to the `dict API`_.
 入力されたすべての値にアクセスする
 ------------------------------
 
-To access all populated values, just use the typical `dict API`_::
+入力された全てにアゥセスする, 標準的な `dict API`_::
 
     >>> product.keys()
     ['price', 'name']
@@ -158,7 +157,7 @@ To access all populated values, just use the typical `dict API`_::
 その他の一般的なタスク
 ------------------
 
-Copying items::
+items をコピーする::
 
     >>> product2 = Product(product)
     >>> print product2
@@ -167,13 +166,13 @@ Copying items::
     >>> product3 = product2.copy()
     >>> print product3
     Product(name='Desktop PC', price=1000)
-
-Creating dicts from items::
+    
+items から dicts を作成する::
 
     >>> dict(product) # create a dict from all populated values
     {'price': 1000, 'name': 'Desktop PC'}
 
-Creating items from dicts::
+dicts から items を作成する::
 
     >>> Product({'name': 'Laptop PC', 'price': 1500})
     Product(price=1500, name='Laptop PC')

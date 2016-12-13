@@ -7,19 +7,16 @@
 .. module:: scrapy.loader
    :synopsis: Item Loader class
 
-Item Loaders provide a convenient mechanism for populating scraped :ref:`Items
-<topics-items>`. Even though Items can be populated using their own
-dictionary-like API, Item Loaders provide a much more convenient API for
-populating them from a scraping process, by automating some common tasks like
-parsing the raw extracted data before assigning it.
+アイテムローダーは, 集めてきた :ref:`アイテム <topics-items>` を投入するための便利なメカニズムを提供します. 
+Items は独自の辞書型APIを使用して作成できますが, 
+アイテムローダーは, スクレイピング処理からデータを取り込むためのより便利なAPIを提供しています.
 
-In other words, :ref:`Items <topics-items>` provide the *container* of
-scraped data, while Item Loaders provide the mechanism for *populating* that
-container.
+言い換えれば, :ref:`アイテム <topics-items>` スクレイピングされたデータの *コンテナ* を提供し, 
+アイテムローダーはそのコンテナを投入するためのメカニズムを提供します.
 
-Item Loaders are designed to provide a flexible, efficient and easy mechanism
-for extending and overriding different field parsing rules, either by spider,
-or by source format (HTML, XML, etc) without becoming a nightmare to maintain.
+アイテムローダーは, スパイダー, またはソースフォーマット（HTML, XMLなど）のいずれかで, 
+維持する悪夢にうなされずに, さまざまなフィールド解析ルールを拡張および上書きするための
+柔軟で効率的で簡単なメカニズムを提供するように設計されています.
 
 アイテムローダーを使用したアイテムの設定
 ====================================
@@ -216,7 +213,7 @@ The precedence order, for both input and output processors, is as follows:
 3. Item Loader defaults: :meth:`ItemLoader.default_input_processor` and
    :meth:`ItemLoader.default_output_processor` (least precedence)
 
-See also: :ref:`topics-loaders-extending`.
+:ref:`topics-loaders-extending` を参照してください.
 
 .. _topics-loaders-context:
 
@@ -306,7 +303,7 @@ ItemLoader オブジェクト
             applied before processors
         :type re: str or compiled regex
 
-        Examples::
+        例::
 
             >>> from scrapy.loader.processors import TakeFirst
             >>> loader.get_value(u'name: foo', TakeFirst(), unicode.upper, re='name: (.+)')
@@ -351,7 +348,7 @@ ItemLoader オブジェクト
             selected XPath region
         :type re: str or compiled regex
 
-        Examples::
+        例::
 
             # HTML snippet: <p class="product-name">Color TV</p>
             loader.get_xpath('//p[@class="product-name"]')
@@ -369,7 +366,7 @@ ItemLoader オブジェクト
         :param xpath: the XPath to extract data from
         :type xpath: str
 
-        Examples::
+        例::
 
             # HTML snippet: <p class="product-name">Color TV</p>
             loader.add_xpath('name', '//p[@class="product-name"]')
@@ -394,7 +391,7 @@ ItemLoader オブジェクト
             selected CSS region
         :type re: str or compiled regex
 
-        Examples::
+        例::
 
             # HTML snippet: <p class="product-name">Color TV</p>
             loader.get_css('p.product-name')
@@ -412,7 +409,7 @@ ItemLoader オブジェクト
         :param css: the CSS selector to extract data from
         :type css: str
 
-        Examples::
+        例::
 
             # HTML snippet: <p class="product-name">Color TV</p>
             loader.add_css('name', 'p.product-name')
@@ -458,7 +455,7 @@ ItemLoader オブジェクト
 
     .. method:: get_input_processor(field_name)
 
-        Return the input processor for the given field.
+        指定されたフィールドの入力プロセッサーを返します.
 
     .. method:: get_output_processor(field_name)
 
@@ -482,13 +479,11 @@ ItemLoader オブジェクト
 
     .. attribute:: default_input_processor
 
-        The default input processor to use for those fields which don't specify
-        one.
-
+        指定されていないフィールドに使用するデフォルトの入力プロセッサー.
+        
     .. attribute:: default_output_processor
 
-        The default output processor to use for those fields which don't specify
-        one.
+        特に指定のないフィールドに使用するデフォルト出力プロセッサ.
 
     .. attribute:: default_selector_class
 
@@ -544,8 +539,8 @@ Example::
     footer_loader = loader.nested_xpath('//footer')
     footer_loader.add_xpath('social', 'a[@class = "social"]/@href')
     footer_loader.add_xpath('email', 'a[@class = "email"]/@href')
-    # no need to call footer_loader.load_item()
-    loader.load_item()
+    # footer_loader.load_item() を実行する必要はない
+    loader.load_item()
 
 You can nest loaders arbitrarily and they work with either xpath or css selectors.
 As a general guideline, use nested loaders when they make your code simpler but do
@@ -594,7 +589,7 @@ want to remove ``CDATA`` occurrences. Here's an example of how to do it::
     class XmlProductLoader(ProductLoader):
         name_in = MapCompose(remove_cdata, ProductLoader.name_in)
 
-And that's how you typically extend input processors.
+そしてそれは典型的な入力プロセッサを拡張する方法です.
 
 As for output processors, it is more common to declare them in the field metadata,
 as they usually depend only on the field and not on each specific site parsing
@@ -742,7 +737,7 @@ Here is a list of all built-in processors:
     Requires jmespath (https://github.com/jmespath/jmespath.py) to run.
     This processor takes only one input at a time.
 
-    Example::
+    例::
 
         >>> from scrapy.loader.processors import SelectJmes, Compose, MapCompose
         >>> proc = SelectJmes("foo") #for direct use on lists and dictionaries
@@ -751,7 +746,7 @@ Here is a list of all built-in processors:
         >>> proc({'foo': {'bar': 'baz'}})
         {'bar': 'baz'}
 
-    Working with Json::
+    Json の中身を見る::
 
         >>> import json
         >>> proc_single_json_str = Compose(json.loads, SelectJmes("foo"))

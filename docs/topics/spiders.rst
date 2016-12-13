@@ -4,11 +4,10 @@
 スパイダー
 =======
 
-Spiders are classes which define how a certain site (or a group of sites) will be
-scraped, including how to perform the crawl (i.e. follow links) and how to
-extract structured data from their pages (i.e. scraping items). In other words,
-Spiders are the place where you define the custom behaviour for crawling and
-parsing pages for a particular site (or, in some cases, a group of sites).
+パイダーとは, クロールの実行方法（リンクをたどる方法）やページから構造化データを抽出する方法（アイテムのスクレイピングなど）を含む, 
+特定のサイト（またはサイトのグループ）のスクレイピング方法を定義するクラスです. 
+言い換えれば, スパイダー は, 特定のサイト（場合によってはサイトのグループ）のページをクロールして
+解析するためのカスタム動作を定義する場所です.
 
 スパイダーの場合, スクレイピングのライフサイクルは以下のようになります:
 

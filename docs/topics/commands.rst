@@ -17,35 +17,30 @@ Scrapyツールは, 複数の目的で複数のコマンドを提供し, それ�
 環境設定
 ======================
 
-Scrapy will look for configuration parameters in ini-style ``scrapy.cfg`` files
-in standard locations:
+Scrapy は標準的な以下の場所から ``scrapy.cfg`` ファイルの設定パラメータを探します:
 
-1. ``/etc/scrapy.cfg`` or ``c:\scrapy\scrapy.cfg`` (system-wide),
-2. ``~/.config/scrapy.cfg`` (``$XDG_CONFIG_HOME``) and ``~/.scrapy.cfg`` (``$HOME``)
-   for global (user-wide) settings, and
-3. ``scrapy.cfg`` inside a scrapy project's root (see next section).
+1. ``/etc/scrapy.cfg`` または ``c:\scrapy\scrapy.cfg`` (system-wide),
+2. グローバルセッティングのための ``~/.config/scrapy.cfg`` (``$XDG_CONFIG_HOME``) と ``~/.scrapy.cfg`` (``$HOME``) 
+   (user-wide), 
+3. プロジェクトルート内にある ``scrapy.cfg`` (次のセクションを参照してください).
 
-Settings from these files are merged in the listed order of preference:
-user-defined values have higher priority than system-wide defaults
-and project-wide settings will override all others, when defined.
+これらのファイルからの設定は, 表示された優先順位でマージされます. 
+ユーザ定義の値はシステム全体のデフォルトよりも優先され, プロジェクト全体の設定は定義されている場合は他のすべての設定を上書きします.
 
-Scrapy also understands, and can be configured through, a number of environment
-variables. Currently these are:
+また, Scrapy はいくつかの環境変数を理解し, 設定することができます. 現在, 以下のものが存在します:
 
-* ``SCRAPY_SETTINGS_MODULE`` (see :ref:`topics-settings-module-envvar`)
+* ``SCRAPY_SETTINGS_MODULE`` ( :ref:`topics-settings-module-envvar` を参照してください)
 * ``SCRAPY_PROJECT``
-* ``SCRAPY_PYTHON_SHELL`` (see :ref:`topics-shell`)
+* ``SCRAPY_PYTHON_SHELL`` ( :ref:`topics-shell` を参照してください)
 
 .. _topics-project-structure:
 
 Scrapyプロジェクトのデフォルト構造
 ====================================
 
-Before delving into the command-line tool and its sub-commands, let's first
-understand the directory structure of a Scrapy project.
+コマンドラインツールとそのサブコマンドについて解説する前に, まずScrapyプロジェクトのディレクトリ構造について理解しておきましょう.
 
-Though it can be modified, all Scrapy projects have the same file
-structure by default, similar to this::
+変更することはできますが, すべての Scrapy プロジェクトはデフォルトで同じファイル構造, もしくはこれに似た構造になっています::
 
    scrapy.cfg
    myproject/
@@ -59,9 +54,9 @@ structure by default, similar to this::
            spider2.py
            ...
 
-The directory where the ``scrapy.cfg`` file resides is known as the *project
-root directory*. That file contains the name of the python module that defines
-the project settings. Here is an example::
+``scrapy.cfg`` ファイルが存在するディレクトリは, 
+**プロジェクトルートディレクトリ** と呼ばれます. 
+このファイルには、プロジェクト設定を定義するpythonモジュールの名前が含まれています。次に例を示します::
 
     [settings]
     default = myproject.settings
@@ -69,8 +64,7 @@ the project settings. Here is an example::
 ``scrapy`` ツールを使う
 =========================
 
-You can start by running the Scrapy tool with no arguments and it will print
-some usage help and the available commands::
+引数を指定せずにScrapyツールを実行すると, いくつかの使用方法のヘルプと使用可能なコマンドが表示されます::
 
     Scrapy X.Y - no active project
 
@@ -82,9 +76,9 @@ some usage help and the available commands::
       fetch         Fetch a URL using the Scrapy downloader
     [...]
 
-The first line will print the currently active project if you're inside a
-Scrapy project. In this example it was run from outside a project. If run from inside
-a project it would have printed something like this::
+あなたがScrapyプロジェクトの中にいる場合, 最初の行は現在アクティブなプロジェクトを出力します. 
+上記の例では, プロジェクトの外から実行されました. 
+プロジェクトの中から実行すると、次のような内容が出力されます::
 
     Scrapy X.Y - project: myproject
 
@@ -96,41 +90,36 @@ a project it would have printed something like this::
 プロジェクトの作成
 -----------------
 
-The first thing you typically do with the ``scrapy`` tool is create your Scrapy
-project::
+まず,  ``scrapy`` ツールで最初に行うことは, あなたのScrapyプロジェクトを作成することです::
 
     scrapy startproject myproject [project_dir]
 
-That will create a Scrapy project under the ``project_dir`` directory.
-If ``project_dir`` wasn't specified, ``project_dir`` will be the same as ``myproject``.
+これにより, ``project_dir`` ディレクトリの下に Scrapy プロジェクトが作成されます.
+``project_dir`` が指定されていない場合, ``project_dir`` は ``myproject`` と同じになります.
 
-Next, you go inside the new project directory::
+次に, 新しいプロジェクトディレクトリ中に移動します::
 
     cd project_dir
 
-And you're ready to use the ``scrapy`` command to manage and control your
-project from there.
+これで,  ``scrapy`` コマンドを使用してそこからプロジェクトを管理および制御する準備が整いました.
 
 プロジェクトの制御
 --------------------
 
-You use the ``scrapy`` tool from inside your projects to control and manage
-them.
+プロジェクトの中から ``scrapy`` ツールを使用して, プロジェクトを制御および管理します.
 
-For example, to create a new spider::
+例えば, 新しいスパイダーを作成するには::
 
     scrapy genspider mydomain mydomain.com
 
-Some Scrapy commands (like :command:`crawl`) must be run from inside a Scrapy
-project. See the :ref:`commands reference <topics-commands-ref>` below for more
-information on which commands must be run from inside projects, and which not.
+一部のScrapyコマンド ( :command:`crawl` など) は, Scrapyプロジェクト内から実行する必要があります. 
+どのコマンドをプロジェクト内から実行する必要があるかについての詳細は, 
+以下の :ref:`コマンドリファレンス <topics-commands-ref>` を参照してください.
 
-Also keep in mind that some commands may have slightly different behaviours
-when running them from inside projects. For example, the fetch command will use
-spider-overridden behaviours (such as the ``user_agent`` attribute to override
-the user-agent) if the url being fetched is associated with some specific
-spider. This is intentional, as the ``fetch`` command is meant to be used to
-check how spiders are downloading pages.
+また、いくつかのコマンドは、プロジェクトの中から実行する際に, 少し違う振る舞いをすることがあります. 
+たとえば、フェッチされたURLが特定のスパイダーに関連付けられている場合, 
+``fetch`` コマンドは spider-overridden ビヘイビア（``user-agent`` 属性を上書きする user_agent など）を使用します. 
+``fetch`` コマンドは, スパイダーがページをどのようにダウンロードしているかを確認するために使用されるため, 意図的に行っています.
 
 .. _topics-commands-ref:
 

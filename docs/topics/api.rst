@@ -21,7 +21,7 @@ Scrapy API の主なエントリポイントは,  ``from_crawler`` メソッド�
 .. module:: scrapy.crawler
    :synopsis: The Scrapy crawler
 
-拡張機能マネージャーは、インストールされている拡張機能の読み込みと追跡を担当しており、使用可能なすべての拡張機能の辞書と、
+拡張機能マネージャーは, インストールされている拡張機能の読み込みと追跡を担当しており, 使用可能なすべての拡張機能の辞書と, 
 :ref:`ダウンローダーミドルウェアの設定 <topics-downloader-middleware-setting>` 
 方法と同様の命令を含む :setting:`EXTENSIONS` 設定によって構成されています.
 
@@ -108,8 +108,9 @@ Scrapy API の主なエントリポイントは,  ``from_crawler`` メソッド�
 
     Scrapyで使用されるデフォルトの設定優先度のキー名と優先度を辞書形式で設定します.
 
-    各項目は設定エントリポイントを定義し、識別のためのコード名と整数の優先順位を与えます. 
-    :class:`~scrapy.settings.Settings` クラスで値を設定したり取得したりするときは、優先度が高いほど優先度が低くなります.
+    各項目は設定エントリポイントを定義し, 
+    識別のためのコード名と整数の優先順位を与えます. 
+    :class:`~scrapy.settings.Settings` クラスで値を設定したり取得したりするときは, 優先度が高いほど優先度が低くなります.
 
     .. highlight:: python
 
@@ -145,14 +146,14 @@ Scrapy API の主なエントリポイントは,  ``from_crawler`` メソッド�
 
 .. class:: SpiderLoader
 
-    このクラスは、プロジェクト全体で定義されたスパイダークラスの取得と処理を担当します.
+    このクラスは, プロジェクト全体で定義されたスパイダークラスの取得と処理を担当します.
 
-    :setting:`SPIDER_LOADER_CLASS` プロジェクト設定でパスを指定することで、カスタムスパイダーローダーを使用できます. 
+    :setting:`SPIDER_LOADER_CLASS` プロジェクト設定でパスを指定することで, カスタムスパイダーローダーを使用できます. 
     エラーのない実行を保証するために :class:`scrapy.interfaces.ISpiderLoader` インタフェースを完全に実装する必要があります.
 
     .. method:: from_settings(settings)
 
-       このクラスメソッドは、クラスのインスタンスを作成するためにScrapyによって使用されます.
+       このクラスメソッドは, クラスのインスタンスを作成するためにScrapyによって使用されます.
        プロジェクト設定で呼び出され,  :setting:`SPIDER_MODULES` 
        設定で指定したモジュール内で再帰的に見つかったスパイダーをロードします.
 
@@ -161,8 +162,8 @@ Scrapy API の主なエントリポイントは,  ``from_crawler`` メソッド�
        
     .. method:: load(spider_name)
 
-       Spider クラスを指定された名前で取得します。以前に読み込まれたスパイダーのうち, 
-       `spider_name` という名前の Spider クラスが検索され、見つからなければ KeyError が発生します.
+       Spider クラスを指定された名前で取得します. 以前に読み込まれたスパイダーのうち, 
+       `spider_name` という名前の Spider クラスが検索され, 見つからなければ KeyError が発生します.
 
        :param spider_name: Spider クラス名
        :type spider_name: str
@@ -173,7 +174,7 @@ Scrapy API の主なエントリポイントは,  ``from_crawler`` メソッド�
 
     .. method:: find_by_request(request)
 
-       指定されたリクエストを処理できるスパイダーの名前をリストします。要求のURLとスパイダーのドメインを照合しようとします.
+       指定されたリクエストを処理できるスパイダーの名前をリストします. 要求のURLとスパイダーのドメインを照合しようとします.
 
        :param request: 問い合わされたリクエスト
        :type request: :class:`~scrapy.http.Request` インスタンス
@@ -193,7 +194,7 @@ Scrapy API の主なエントリポイントは,  ``from_crawler`` メソッド�
 統計コレクター API
 ===================
 
-:mod:`scrapy.statscollectors` モジュールの下に利用可能ないくつかの統計コレクタがあり、それらはすべて
+:mod:`scrapy.statscollectors` モジュールの下に利用可能ないくつかの統計コレクタがあり, それらはすべて
 :class:`~scrapy.statscollectors.StatsCollector` 
 クラスで定義されたStatsコレクタAPIを実装しています（すべて継承しています）.
 
@@ -220,17 +221,17 @@ Scrapy API の主なエントリポイントは,  ``from_crawler`` メソッド�
 
     .. method:: inc_value(key, count=1, start=0)
 
-        指定された統計値キーの値を与えられた数だけ増やします（設定されていない場合は、与えられた開始値を仮定する）.
+        指定された統計値キーの値を与えられた数だけ増やします（設定されていない場合は, 与えられた開始値を仮定する）.
 
     .. method:: max_value(key, value)
 
-        指定されたキーの現在の値が ``value`` よりも小さい場合にのみ、指定されたキーの値に ``value`` を設定します。
-        指定されたキーに現在の値がない場合、値は常に設定されます。
+        指定されたキーの現在の値が ``value`` よりも小さい場合にのみ, 指定されたキーの値に ``value`` を設定します. 
+        指定されたキーに現在の値がない場合, 値は常に設定されます. 
 
     .. method:: min_value(key, value)
 
-        指定されたキーの現在の値が ``value`` より大きい場合にのみ、指定されたキーの値に ``value`` を設定します。
-        指定されたキーに現在の値がない場合、値は常に設定されます.
+        指定されたキーの現在の値が ``value`` より大きい場合にのみ, 指定されたキーの値に ``value`` を設定します. 
+        指定されたキーに現在の値がない場合, 値は常に設定されます.
 
     .. method:: clear_stats()
 
@@ -244,6 +245,6 @@ Scrapy API の主なエントリポイントは,  ``from_crawler`` メソッド�
 
     .. method:: close_spider(spider)
 
-        指定されたスパイダーを閉じます。これが呼び出された後, 特定の統計情報にアクセスまたは収集することはできません.
+        指定されたスパイダーを閉じます. これが呼び出された後, 特定の統計情報にアクセスまたは収集することはできません.
         
 .. _reactor: https://twistedmatrix.com/documents/current/core/howto/reactor-basics.html

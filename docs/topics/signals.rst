@@ -63,7 +63,7 @@ the :ref:`topics-signals-ref` below to know which ones.
 .. module:: scrapy.signals
    :synopsis: Signals definitions
 
-Here's the list of Scrapy built-in signals and their meaning.
+Scrapy のビルトインシグナルのリストとその意味は次のとおりです.
 
 engine_started
 --------------

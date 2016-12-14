@@ -213,7 +213,7 @@ Scrapy API の主なエントリポイントは,  ``from_crawler`` メソッド�
 
     .. method:: set_value(key, value)
 
-        与えられた stats キーに与えられた値を設定する.
+        与えられた stats キーに与えられた値を設定します.
 
     .. method:: set_stats(stats)
 

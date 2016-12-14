@@ -21,11 +21,9 @@ Scrapy API の主なエントリポイントは,  ``from_crawler`` メソッド�
 .. module:: scrapy.crawler
    :synopsis: The Scrapy crawler
 
-The Extension Manager is responsible for loading and keeping track of installed
-extensions and it's configured through the :setting:`EXTENSIONS` setting which
-contains a dictionary of all available extensions and their order similar to
-how you :ref:`configure the downloader middlewares
-<topics-downloader-middleware-setting>`.
+拡張機能マネージャーは、インストールされている拡張機能の読み込みと追跡を担当しており、使用可能なすべての拡張機能の辞書と、
+:ref:`ダウンローダーミドルウェアの設定 <topics-downloader-middleware-setting>` 
+方法と同様の命令を含む :setting:`EXTENSIONS` 設定によって構成されています.
 
 .. class:: Crawler(spidercls, settings)
 
@@ -108,13 +106,10 @@ how you :ref:`configure the downloader middlewares
 
 .. attribute:: SETTINGS_PRIORITIES
 
-    Dictionary that sets the key name and priority level of the default
-    settings priorities used in Scrapy.
+    Scrapyで使用されるデフォルトの設定優先度のキー名と優先度を辞書形式で設定します.
 
-    Each item defines a settings entry point, giving it a code name for
-    identification and an integer priority. Greater priorities take more
-    precedence over lesser ones when setting and retrieving values in the
-    :class:`~scrapy.settings.Settings` class.
+    各項目は設定エントリポイントを定義し、識別のためのコード名と整数の優先順位を与えます. 
+    :class:`~scrapy.settings.Settings` クラスで値を設定したり取得したりするときは、優先度が高いほど優先度が低くなります.
 
     .. highlight:: python
 
@@ -128,8 +123,8 @@ how you :ref:`configure the downloader middlewares
             'cmdline': 40,
         }
 
-    For a detailed explanation on each settings sources, see:
-    :ref:`topics-settings`.
+    各設定の詳細については, 
+    :ref:`topics-settings` を参照してください.
 
 .. autofunction:: get_settings_priority
 
@@ -150,45 +145,39 @@ how you :ref:`configure the downloader middlewares
 
 .. class:: SpiderLoader
 
-    This class is in charge of retrieving and handling the spider classes
-    defined across the project.
+    このクラスは、プロジェクト全体で定義されたスパイダークラスの取得と処理を担当します.
 
-    Custom spider loaders can be employed by specifying their path in the
-    :setting:`SPIDER_LOADER_CLASS` project setting. They must fully implement
-    the :class:`scrapy.interfaces.ISpiderLoader` interface to guarantee an
-    errorless execution.
+    :setting:`SPIDER_LOADER_CLASS` プロジェクト設定でパスを指定することで、カスタムスパイダーローダーを使用できます. 
+    エラーのない実行を保証するために :class:`scrapy.interfaces.ISpiderLoader` インタフェースを完全に実装する必要があります.
 
     .. method:: from_settings(settings)
 
-       This class method is used by Scrapy to create an instance of the class.
-       It's called with the current project settings, and it loads the spiders
-       found recursively in the modules of the :setting:`SPIDER_MODULES`
-       setting.
+       このクラスメソッドは、クラスのインスタンスを作成するためにScrapyによって使用されます.
+       プロジェクト設定で呼び出され,  :setting:`SPIDER_MODULES` 
+       設定で指定したモジュール内で再帰的に見つかったスパイダーをロードします.
 
-       :param settings: project settings
-       :type settings: :class:`~scrapy.settings.Settings` instance
-
+       :param settings: プロジェクト設定
+       :type settings: :class:`~scrapy.settings.Settings` インスタンス
+       
     .. method:: load(spider_name)
 
-       Get the Spider class with the given name. It'll look into the previously
-       loaded spiders for a spider class with name `spider_name` and will raise
-       a KeyError if not found.
+       Spider クラスを指定された名前で取得します。以前に読み込まれたスパイダーのうち, 
+       `spider_name` という名前の Spider クラスが検索され、見つからなければ KeyError が発生します.
 
-       :param spider_name: spider class name
-       :type spider_name: str
+       :param spider_name: Spider クラス名
+       :type spider_name: str
 
     .. method:: list()
 
-       Get the names of the available spiders in the project.
+       プロジェクトで利用可能なスパイダーの名前を取得する.
 
     .. method:: find_by_request(request)
 
-       List the spiders' names that can handle the given request. Will try to
-       match the request's url against the domains of the spiders.
+       指定されたリクエストを処理できるスパイダーの名前をリストします。要求のURLとスパイダーのドメインを照合しようとします.
 
-       :param request: queried request
-       :type request: :class:`~scrapy.http.Request` instance
-
+       :param request: 問い合わされたリクエスト
+       :type request: :class:`~scrapy.http.Request` インスタンス
+       
 .. _topics-api-signals:
 
 シグナル API
@@ -204,10 +193,9 @@ how you :ref:`configure the downloader middlewares
 統計コレクター API
 ===================
 
-There are several Stats Collectors available under the
-:mod:`scrapy.statscollectors` module and they all implement the Stats
-Collector API defined by the :class:`~scrapy.statscollectors.StatsCollector`
-class (which they all inherit from).
+:mod:`scrapy.statscollectors` モジュールの下に利用可能ないくつかの統計コレクタがあり、それらはすべて
+:class:`~scrapy.statscollectors.StatsCollector` 
+クラスで定義されたStatsコレクタAPIを実装しています（すべて継承しています）.
 
 .. module:: scrapy.statscollectors
    :synopsis: Stats Collectors
@@ -232,20 +220,17 @@ class (which they all inherit from).
 
     .. method:: inc_value(key, count=1, start=0)
 
-        Increment the value of the given stats key, by the given count,
-        assuming the start value given (when it's not set).
+        指定された統計値キーの値を与えられた数だけ増やします（設定されていない場合は、与えられた開始値を仮定する）.
 
     .. method:: max_value(key, value)
 
-        Set the given value for the given key only if current value for the
-        same key is lower than value. If there is no current value for the
-        given key, the value is always set.
+        指定されたキーの現在の値が ``value`` よりも小さい場合にのみ、指定されたキーの値に ``value`` を設定します。
+        指定されたキーに現在の値がない場合、値は常に設定されます。
 
     .. method:: min_value(key, value)
 
-        Set the given value for the given key only if current value for the
-        same key is greater than value. If there is no current value for the
-        given key, the value is always set.
+        指定されたキーの現在の値が ``value`` より大きい場合にのみ、指定されたキーの値に ``value`` を設定します。
+        指定されたキーに現在の値がない場合、値は常に設定されます.
 
     .. method:: clear_stats()
 

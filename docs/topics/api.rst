@@ -6,7 +6,7 @@
 
 .. versionadded:: 0.15
 
-このセクションでは, ScrapyコアAPIについて説明します. 拡張APIやミドルウェアの開発者向けです.
+このセクションは, ScrapyコアAPIについて説明します. 拡張APIやミドルウェアの開発者向けです.
 
 .. _topics-api-crawler:
 

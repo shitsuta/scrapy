@@ -4,67 +4,62 @@
 メモリリークのデバッグ
 ======================
 
-In Scrapy, objects such as Requests, Responses and Items have a finite
-lifetime: they are created, used for a while, and finally destroyed.
+Scrapyでは, リクエスト, レスポンス, アイテムなどのオブジェクトの寿命は制限されています. 
+作成され, しばらく使用された後, 最終的に破棄されます.
 
-From all those objects, the Request is probably the one with the longest
-lifetime, as it stays waiting in the Scheduler queue until it's time to process
-it. For more info see :ref:`topics-architecture`.
+全オブジェクトの中でも, Requestはおそらく最も寿命の長いものです. 
+スケジューラのキューで待機してから処理するまでです. 
+詳細は,  :ref:`topics-architecture` を参照してください.
 
-As these Scrapy objects have a (rather long) lifetime, there is always the risk
-of accumulating them in memory without releasing them properly and thus causing
-what is known as a "memory leak".
+これらの Scrapy オブジェクトは（かなり長い）存続期間を持つため, 
+適切に解放されずメモリに蓄積され, 「メモリリーク」を引き起こすリスクが常にあります.
 
-To help debugging memory leaks, Scrapy provides a built-in mechanism for
-tracking objects references called :ref:`trackref <topics-leaks-trackrefs>`,
-and you can also use a third-party library called :ref:`Guppy
-<topics-leaks-guppy>` for more advanced memory debugging (see below for more
-info). Both mechanisms must be used from the :ref:`Telnet Console
-<topics-telnetconsole>`.
+メモリリークをデバッグするのに役立つように, Scrapyには :ref:`trackref <topics-leaks-trackrefs>` 
+というオブジェクト参照をトラッキングするためのメカニズムが組み込まれています. 
+さらに詳細なメモリデバッグには :ref:`Guppy <topics-leaks-guppy>` 
+というサードパーティのライブラリを使用することもできます.  
+どちらのツールも :ref:`Telnet コンソール <topics-telnetconsole>` から使用する必要があります.
 
 メモリリークの一般的な原因
 =============================
 
-It happens quite often (sometimes by accident, sometimes on purpose) that the
-Scrapy developer passes objects referenced in Requests (for example, using the
-:attr:`~scrapy.http.Request.meta` attribute or the request callback function)
-and that effectively bounds the lifetime of those referenced objects to the
-lifetime of the Request. This is, by far, the most common cause of memory leaks
-in Scrapy projects, and a quite difficult one to debug for newcomers.
+頻繁に, Scrapy 開発者はリクエストで参照されるオブジェクト（たとえば, :attr:`~scrapy.http.Request.meta` 
+属性または要求コールバック関数を使用して）を渡し, 
+これらの参照されたオブジェクトの有効期間をリクエストの存続期間として効果的に制限します. 
+これは, 今のところScrapyプロジェクトでのメモリリークの最も一般的な原因であり, 
+新規参入者がデバッグするのは非常に難しいものです.
 
-In big projects, the spiders are typically written by different people and some
-of those spiders could be "leaking" and thus affecting the rest of the other
-(well-written) spiders when they get to run concurrently, which, in turn,
-affects the whole crawling process.
+大きなプロジェクトでは, 一般的にスパイダーは様々な人によって書かれており, 
+そのスパイダーのいくつかは「リーク」の原因になりえ, 他の（よく書かれた）スパイダーの部分に同時に影響を及ぼし, 
+全体的なクロールプロセスに影響を及ぼす可能性があります.
 
-The leak could also come from a custom middleware, pipeline or extension that
-you have written, if you are not releasing the (previously allocated) resources
-properly. For example, allocating resources on :signal:`spider_opened`
-but not releasing them on :signal:`spider_closed` may cause problems if
-you're running :ref:`multiple spiders per process <run-multiple-spiders>`.
+また, （以前に割り当てられた）リソースを適切に解放していない場合は, 
+作成したカスタムミドルウェア, パイプライン, または拡張機能からリークが発生する可能性があります. 
+たとえば,  :signal:`spider_opened` にリソースを割り当てても
+:signal:`spider_closed` でリソースを解放しないと, 
+:ref:`プロセスごとに複数のスパイダーを実行 <run-multiple-spiders>` していると問題が発生する可能性があります. 
 
 リクエストが多すぎ?
 ------------------
 
-By default Scrapy keeps the request queue in memory; it includes
-:class:`~scrapy.http.Request` objects and all objects
-referenced in Request attributes (e.g. in :attr:`~scrapy.http.Request.meta`).
-While not necessarily a leak, this can take a lot of memory. Enabling
-:ref:`persistent job queue <topics-jobs>` could help keeping memory usage
-in control.
+デフォルトでは, Scrapyはリクエストのキューをメモリ内に保持します. 
+これは,  :class:`~scrapy.http.Request` オブジェクトおよび
+（例えば, :attr:`~scrapy.http.Request.meta` 内の）
+リクエスト属性内で参照されるすべてのオブジェクトを含みます. 
+必ずしもリークとはいえませんが, これには多くのメモリを必要とします. 
+:ref:`永続的なジョブ・キュー <topics-jobs>` を有効にすると, メモリー使用量を制御できます.
 
 .. _topics-leaks-trackrefs:
 
 ``trackref`` でメモリリークのデバッグをする
 ========================================
 
-:mod:`trackref` is a module provided by Scrapy to debug the most common cases of
-memory leaks. It basically tracks the references to all live Requests,
-Responses, Item and Selector objects.
+:mod:`trackref` は, メモリリークの最も一般的なケースをデバッグするためにScrapyによって提供されるモジュールです. 
+これは, 基本的にすべての実際のリクエスト, レスポンス, アイテム, およびセレクタオブジェクトへの参照を追跡します.
 
-You can enter the telnet console and inspect how many objects (of the classes
-mentioned above) are currently alive using the ``prefs()`` function which is an
-alias to the :func:`~scrapy.utils.trackref.print_live_refs` function::
+Telnet コンソールに入り,  :func:`~scrapy.utils.trackref.print_live_refs` 
+関数のエイリアスである ``prefs()`` 関数を使って, 
+現在生きているオブジェクトの数（上記のクラスのうちどれか）を調べることができます::
 
     telnet localhost 6023
 
@@ -76,17 +71,16 @@ alias to the :func:`~scrapy.utils.trackref.print_live_refs` function::
     Selector                            2   oldest: 0s ago
     FormRequest                       878   oldest: 7s ago
 
-As you can see, that report also shows the "age" of the oldest object in each
-class. If you're running multiple spiders per process chances are you can
-figure out which spider is leaking by looking at the oldest request or response.
-You can get the oldest object of each class using the
-:func:`~scrapy.utils.trackref.get_oldest` function (from the telnet console).
+ご覧のとおり, このレポートには, 各クラスの中で最も古いオブジェクトの「年齢」も表示されます. 
+プロセスごとに複数のスパイダーを実行している場合は, 最も古いリクエスト, またはレスポンスを調べることで, 
+どのスパイダーがリークを起こしているか把握できます.
+Telnetコンソールから :func:`~scrapy.utils.trackref.get_oldest` 関数を使用して, 
+各クラスの最も古いオブジェクトを取得できます.
 
 どのオブジェクトが追跡されるの?
 --------------------------
 
-The objects tracked by ``trackrefs`` are all from these classes (and all its
-subclasses):
+``trackrefs``によって追跡されるオブジェクトは, すべてこれらのクラス（およびそのすべてのサブクラス）のものです:
 
 * :class:`scrapy.http.Request`
 * :class:`scrapy.http.Response`
@@ -97,22 +91,19 @@ subclasses):
 実際の例
 --------------
 
-Let's see a concrete example of a hypothetical case of memory leaks.
-Suppose we have some spider with a line similar to this one::
+仮想のメモリリークの具体例を見てみましょう. このような行を持つスパイダーがいくつかあるとします::
 
     return Request("http://www.somenastyspider.com/product.php?pid=%d" % product_id,
         callback=self.parse, meta={referer: response})
 
-That line is passing a response reference inside a request which effectively
-ties the response lifetime to the requests' one, and that would definitely
-cause memory leaks.
+この行は, リクエスト中にレスポンスの参照を渡しています. 
+このレスポンスの参照は, レスポンスの存続期間とリクエストの存続期間とを結びつけ, 
+メモリリークを引き起こします.
 
-Let's see how we can discover the cause (without knowing it
-a-priori, of course) by using the ``trackref`` tool.
+``trackref`` ツールを使用して, 原因を発見する方法を見てみましょう.
 
-After the crawler is running for a few minutes and we notice its memory usage
-has grown a lot, we can enter its telnet console and check the live
-references::
+クローラが数分間実行され, メモリ使用量が大きく増えたことがわかったら, 
+Telnet コンソールに入り, 生きている参照を確認します::
 
     >>> prefs()
     Live References
@@ -122,23 +113,20 @@ references::
     Selector                            2   oldest: 0s ago
     Request                          3878   oldest: 250s ago
 
-The fact that there are so many live responses (and that they're so old) is
-definitely suspicious, as responses should have a relatively short lifetime
-compared to Requests. The number of responses is similar to the number
-of requests, so it looks like they are tied in a some way. We can now go
-and check the code of the spider to discover the nasty line that is
-generating the leaks (passing response references inside requests).
+レスポンスはリクエストと比較して, 短い寿命でなければならないので, 
+非常に多くの生きているレスポンスがあること（そしてそれらは古くなっています）は間違いなく疑わしいです. 
+レスポンスの数とリクエストの数がほぼ同じなので, 何らかの原因で結び付けられているように見えます. 
+この結果から, スパイダーのコードをチェックして, リークを生成している厄介な行を発見することができます（リクエスト内でレスポンス参照を渡す）.
 
-Sometimes extra information about live objects can be helpful.
-Let's check the oldest response::
+生きているオブジェクトに関する追加情報が役立つ場合があります. 最も古いリクエストを確認しましょう::
 
     >>> from scrapy.utils.trackref import get_oldest
     >>> r = get_oldest('HtmlResponse')
     >>> r.url
     'http://www.somenastyspider.com/product.php?pid=123'
 
-If you want to iterate over all objects, instead of getting the oldest one, you
-can use the :func:`scrapy.utils.trackref.iter_all` function::
+最も古いものだけを取得するのではなく, すべてのオブジェクトを繰り返し処理したい場合は 
+:func:`scrapy.utils.trackref.iter_all` 関数を使用します::
 
     >>> from scrapy.utils.trackref import iter_all
     >>> [r.url for r in iter_all('HtmlResponse')]
@@ -149,11 +137,10 @@ can use the :func:`scrapy.utils.trackref.iter_all` function::
 スパイダーが多すぎる?
 -----------------
 
-If your project has too many spiders executed in parallel,
-the output of :func:`prefs()` can be difficult to read.
-For this reason, that function has a ``ignore`` argument which can be used to
-ignore a particular class (and all its subclases). For
-example, this won't show any live references to spiders::
+プロジェクトの並列実行数が多すぎると,
+:func:`prefs()` の出力を読みにくくなる可能性があります.
+このため, この関数には, 特定のクラス（およびすべてのサブクラス）を無視できる ``ignore`` 引数があります. 
+たとえば, これはスパイダーの参照を表示しません::
 
     >>> from scrapy.spiders import Spider
     >>> prefs(ignore=Spider)
@@ -164,54 +151,49 @@ example, this won't show any live references to spiders::
 scrapy.utils.trackref モジュール
 ------------------------------
 
-Here are the functions available in the :mod:`~scrapy.utils.trackref` module.
+:mod:`~scrapy.utils.trackref` モジュールで利用できる関数は次のとおりです.
 
 .. class:: object_ref
 
-    Inherit from this class (instead of object) if you want to track live
-    instances with the ``trackref`` module.
+    ``trackref`` モジュールを使用してライブインスタンスをトラッキングする場合は, （オブジェクトではなく）このクラスから継承します.
 
 .. function:: print_live_refs(class_name, ignore=NoneType)
 
-    Print a report of live references, grouped by class name.
+    生きている参照のレポートをクラス名でグループ化して出力します.
 
-    :param ignore: if given, all objects from the specified class (or tuple of
-        classes) will be ignored.
-    :type ignore: class or classes tuple
-
+    :param ignore: 与えられた場合, 指定されたクラス（またはクラスのタプル）からのすべてのオブジェクトは無視されます.
+    :type ignore: class または classe のタプル
+    
 .. function:: get_oldest(class_name)
 
-    Return the oldest object alive with the given class name, or ``None`` if
-    none is found. Use :func:`print_live_refs` first to get a list of all
-    tracked live objects per class name.
+    指定されたクラス名で生存しているすべてのオブジェクトのイテレータを返します. 見つからない場合は ``None`` を返します. 
+    まず,  :func:`print_live_refs` を使用して, クラス名ごとに追跡されたすべてのライブオブジェクトのリストを取得します.
 
 .. function:: iter_all(class_name)
 
-    Return an iterator over all objects alive with the given class name, or
-    ``None`` if none is found. Use :func:`print_live_refs` first to get a list
-    of all tracked live objects per class name.
+    指定されたクラス名で生存しているすべてのオブジェクトのイテレータを返します. 見つからない場合は
+    ``None`` を返します. まず,  :func:`print_live_refs` を使用して, 
+    クラス名ごとに追跡されたすべてのライブオブジェクトのリストを取得します.
 
 .. _topics-leaks-guppy:
 
 Guppy でメモリリークのデバッグをする
 =================================
 
-``trackref`` provides a very convenient mechanism for tracking down memory
-leaks, but it only keeps track of the objects that are more likely to cause
-memory leaks (Requests, Responses, Items, and Selectors). However, there are
-other cases where the memory leaks could come from other (more or less obscure)
-objects. If this is your case, and you can't find your leaks using ``trackref``,
-you still have another resource: the `Guppy library`_.
+``trackref`` はメモリリークを追跡する非常に便利なメカニズムを提供しますが, 
+メモリリーク（リクエスト, レスポンス, アイテム, セレクタ）の原因となる可能性の高いオブジェクトのみを追跡します. 
+しかし, メモリリークが他の（多かれ少なかれわかりにくい）オブジェクトから来る場合もあります. 
+``trackref`` を使ってリークを見つけることができない場合は, もう一つのリソース,
+`Guppy ライブラリ`_ があります.
 
-.. _Guppy library: https://pypi.python.org/pypi/guppy
+.. _Guppy ライブラリ: https://pypi.python.org/pypi/guppy
 
-If you use ``pip``, you can install Guppy with the following command::
+``pip`` を使用している場合は, 次のコマンドでGuppyをインストールできます::
 
     pip install guppy
 
-The telnet console also comes with a built-in shortcut (``hpy``) for accessing
-Guppy heap objects. Here's an example to view all Python objects available in
-the heap using Guppy::
+また, Telnet コンソールには, Guppy ヒープオブジェクトにアクセスするための組み込みショートカット（hpy）
+が付属しています. 以下は, Guppyを使ってヒープ内で利用可能なすべてのPythonオブジェクトを表示する例です::
 
     >>> x = hpy.heap()
     >>> x.bytype
@@ -229,8 +211,8 @@ the heap using Guppy::
          9   1209   0   456936   1  49872920  95 scrapy.http.headers.Headers
     <1676 more rows. Type e.g. '_.more' to view.>
 
-You can see that most space is used by dicts. Then, if you want to see from
-which attribute those dicts are referenced, you could do::
+ほとんどのスペースは ``dict`` によって使用されていることがわかります. 
+これらの ``dict`` がどの属性から参照されているかを確認したい場合は, 以下のようにします::
 
     >>> x.bytype[0].byvia
     Partition of a set of 22307 objects. Total size = 16423880 bytes.
@@ -247,30 +229,28 @@ which attribute those dicts are referenced, you could do::
          9     27   0   155016   1  14841328  90 '[1]'
     <333 more rows. Type e.g. '_.more' to view.>
 
-As you can see, the Guppy module is very powerful but also requires some deep
-knowledge about Python internals. For more info about Guppy, refer to the
-`Guppy documentation`_.
+ご覧のとおり, Guppy モジュールは非常に強力ですが, Python についての深い知識も必要です. Guppyの詳細については, 
+`Guppy ドキュメント`_ を参照してください.
 
-.. _Guppy documentation: http://guppy-pe.sourceforge.net/
+.. _Guppy ドキュメント: http://guppy-pe.sourceforge.net/
 
 .. _topics-leaks-without-leaks:
 
 漏れのない漏れ
 ===================
 
-Sometimes, you may notice that the memory usage of your Scrapy process will
-only increase, but never decrease. Unfortunately, this could happen even
-though neither Scrapy nor your project are leaking memory. This is due to a
-(not so well) known problem of Python, which may not return released memory to
-the operating system in some cases. For more information on this issue see:
+場合によっては, Scrapy プロセスのメモリ使用量が増加するだけで, 減少しないことがあります. 
+この場合残念なことに, Scrapy または, あなたのプロジェクトどちらにも, メモリリークが発生する可能性があります. 
+これは（あまりよく知られていない）Python の問題で, Python がリリースしたメモリをオペレーティングシステムに返さないことにより発生します. 
+詳細については, 以下を参照してください:
 
 * `Python Memory Management <http://www.evanjones.ca/python-memory.html>`_
 * `Python Memory Management Part 2 <http://www.evanjones.ca/python-memory-part2.html>`_
 * `Python Memory Management Part 3 <http://www.evanjones.ca/python-memory-part3.html>`_
 
-The improvements proposed by Evan Jones, which are detailed in `this paper`_,
-got merged in Python 2.5, but this only reduces the problem, it doesn't fix it
-completely. To quote the paper:
+ `この記事`_で詳しく述べられている Evan Jones が提案した改良点は, 
+Python 2.5でマージされましたが, これは問題が軽減されただけで, 完全に修正されたわけではありません. 
+以下は, 記事の引用です:
 
     *Unfortunately, this patch can only free an arena if there are no more
     objects allocated in it anymore. This means that fragmentation is a large
@@ -280,8 +260,7 @@ completely. To quote the paper:
     to move to a compacting garbage collector, which is able to move objects in
     memory. This would require significant changes to the Python interpreter.*
 
-.. _this paper: http://www.evanjones.ca/memoryallocator/
+.. _この記事: http://www.evanjones.ca/memoryallocator/
 
-To keep memory consumption reasonable you can split the job into several
-smaller jobs or enable :ref:`persistent job queue <topics-jobs>`
-and stop/start spider from time to time.
+メモリ消費を合理的に保つために, ジョブを複数の小さなジョブに分割するか, 
+:ref:`永続的なジョブ・キュー <topics-jobs>` を有効にし, スパイダーを停止/開始するすることが望ましいです.

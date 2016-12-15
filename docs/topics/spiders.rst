@@ -350,7 +350,7 @@ CrawlSpider
 .. class:: Rule(link_extractor, callback=None, cb_kwargs=None, follow=None, process_links=None, process_request=None)
 
    ``link_extractor`` は, クロールされた各ページからリンクを抽出する方法を定義する
-    :ref:`Link Extractor <topics-link-extractors>` オブジェクトです.
+   :ref:`Link Extractor <topics-link-extractors>` オブジェクトです.
 
    ``callback`` は抽出されたリンクごとに呼び出される, 
    呼び出し可能または文字列です（この場合, その名前を持つスパイダーオブジェクトのメソッドが使用されます）. 
@@ -358,8 +358,8 @@ CrawlSpider
    :class:`~scrapy.http.Request` オブジェクト（またはそれらのサブクラス）を含むリストを返す必要があります.
 
    .. warning:: クロールスパイダールールを作成するときは,  :class:`CrawlSpider` は ``parse`` メソッド自体を使用してロジックを実装するため, 
-       ``parse`` をコールバックとして使用しないでください. 
-       したがって, 解析メソッドをオーバーライドすると, クロールスパイダーは機能しなくなります. 
+      ``parse`` をコールバックとして使用しないでください. 
+      したがって, 解析メソッドをオーバーライドすると, クロールスパイダーは機能しなくなります. 
        
    ``cb_kwargs`` は, コールバック関数に渡すキーワード引数を含む ``dict`` です.
 

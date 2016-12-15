@@ -268,17 +268,16 @@ to give data more structure you can use :ref:`topics-items`::
 スパイダーの引数
 ================
 
-Spiders can receive arguments that modify their behaviour. Some common uses for
-spider arguments are to define the start URLs or to restrict the crawl to
-certain sections of the site, but they can be used to configure any
-functionality of the spider.
+スパイダーは行動を変更する引数を受け取ることができます. 
+スパイダー引数の一般的な用途の1つは, 
+開始URLを定義するか, サイトの特定のセクションにクロールを制限することですが, 
+スパイダーの機能を構成するために使用できます.
 
-Spider arguments are passed through the :command:`crawl` command using the
-``-a`` option. For example::
+スパイダーの引数は, ``-a`` オプションを使用して :command:`crawl` コマンドに渡されます. 例えば
 
     scrapy crawl myspider -a category=electronics
 
-Spiders can access arguments in their `__init__` methods::
+スパイダーは `__init__` メソッドで引数にアクセスできます::
 
     import scrapy
 
@@ -290,21 +289,21 @@ Spiders can access arguments in their `__init__` methods::
             self.start_urls = ['http://www.example.com/categories/%s' % category]
             # ...
 
-Spider arguments can also be passed through the Scrapyd ``schedule.json`` API.
-See `Scrapyd documentation`_.
+スパイダーの引数は, Scrapydの ``schedule.json`` API を介して渡すこともできます.
+`Scrapyd documentation`_ を参照してください.
 
 .. _builtin-spiders:
 
 一般的なスパイダー
 ===============
 
-Scrapy comes with some useful generic spiders that you can use to subclass
-your spiders from. Their aim is to provide convenient functionality for a few
-common scraping cases, like following all links on a site based on certain
-rules, crawling from `Sitemaps`_, or parsing an XML/CSV feed.
+Scrapy には, スパイダーをサブクラス化するために使用できる, いくつかの有用なスパイダーがあります. 
+その目的は, 特定のルールに基づいてサイトのすべてのリンクをたどったり, 
+`Sitemaps`_ からクロールしたり, XML / CSV フィードを解析するなど, 
+いくつかの一般的なスクラップケースに対して便利な機能を提供することです
 
-For the examples used in the following spiders, we'll assume you have a project
-with a ``TestItem`` declared in a ``myproject.items`` module::
+以下のスパイダーで使用されているサンプルについては, 
+``myproject.items`` モジュールで宣言された ``TestItem`` を持つプロジェクトがあると仮定します::
 
     import scrapy
 
@@ -341,8 +340,8 @@ CrawlSpider
    .. method:: parse_start_url(response)
 
       このメソッドは, start_urlsレスポンスに対して呼び出されます. それは初期応答を解析することを可能にし, 
-      :class:`~scrapy.item.Item` オブジェクト, :class:`~scrapy.http.Request`
-      オブジェクト, またはそれらのいずれかを含む iterable を返さなければなりません.
+      :class:`~scrapy.item.Item` オブジェクト, :class:`~scrapy.http.Request` 
+      オブジェクト, またはそれらのいずれかを含む iterable を返さなければなりません.
 
 クローリング規則
 ~~~~~~~~~~~~~~
@@ -392,11 +391,11 @@ CrawlSpider の設定例
         start_urls = ['http://www.example.com']
 
         rules = (
-            # Extract links matching 'category.php' (but not matching 'subsection.php')
-            # and follow links from them (since no callback means follow=True by default).
+            # 'category.php' に一致するリンクを抽出する ('subsection.php' とは一致しません)
+            # そして, それらのリンクをたどります (なぜならコールバックはデフォルトで follow=True ではないからです).
             Rule(LinkExtractor(allow=('category\.php', ), deny=('subsection\.php', ))),
 
-            # Extract links matching 'item.php' and parse them with the spider's method parse_item
+            # と一致するリンクを抽出し, スパイダーの parse_item() メソッドで解析します
             Rule(LinkExtractor(allow=('item\.php', )), callback='parse_item'),
         )
 
@@ -409,10 +408,10 @@ CrawlSpider の設定例
             return item
 
 
-This spider would start crawling example.com's home page, collecting category
-links, and item links, parsing the latter with the ``parse_item`` method. For
-each item response, some data will be extracted from the HTML using XPath, and
-an :class:`~scrapy.item.Item` will be filled with it.
+このスパイダーは, example.comのホームページをクロールし, カテゴリリンクとアイテムリンクを収集し, 
+後者を ``parse_item`` メソッドで解析します. 
+各アイテムのレスポンスでは, XPathを使用してHTMLからいくつかのデータが抽出され, 
+:class:`~scrapy.item.Item` にそのデータをいれています.
 
 XMLFeedSpider
 -------------

@@ -53,8 +53,7 @@ AutoThrottle拡張機能はダウンロード遅延を動的に調整して, ス
     :setting:`AUTOTHROTTLE_MAX_DELAY` より大きくなることもできません.
     
 .. note:: AutoThrottle拡張機能は, 標準的なScrapyの設定の並行性と遅延を優先します. 
-   This means that it will respect
-   :setting:`CONCURRENT_REQUESTS_PER_DOMAIN` オプションと, 
+   これは, :setting:`CONCURRENT_REQUESTS_PER_DOMAIN` オプションと
    :setting:`CONCURRENT_REQUESTS_PER_IP` オプションを尊重し, ダウンロード遅延を
    :setting:`DOWNLOAD_DELAY` よりも低く設定しないことを意味します.
 
@@ -140,4 +139,4 @@ AUTOTHROTTLE_DEBUG
 
 デフォルト: ``False``
 
-受信したすべてのレスポンスの統計情報を表示するAutoThrottleデバッグモードを有効にすると, 調整パラメータがリアルタイムでどのように調整されているかがわかります.
+受信したすべてのレスポンスの統計情報を表示する AutoThrottle デバッグモードを有効にすると, 調整パラメータがリアルタイムでどのように調整されているかがわかります.

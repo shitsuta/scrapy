@@ -4,52 +4,45 @@
 ジョブ: クロールの一時停止と再開
 =================================
 
-Sometimes, for big sites, it's desirable to pause crawls and be able to resume
-them later.
+大規模なサイトでは, クロールを一時停止してから後で再開できるようにすることが望ましい場合があります.
 
-Scrapy supports this functionality out of the box by providing the following
-facilities:
+Scrapy は, 以下の機能を提供することにより, この機能をそのまま使用できます:
 
-* a scheduler that persists scheduled requests on disk
+* スケジュールされた要求をディスクに保存するスケジューラ
 
-* a duplicates filter that persists visited requests on disk
+* ディスクに訪問要求を継続する重複フィルタ
 
-* an extension that keeps some spider state (key/value pairs) persistent
-  between batches
+* バッチ間で永続的なスパイダー状態（キーと値のペア）を維持する拡張機能
 
 ジョブディレクトリ
 =============
 
-To enable persistence support you just need to define a *job directory* through
-the ``JOBDIR`` setting. This directory will be for storing all required data to
-keep the state of a single job (ie. a spider run).  It's important to note that
-this directory must not be shared by different spiders, or even different
-jobs/runs of the same spider, as it's meant to be used for storing the state of
-a *single* job.
+永続性サポートを有効にするには,  ``JOBDIR`` 設定を使用してジョブディレクトリを定義するだけです. 
+このディレクトリは, 単一のジョブ（つまり, スパイダ実行）の状態を保持するために必要なすべてのデータを格納するためのディレクトリです. 
+このディレクトリは, 単一のジョブの状態を格納するために使用されるため, 
+異なるスパイダ, または同じスパイダの異なるジョブ・実行間で共有されてはならないことに注意することが重要です.
 
 使用方法
 =============
 
-To start a spider with persistence supported enabled, run it like this::
+持続性がサポートされているスパイダーを起動するには, 次のように実行します::
 
     scrapy crawl somespider -s JOBDIR=crawls/somespider-1
 
-Then, you can stop the spider safely at any time (by pressing Ctrl-C or sending
-a signal), and resume it later by issuing the same command::
+その後, いつでも（Ctrl-Cを押すかシグナルを送信することによって）スパイダーを安全に停止し, 
+後で同じコマンドを発行して再開することができます::
 
     scrapy crawl somespider -s JOBDIR=crawls/somespider-1
 
 バッチ間で永続的な状態を維持する
 ========================================
 
-Sometimes you'll want to keep some persistent spider state between pause/resume
-batches. You can use the ``spider.state`` attribute for that, which should be a
-dict. There's a built-in extension that takes care of serializing, storing and
-loading that attribute from the job directory, when the spider starts and
-stops.
+一時停止/再開バッチの間にスパイダーの状態を維持したい場合があります. 
+これには,  ``spider.state`` 属性を使用できます. これは ``dict`` でなければなりません. 
+スパイダーの起動と停止時に, ジョブディレクトリからその属性をシリアル化, 
+格納, ロードするための拡張機能が組み込まれています.
 
-Here's an example of a callback that uses the spider state (other spider code
-is omitted for brevity)::
+以下は, スパイダーの状態を使用するコールバックの例です（簡潔にするために他のスパイダーコードは省略されています）::
 
     def parse_item(self, response):
         # parse item here
@@ -58,26 +51,24 @@ is omitted for brevity)::
 持続性の落とし穴
 ===================
 
-There are a few things to keep in mind if you want to be able to use the Scrapy
-persistence support:
+Scrapyの永続性サポートを使用できるようにするには, 次の点に注意してください.
 
 Cookieの有効期限
 ------------------
 
-Cookies may expire. So, if you don't resume your spider quickly the requests
-scheduled may no longer work. This won't be an issue if you spider doesn't rely
-on cookies.
+クッキーの有効期限が切れる可能性があります. したがって, スパイダーをすぐに再開しないと, 
+スケジュールされたリクエストはすぐに機能しなくなる可能性があります. 
+スパイダーがクッキーに依存していない場合, これは問題にはなりません.
 
 シリアル化を要求する
 ---------------------
 
-Requests must be serializable by the `pickle` module, in order for persistence
-to work, so you should make sure that your requests are serializable.
+永続性を機能させるためには, リクエストが ``pickle`` モジュールによって直列化可能でなければならないため, 
+リクエストが直列化可能であることを確認する必要があります.
 
-The most common issue here is to use ``lambda`` functions on request callbacks that
-can't be persisted.
-
-So, for example, this won't work::
+最も一般的な問題は, 永続化できない要求コールバックに対して ``lambda`` 関数を使用することです.
+語
+例えば, これはうまくいきません::
 
     def some_callback(self, response):
         somearg = 'test'
@@ -86,7 +77,7 @@ So, for example, this won't work::
     def other_callback(self, response, somearg):
         print "the argument passed is:", somearg
 
-But this will::
+しかし, これはうまくいきます::
 
     def some_callback(self, response):
         somearg = 'test'
@@ -96,8 +87,8 @@ But this will::
         somearg = response.meta['somearg']
         print "the argument passed is:", somearg
 
-If you wish to log the requests that couldn't be serialized, you can set the
-:setting:`SCHEDULER_DEBUG` setting to ``True`` in the project's settings page.
-It is ``False`` by default.
+シリアライズできなかったリクエストを記録する場合は, プロジェクトの設定ページで
+:setting:`SCHEDULER_DEBUG` 設定を ``True`` に設定します.
+デフォルトでは ``False`` です.
 
 .. _pickle: http://docs.python.org/library/pickle.html

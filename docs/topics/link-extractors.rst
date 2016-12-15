@@ -48,39 +48,40 @@ LxmlLinkExtractor
     LxmlLinkExtractor は, 便利なフィルタリングオプションを備えた推奨リンク抽出ツールです. lxmlの堅牢なHTMLパーサーを使用して実装されています.
 
     :param allow: リンクを抽出するために（絶対）URLが一致しなければならない単一の正規表現（または正規表現のリスト）. 
-    指定されていない（または空）場合, すべてのリンクに一致します.
+        指定されていない（または空）場合, すべてのリンクに一致します.
     :type allow: 正規表現（またはそのリスト）
 
     :param deny: 除外する（絶対）URLが一致しなければならない（つまり抽出されない）単一の正規表現（または正規表現のリスト）. 
-    これは, ``allow`` パラメータよりも優先されます. 指定されていない場合（または空の場合）, リンクを除外しません. 
+        これは, ``allow`` パラメータよりも優先されます. 指定されていない場合（または空の場合）, リンクを除外しません. 
     :type deny: 正規表現（またはそのリスト）
 
-    :param allow_domains:リンクを抽出するために考慮されるドメインを含む文字列の単一の値, またはリスト
+    :param allow_domains: リンクを抽出するために考慮されるドメインを含む文字列の単一の値, またはリスト. 
     :type allow_domains: 文字列またはリスト
     
-    :param deny_domains: リンクを抽出するために考慮されないドメインを含む文字列の単一の値、またはリスト
-    :type deny_domains: 文字列またはリスト
+    :param deny_domains: リンクを抽出するために考慮されないドメインを含む文字列の単一の値、またはリスト. 
+    :type deny_domains: 文字列またはリスト
 
-    :param deny_extensions: リンクを抽出するときに無視すべき拡張子を含む単一の値または文字列のリスト.
-        指定されていない場合は,  `scrapy.linkextractors`_ パッケージで定義されている
-        デフォルトの ``IGNORED_EXTENSIONS`` の値になります.
+    :param deny_extensions: リンクを抽出するときに無視すべき拡張子を含む単一の値または文字列のリスト. 
+        指定されていない場合は,  `scrapy.linkextractors`_ パッケージで定義されている
+        ``IGNORED_EXTENSIONS`` のデフォルト値になります.
     :type deny_extensions: リスト
     
     :param restrict_xpaths: は, XPath（またはXPathのリスト）であり, そこからリンクを抽出する応答内の領域を定義します. 
-        指定すると, それらのXPathによって選択されたテキストのみがリンクのためにスキャンされます. 下記の例を参照してください.
-    :type restrict_xpaths: 文字列またはリスト
+        指定すると, それらのXPathによって選択されたテキストのみがリンクのためにスキャンされます. 下記の例を参照してください. 
+    :type restrict_xpaths: 文字列またはリスト
 
-    :param restrict_css: リンクの抽出元となる応答内の領域を定義するCSSセレクタ（またはセレクタのリスト）.
-        ``restrict_xpaths`` と同じ動作をします.
+    :param restrict_css: リンクの抽出元となる応答内の領域を定義するCSSセレクタ（またはセレクタのリスト）. 
+        ``restrict_xpaths`` と同じ動作をします.
     :type restrict_css: 文字列またはリスト
 
-    :param tags: リンクを抽出するときに考慮するタグまたはタグのリスト. デフォルトは ``('a', 'area')`` タグです.
-    :type tags: 文字列またはリスト
+    :param tags: リンクを抽出するときに考慮するタグまたはタグのリスト. デフォルトは ``('a', 'area')`` タグです. 
+    :type tags: 文字列またはリスト
 
-    :param attrs: 抽出するリンクを探すときに考慮する属性または属性のリスト（ ``tags`` パラメータで指定されたタグのみ）. デフォルトは ``('href',)``
+    :param attrs: 抽出するリンクを探すときに考慮する属性または属性のリスト（ ``tags`` パラメータで指定されたタグのみ）. 
+         デフォルトは ``('href')`` 属性です. 
     :type attrs: リスト
     
-    :param canonicalize: 抽出された各URLを正規化します (w3lib.url.canonicalize_urlを使用). デフォルトは ``True``.
+    :param canonicalize: 抽出された各URLを正規化します (w3lib.url.canonicalize_urlを使用). デフォルトは ``True`` です. 
     :type canonicalize: boolean
 
     :param unique: 抽出されたリンクに重複フィルタリングを適用するかどうか.
@@ -88,8 +89,8 @@ LxmlLinkExtractor
 
     :param process_value: タグから抽出された各値とスキャンされた属性を受け取り, 値を修正して新しい値を返す, 
         または ``None`` を返してリンクを完全に無視する関数.
-        指定されていない場合, ``process_value`` のデフォルトは ``lambda x: x``.
-
+        指定されていない場合, ``process_value`` のデフォルトは ``lambda x: x`` です. 
+        
         .. highlight:: html
 
         たとえば, このコードからリンクを抽出するには::

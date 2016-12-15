@@ -319,30 +319,27 @@ CrawlSpider
 
 .. class:: CrawlSpider
 
-   This is the most commonly used spider for crawling regular websites, as it
-   provides a convenient mechanism for following links by defining a set of rules.
-   It may not be the best suited for your particular web sites or project, but
-   it's generic enough for several cases, so you can start from it and override it
-   as needed for more custom functionality, or just implement your own spider.
+   これは定期的なウェブサイトをクロールするために最も一般的に使用されるスパイダーです. 
+   一連のルールを定義してリンクをたどるための便利なメカニズムを提供します.
+   特定のウェブサイトやプロジェクトには最適ではないかもしれませんが. 
+   いくつかのケースでは十分に一般的なので. 
+   より多くのカスタム機能のために必要に応じて上書きしたり, 独自のスパイダーを実装することができます.
 
-   Apart from the attributes inherited from Spider (that you must
-   specify), this class supports a new attribute:
+   Spiderから継承した属性（指定する必要がある）を除いて, このクラスは新しい属性をサポートします:
 
    .. attribute:: rules
 
-       Which is a list of one (or more) :class:`Rule` objects.  Each :class:`Rule`
-       defines a certain behaviour for crawling the site. Rules objects are
-       described below. If multiple rules match the same link, the first one
-       will be used, according to the order they're defined in this attribute.
+       1つ（または複数）の :class:`Rule` オブジェクトのリストです.  各 :class:`Rule`
+       は, サイトをクロールするための特定の動作を定義します. Rules オブジェクトについては以下で説明します. 
+       複数のルールが同じリンクに一致する場合, この属性で定義されている順序に従って, 最初のリンクが使用されます.
 
-   This spider also exposes an overrideable method:
+   このスパイダーは, オーバーライド可能なメソッドも公開しています:
 
    .. method:: parse_start_url(response)
 
-      This method is called for the start_urls responses. It allows to parse
-      the initial responses and must return either an
-      :class:`~scrapy.item.Item` object, a :class:`~scrapy.http.Request`
-      object, or an iterable containing any of them.
+      このメソッドは, start_urlsレスポンスに対して呼び出されます. それは初期応答を解析することを可能にし, 
+      :class:`~scrapy.item.Item` オブジェクト, :class:`~scrapy.http.Request`
+      オブジェクト, またはそれらのいずれかを含む iterable を返さなければなりません.
 
 クローリング規則
 ~~~~~~~~~~~~~~

@@ -45,8 +45,8 @@ AutoThrottle拡張機能はダウンロード遅延を動的に調整して, ス
 1. スパイダーは常に 
    :setting:`AUTOTHROTTLE_START_DELAY` のダウンロード遅延で始まります.
 2. レスポンスが受信されると, ターゲットダウンロード遅延は,  ``latency`` がレスポンスのレイテンシである 
-   ``latency / N`` として計算され, 
-   ``N`` は :setting:`AUTOTHROTTLE_TARGET_CONCURRENCY` です.
+   ``latency / N`` として計算されます. 
+   ``N`` は :setting:`AUTOTHROTTLE_TARGET_CONCURRENCY` の値です.
 3. 次の要求のダウンロード遅延は, 前回のダウンロード遅延と目標のダウンロード遅延の平均値に設定されます.
 4. レイテンシの non-200 レスポンス待ち時間は遅延を減少させることができない.
 5. ダウンロードの遅延が :setting:`DOWNLOAD_DELAY` より小さくなることも,

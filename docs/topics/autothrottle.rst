@@ -124,7 +124,7 @@ AUTOTHROTTLE_TARGET_CONCURRENCY
 ``AUTOTHROTTLE_TARGET_CONCURRENCY`` が小さいほど（ ``0.5`` など）, クローラはより控えめで丁寧なものになります.
 
 AutoThrottle拡張機能が有効な場合,  :setting:`CONCURRENT_REQUESTS_PER_DOMAIN`
-および :setting:`CONCURRENT_REQUESTS_PER_IP` oオプションは引き続き考慮されます. This means that if
+および :setting:`CONCURRENT_REQUESTS_PER_IP` オプションは引き続き考慮されます. This means that if
 ``AUTOTHROTTLE_TARGET_CONCURRENCY`` が 
 :setting:`CONCURRENT_REQUESTS_PER_DOMAIN` または
 :setting:`CONCURRENT_REQUESTS_PER_IP` より高い値に設定されていると, クローラはこの数の同時要求に達しません.

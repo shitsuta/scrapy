@@ -248,7 +248,7 @@ Guppy でメモリリークのデバッグをする
 * `Python Memory Management Part 2 <http://www.evanjones.ca/python-memory-part2.html>`_
 * `Python Memory Management Part 3 <http://www.evanjones.ca/python-memory-part3.html>`_
 
- `この記事`_で詳しく述べられている Evan Jones が提案した改良点は, 
+`この記事`_ で詳しく述べられている Evan Jones が提案した改良点は, 
 Python 2.5でマージされましたが, これは問題が軽減されただけで, 完全に修正されたわけではありません. 
 以下は, 記事の引用です:
 

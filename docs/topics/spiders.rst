@@ -49,15 +49,15 @@ scrapy.Spider
 
 .. class:: Spider()
 
-   これは最もシンプルなスパイダーで, 他のすべてのスパイダーが継承しなければならないものです（Scrapyにバンドルされたスパイダー、あなた自身で作成したスパイダーを含む）.
+   これは最もシンプルなスパイダーで, 他のすべてのスパイダーが継承しなければならないものです（Scrapyにバンドルされたスパイダー, あなた自身で作成したスパイダーを含む）.
    特別な機能は提供しません. 
-   :attr:`start_urls` 属性からリクエストを送信し、スパイダーの ``parse`` メソッドを, 
+   :attr:`start_urls` 属性からリクエストを送信し, スパイダーの ``parse`` メソッドを, 
    レスポンス結果ごとに呼び出す :meth:`start_requests` メソッドの実装を提供するだけです.
 
    .. attribute:: name
 
        スパイダーの名前を定義する文字列. 名前は, スパイダーが Scrapy によってどのように配置（インスタンス化）されているか判別するために, ユニークでなければなりません. 
-       ただし、同じスパイダーのインスタンスは一つだけ作成可能で, 複数インスタンス化することはできません. 
+       ただし, 同じスパイダーのインスタンスは一つだけ作成可能で, 複数インスタンス化することはできません. 
        これは最も重要なスパイダー属性であり, 必須です.
 
        スパイダーが単一のドメインをスクラップする場合, 一般的には,  `TLD`_の有無にかかわらず, ドメイン名と同じの名前を付けます. 
@@ -349,36 +349,33 @@ CrawlSpider
 
 .. class:: Rule(link_extractor, callback=None, cb_kwargs=None, follow=None, process_links=None, process_request=None)
 
-   ``link_extractor`` is a :ref:`Link Extractor <topics-link-extractors>` object which
-   defines how links will be extracted from each crawled page.
+   ``link_extractor`` は, クロールされた各ページからリンクを抽出する方法を定義する
+    :ref:`Link Extractor <topics-link-extractors>` オブジェクトです.
 
-   ``callback`` is a callable or a string (in which case a method from the spider
-   object with that name will be used) to be called for each link extracted with
-   the specified link_extractor. This callback receives a response as its first
-   argument and must return a list containing :class:`~scrapy.item.Item` and/or
-   :class:`~scrapy.http.Request` objects (or any subclass of them).
+   ``callback`` は抽出されたリンクごとに呼び出される, 
+   呼び出し可能または文字列です（この場合, その名前を持つスパイダーオブジェクトのメソッドが使用されます）. 
+   このコールバックは, 最初の引数としてレスポンスを受け取り,  :class:`~scrapy.item.Item` オブジェクトおよび/または
+   :class:`~scrapy.http.Request` オブジェクト（またはそれらのサブクラス）を含むリストを返す必要があります.
 
-   .. warning:: When writing crawl spider rules, avoid using ``parse`` as
-       callback, since the :class:`CrawlSpider` uses the ``parse`` method
-       itself to implement its logic. So if you override the ``parse`` method,
-       the crawl spider will no longer work.
+   .. warning:: クロールスパイダールールを作成するときは,  :class:`CrawlSpider` は ``parse`` メソッド自体を使用してロジックを実装するため, 
+       ``parse`` をコールバックとして使用しないでください. 
+       したがって, 解析メソッドをオーバーライドすると, クロールスパイダーは機能しなくなります. 
+       
+   ``cb_kwargs`` は, コールバック関数に渡すキーワード引数を含む ``dict`` です.
 
-   ``cb_kwargs`` is a dict containing the keyword arguments to be passed to the
-   callback function.
+   ``follow`` は, このルールで抽出された各レスポンスからリンクをたどらなければならないかどうかを指定する bool 値です. 
+   ``callback`` が None の場合,  ``follow`` のデフォルトは ``True`` になります. 
+   それ以外の場合は ``False`` にデフォルト設定されます
 
-   ``follow`` is a boolean which specifies if links should be followed from each
-   response extracted with this rule. If ``callback`` is None ``follow`` defaults
-   to ``True``, otherwise it defaults to ``False``.
-
-   ``process_links`` is a callable, or a string (in which case a method from the
-   spider object with that name will be used) which will be called for each list
-   of links extracted from each response using the specified ``link_extractor``.
-   This is mainly used for filtering purposes.
-
-   ``process_request`` is a callable, or a string (in which case a method from
-   the spider object with that name will be used) which will be called with
-   every request extracted by this rule, and must return a request or None (to
-   filter out the request).
+   ``process_links`` は呼び出し可能です. 指定された ``link_extractor`` 
+   を使用して各レスポンスから抽出されたリンクのリストごとに呼び出される文字列
+   （その名前のスパイダーオブジェクトのメソッドが使用されます）です. 
+   これは, 主にフィルタリングの目的で使用されます. 
+   
+   ``process_request`` は呼び出し可能です. 
+   このルールで抽出されたリクエストごとに呼び出され, 
+   リクエストを返す必要があります（リクエストをフィルタにかけるには, 
+   その名前を持つスパイダオブジェクトのメソッドが呼び出されます）.
 
 CrawlSpider の設定例
 ~~~~~~~~~~~~~~~~~~~

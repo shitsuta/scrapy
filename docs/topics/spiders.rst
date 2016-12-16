@@ -14,7 +14,7 @@
 1. 最初のURLをクロールする最初のリクエストを生成し, それらのリクエストからダウンロードされたレスポンスで呼び出されるコールバック関数を指定します.
 
    実行する最初のリクエストは, 
-   :meth:`~scrapy.spiders.Spider.start_requests` メソッドを呼び出すことによって取得されます。
+   :meth:`~scrapy.spiders.Spider.start_requests` メソッドを呼び出すことによって取得されます. 
    このメソッドは, デフォルトで
    :attr:`~scrapy.spiders.Spider.start_urls` で指定されたURLと
    :class:`~scrapy.http.Request` のコールバック関数として呼ばれる :attr:`~scrapy.spiders.Spider.parse` メソッドで, 
@@ -65,59 +65,59 @@ scrapy.Spider
       
       このスパイダーがクロールできるドメインを含む文字列のオプションのリスト. 
       :class:`~scrapy.spidermiddlewares.offsite.OffsiteMiddleware` 
-      が有効になっている場合、このリスト（またはそのサブドメイン）で指定された
+      が有効になっている場合, このリスト（またはそのサブドメイン）で指定された
       ドメイン名に属していないURLに対するリクエストは追跡されません.
 
    .. attribute:: start_urls
       
-      特定のURLが指定されていない場合、スパイダーがクロールを開始するURLのリスト. 
-      したがって、ダウンロードされる最初のページはここにリストされたページになります。
-      後続のURLは、開始URLに含まれるデータから順番に生成されます.
+      特定のURLが指定されていない場合, スパイダーがクロールを開始するURLのリスト. 
+      したがって, ダウンロードされる最初のページはここにリストされたページになります. 
+      後続のURLは, 開始URLに含まれるデータから順番に生成されます.
 
    .. attribute:: custom_settings
       
       このスパイダーを実行するときにオーバーライドされるプロジェクトの設定の辞書. 
-      インスタンス化前に設定が更新されるため、クラス属性として定義する必要があります.
+      インスタンス化前に設定が更新されるため, クラス属性として定義する必要があります.
       
-      使用可能なビルトイン設定のリストについては、
-      :ref:`topics-settings-ref` を参照してください.
+      使用可能なビルトイン設定のリストについては, 
+      :ref:`topics-settings-ref` を参照してください.
 
    .. attribute:: crawler
       
-      この属性は、クラスを初期化した後の :meth:`from_crawler` クラスメソッドによって設定され、
+      この属性は, クラスを初期化した後の :meth:`from_crawler` クラスメソッドによって設定され, 
       このスパイダーインスタンスがバインドされている
       :class:`~scrapy.crawler.Crawler` オブジェクトへのリンクになります.
       
-      クローラは、単一エントリアクセス（エクステンション、ミドルウェア、シグナルマネージャなど）のために、
-      プロジェクト内の多くのコンポーネントをカプセル化します.
-      詳細については :ref:`topics-api-crawler` を参照してください.
+      クローラは, 単一エントリアクセス（エクステンション, ミドルウェア, シグナルマネージャなど）のために, 
+      プロジェクト内の多くのコンポーネントをカプセル化します. 
+      詳細については :ref:`topics-api-crawler` を参照してください.
 
    .. attribute:: settings
       
       このスパイダーを実行するための設定. これは
-      :class:`~scrapy.settings.Settings` インスタンスです。 
-      このトピックの詳細な紹介については、
+      :class:`~scrapy.settings.Settings` インスタンスです.  
+      このトピックの詳細な紹介については, 
       :ref:`topics-settings` を参照してください.
 
    .. attribute:: logger
       
       スパイダーの :attr:`name` で作成された Python ロガー. 
-      :ref:`topics-logging-from-spiders` で説明しているように、
-      これを使ってログメッセージを送信することができます.
+      :ref:`topics-logging-from-spiders` で説明しているように, 
+      これを使ってログメッセージを送信することができます.
 
    .. method:: from_crawler(crawler, \*args, \**kwargs)
       
       これは Scrapy があなたのスパイダーを作成するために使用するクラスメソッドです.
-       
-      デフォルトの実装は :meth:`__init__` メソッドへのプロキシとして機能し、
-      与えられた引数 `args` と名前付き引数 `kwargs` を呼び出すので、
+      
+      デフォルトの実装は :meth:`__init__` メソッドへのプロキシとして機能し, 
+      与えられた引数 `args` と名前付き引数 `kwargs` を呼び出すので, 
       これを直接オーバーライドする必要はないでしょう.
       
-      それにもかかわらず、このメソッドは :attr:`crawler` と :attr:`settings`
-      属性を新しいインスタンスに設定し、後でスパイダのコード内でアクセスできるようにします.
+      それにもかかわらず, このメソッドは :attr:`crawler` と :attr:`settings`
+      属性を新しいインスタンスに設定し, 後でスパイダのコード内でアクセスできるようにします.
       
-      :param crawler: スパイダーにバインドされるクローラー 
-      :type crawler: :class:`~scrapy.crawler.Crawler` インスタンス
+      :param crawler: スパイダーにバインドされるクローラー 
+      :type crawler: :class:`~scrapy.crawler.Crawler` インスタンス
        
       :param args: :meth:`__init__` メソッドに渡される引数
       :type args: list
@@ -126,19 +126,19 @@ scrapy.Spider
       :type kwargs: dict
 
    .. method:: start_requests()
-
-       このメソッドは、スパイダーの最初のクロールリクエストで繰り返し可能な値を返す必要があります.
-
-       これは、特定のURLが指定されずにスパイダーを開いてスクレイピングするときに、
-       Scrapy によって呼び出されるメソッドです。特定のURLが指定されている場合、
-       代わりに :meth:`make_requests_from_url` がリクエストを作成するために使用されます. 
-       このメソッドはScrapyから1回だけ呼び出されるため、安全にジェネレータとして実装することができます.
-
-       デフォルトの実装では、 :meth:`make_requests_from_url` を使用して、
-       :attr:`start_urls` 内の各URLのリクエストを生成します.
-
-       ドメインのスクレイピングを開始するために使用されるリクエストを変更したい場合は、これをオーバーライドすることができます. 
-       たとえば、POSTリクエストを使用してログインする必要がある場合は::
+      
+      このメソッドは, スパイダーの最初のクロールリクエストで繰り返し可能な値を返す必要があります.
+      
+      これは, 特定のURLが指定されずにスパイダーを開いてスクレイピングするときに, 
+      Scrapy によって呼び出されるメソッドです. 特定のURLが指定されている場合, 
+      代わりに :meth:`make_requests_from_url` がリクエストを作成するために使用されます. 
+      このメソッドはScrapyから1回だけ呼び出されるため, 安全にジェネレータとして実装することができます.
+      
+      デフォルトの実装では,  :meth:`make_requests_from_url` を使用して, 
+      :attr:`start_urls` 内の各URLのリクエストを生成します.
+      
+      ドメインのスクレイピングを開始するために使用されるリクエストを変更したい場合は, これをオーバーライドすることができます. 
+      たとえば, POSTリクエストを使用してログインする必要がある場合は::
 
            class MySpider(scrapy.Spider):
                name = 'myspider'
@@ -229,7 +229,7 @@ scrapy.Spider
             for url in response.xpath('//a/@href').extract():
                 yield scrapy.Request(url, callback=self.parse)
 
-:attr:`~.start_urls` の代わりに :meth:`~.start_requests` を直接使うことができます。
+:attr:`~.start_urls` の代わりに :meth:`~.start_requests` を直接使うことができます. 
 :ref:`topics-items` を使用することで多くの構造体にデータを与えることができます::
 
     import scrapy
@@ -327,7 +327,7 @@ CrawlSpider
 
    .. method:: parse_start_url(response)
 
-      このメソッドは, start_urlsレスポンスに対して呼び出されます. それは初期応答を解析することを可能にし, 
+      このメソッドは, start_urlsレスポンスに対して呼び出されます. これは初期応答を解析することを可能にし, 
       :class:`~scrapy.item.Item` オブジェクト, :class:`~scrapy.http.Request` 
       オブジェクト, またはそれらのいずれかを含む iterable を返さなければなりません.
 

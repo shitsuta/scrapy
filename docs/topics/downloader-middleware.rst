@@ -314,43 +314,41 @@ HttpCacheMiddleware
 
 .. class:: HttpCacheMiddleware
 
-    This middleware provides low-level cache to all HTTP requests and responses.
-    It has to be combined with a cache storage backend as well as a cache policy.
+    このミドルウェアは, すべてのHTTPリクエストとレスポンスに低レベルのキャッシュを提供します.
+    これはキャッシュストレージバックエンドとキャッシュポリシーとを組み合わせなければなりません.
 
     2つのHTTPキャッシュストレージバックエンドを持つ Scrapy:
 
         * :ref:`httpcache-storage-fs`
         * :ref:`httpcache-storage-dbm`
 
-    You can change the HTTP cache storage backend with the :setting:`HTTPCACHE_STORAGE`
-    setting. Or you can also implement your own storage backend.
+    HTTPキャッシュストレージバックエンドは,  :setting:`HTTPCACHE_STORAGE`
+    設定で変更できます. また, 独自のストレージバックエンドを実装することもできます.
 
     2つのHTTPキャッシュポリシーを持つ Scrapy:
 
         * :ref:`httpcache-policy-rfc2616`
         * :ref:`httpcache-policy-dummy`
 
-    You can change the HTTP cache policy with the :setting:`HTTPCACHE_POLICY`
-    setting. Or you can also implement your own policy.
+    :setting:`HTTPCACHE_POLICY` 
+    設定を使用してHTTPキャッシュポリシーを変更できます. あるいは独自のポリシーを実装することもできます.
 
     .. reqmeta:: dont_cache
 
-    You can also avoid caching a response on every policy using :reqmeta:`dont_cache` meta key equals `True`.
+    また,  :reqmeta:`dont_cache` メタキーを `True` とすると, すべてのポリシーで応答をキャッシュすることを避けることができます.
 
 .. _httpcache-policy-dummy:
 
-Dummy policy (default)
+ダミーポリシー (デフォルト)
 ~~~~~~~~~~~~~~~~~~~~~~
 
-This policy has no awareness of any HTTP Cache-Control directives.
-Every request and its corresponding response are cached.  When the same
-request is seen again, the response is returned without transferring
-anything from the Internet.
+このポリシーは, HTTP Cache-Control ディレクティブを意識していません. 
+すべてのリクエストとそれに対応するレスポンスがキャッシュされます. 
+同じリクエストが再び見られると, インターネットから何も転送せずにレスポンスが返されます.
 
-The Dummy policy is useful for testing spiders faster (without having
-to wait for downloads every time) and for trying your spider offline,
-when an Internet connection is not available. The goal is to be able to
-"replay" a spider run *exactly as it ran before*.
+ダミーポリシーは, スパイダーを素早くテストする（毎回ダウンロードを待たずに）, 
+または, インターネット接続が利用できないときにスパイダーをオフラインで試すのに便利です. 
+目標は, 以前に実行されたとおりにスパイダーの実行を「再生」できるようにすることです.
 
 このポリシーを使用するには:
 
@@ -359,44 +357,43 @@ when an Internet connection is not available. The goal is to be able to
 
 .. _httpcache-policy-rfc2616:
 
-RFC2616 policy
+RFC2616 ポリシー
 ~~~~~~~~~~~~~~
 
-This policy provides a RFC2616 compliant HTTP cache, i.e. with HTTP
-Cache-Control awareness, aimed at production and used in continuous
-runs to avoid downloading unmodified data (to save bandwidth and speed up crawls).
+このポリシーは, HTTPキャッシュ制御の認識を備えた RFC2616 準拠の HTTP キャッシュを提供し, 
+生産を目的とし, 変更なしのデータのダウンロードを避けるために連続実行で
+使用します（帯域幅を節約し, クロールを高速化します）.
 
 実装されているもの:
 
-* Do not attempt to store responses/requests with `no-store` cache-control directive set
-* Do not serve responses from cache if `no-cache` cache-control directive is set even for fresh responses
-* Compute freshness lifetime from `max-age` cache-control directive
-* Compute freshness lifetime from `Expires` response header
-* Compute freshness lifetime from `Last-Modified` response header (heuristic used by Firefox)
-* Compute current age from `Age` response header
-* Compute current age from `Date` header
-* Revalidate stale responses based on `Last-Modified` response header
-* Revalidate stale responses based on `ETag` response header
-* Set `Date` header for any received response missing it
-* Support `max-stale` cache-control directive in requests
+* `no-store` キャッシュ制御ディレクティブセットで, レスポンス/リクエストを格納しない
+* 新しいレスポンスに対しても `no-cache` キャッシュコントロール指令が設定されている場合, キャッシュからの応答を提供しない
+* `max-age` キャッシュ制御命令からフレッシュネスライフタイムを計算する
+* `Expires` レスポンスヘッダーからフレッシュネスライフタイムを計算する
+* `Last-Modified` レスポンスヘッダ（Firefoxで使用されるヒューリスティック）からフレッシュネスライフタイムを計算
+* `Age` レスポンスヘッダから現在の年齢を計算する
+* `Date` ヘッダから現在の年齢を計算する
+* `Last-Modified` レスポンスヘッダに基づいて失効したレスポンスを再確認する
+* `ETag` レスポンスヘッダーにもとづいて失効した応答を再検証する
+* 受け取らなかったレスポンスの Date` ヘッダーを設定しない
+* リクエストにおける `max-stale` キャッシュ制御命令をサポート
 
-  This allows spiders to be configured with the full RFC2616 cache policy,
-  but avoid revalidation on a request-by-request basis, while remaining
-  conformant with the HTTP spec.
+  これにより, スパイダーを完全なRFC2616キャッシュポリシーで構成することができますが, 
+  HTTP仕様に準拠したままで, リクエストごとに再検証は行われません.
 
   例:
 
-  Add `Cache-Control: max-stale=600` to Request headers to accept responses that
-  have exceeded their expiration time by no more than 600 seconds.
+  `Cache-Control: max-stale=600` を追加して, 
+  有効期限を超過したリクエストを600秒以下で受け入れるようにヘッダーに要求します.
 
-  See also: RFC2616, 14.9.3
+  参照: RFC2616, 14.9.3
 
-what is missing:
+何が無くなったか:
 
-* `Pragma: no-cache` support https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1
-* `Vary` header support https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.6
-* Invalidation after updates or deletes https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.10
-* ... probably others ..
+* `Pragma: no-cache` サポート https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1
+* `Vary` ヘッダーサポート https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.6
+* 更新または削除後の無効化 https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.10
+* ... おそらく他にも ..
 
 このポリシーを使用するには:
 
@@ -405,7 +402,7 @@ what is missing:
 
 .. _httpcache-storage-fs:
 
-Filesystem storage backend (default)
+ファイルシステムストレージバックエンド (デフォルト)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ファイルシステムストレージバックエンドは, HTTPキャッシュミドルウェアで使用できます.
@@ -414,8 +411,7 @@ Filesystem storage backend (default)
 
 * :setting:`HTTPCACHE_STORAGE` to ``scrapy.extensions.httpcache.FilesystemCacheStorage``
 
-Each request/response pair is stored in a different directory containing
-the following files:
+各 request/response のペアは, 次のファイルを含む別のディレクトリに格納されます:
 
  * ``request_body`` - the plain request body
  * ``request_headers`` - the request headers (in raw HTTP format)
@@ -426,24 +422,23 @@ the following files:
  * ``pickled_meta`` - the same metadata in ``meta`` but pickled for more
    efficient deserialization
 
-The directory name is made from the request fingerprint (see
-``scrapy.utils.request.fingerprint``), and one level of subdirectories is
-used to avoid creating too many files into the same directory (which is
-inefficient in many file systems). An example directory could be::
+ディレクトリ名はリクエストフィンガープリント ( ``scrapy.utils.request.fingerprint`` を参照)から作成され, 
+1つのレベルのサブディレクトリが, 同じディレクトリにあまりにも多くのファイルを作成することを
+避けるために使用されます（多くのファイルシステムでは非効率的です）::
 
    /path/to/cache/dir/example.com/72/72811f648e718090f041317756c03adb0ada46c7
 
 .. _httpcache-storage-dbm:
 
-DBM storage backend
+DBM ストレージバックエンド
 ~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 0.13
 
-A DBM_ storage backend is also available for the HTTP cache middleware.
+DBM_ ストレージバックエンドは, HTTPキャッシュミドルウェアでも使用できます.
 
-By default, it uses the anydbm_ module, but you can change it with the
-:setting:`HTTPCACHE_DBM_MODULE` setting.
+デフォルトでは,  anydbm_ モジュールを使用しますが, 
+:setting:`HTTPCACHE_DBM_MODULE` 設定で変更することができます.
 
 このストレージバックエンドを使用するには:
 
@@ -451,31 +446,30 @@ By default, it uses the anydbm_ module, but you can change it with the
 
 .. _httpcache-storage-leveldb:
 
-LevelDB storage backend
+LevelDB ストレージバックエンド
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 0.23
 
-A LevelDB_ storage backend is also available for the HTTP cache middleware.
+LevelDB_ ストレージバックエンドは, HTTPキャッシュミドルウェアでも使用できます.
 
-This backend is not recommended for development because only one process can
-access LevelDB databases at the same time, so you can't run a crawl and open
-the scrapy shell in parallel for the same spider.
+このバックエンドは開発プロセスにはお勧めできません. 
+これは, 同時に1つのプロセスしか LevelDB データベースにアクセスできないためです. 
+そのため, 同じスパイダーに対して並列に Scrapy シェルを開くことはできません.
 
-In order to use this storage backend:
+このストレージバックエンドを使用するには:
 
-* set :setting:`HTTPCACHE_STORAGE` to ``scrapy.extensions.httpcache.LeveldbCacheStorage``
-* install `LevelDB python bindings`_ like ``pip install leveldb``
+* ``scrapy.extensions.httpcache.LeveldbCacheStorage`` に :setting:`HTTPCACHE_STORAGE` を設定します
+* ``pip install leveldb`` のようにして,  `LevelDB の Python バインディング`_ をインストールします
 
 .. _LevelDB: https://github.com/google/leveldb
-.. _leveldb python bindings: https://pypi.python.org/pypi/leveldb
+.. _LevelDB の Python バインディング: https://pypi.python.org/pypi/leveldb
 
 
-HTTPCache middleware settings
+HTTPCache middleware 設定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The :class:`HttpCacheMiddleware` can be configured through the following
-settings:
+:class:`HttpCacheMiddleware` は, 次の設定で構成されています:
 
 .. setting:: HTTPCACHE_ENABLED
 
@@ -486,10 +480,10 @@ HTTPCACHE_ENABLED
 
 デフォルト: ``False``
 
-Whether the HTTP cache will be enabled.
+HTTPキャッシュを有効にするかどうか.
 
 .. versionchanged:: 0.11
-   Before 0.11, :setting:`HTTPCACHE_DIR` was used to enable cache.
+   0.11 より前では, キャッシュを有効にするために :setting:`HTTPCACHE_DIR` が使用されていました.
 
 .. setting:: HTTPCACHE_EXPIRATION_SECS
 
@@ -498,13 +492,13 @@ HTTPCACHE_EXPIRATION_SECS
 
 デフォルト: ``0``
 
-Expiration time for cached requests, in seconds.
+キャッシュされた要求の有効期限（秒単位）.
 
-Cached requests older than this time will be re-downloaded. If zero, cached
-requests will never expire.
+この時間より古いキャッシュされたリクエストは再ダウンロードされます.  
+0の場合, キャッシュされた要求は期限切れになりません.
 
 .. versionchanged:: 0.11
-   Before 0.11, zero meant cached requests always expire.
+   0.11 より前では, ゼロはキャッシュされた要求が常に期限切れになることを意味しました.
 
 .. setting:: HTTPCACHE_DIR
 
@@ -513,9 +507,10 @@ HTTPCACHE_DIR
 
 デフォルト: ``'httpcache'``
 
-The directory to use for storing the (low-level) HTTP cache. If empty, the HTTP
-cache will be disabled. If a relative path is given, is taken relative to the
-project data dir. For more info see: :ref:`topics-project-structure`.
+（低レベル）HTTPキャッシュを格納するために使用するディレクトリ. 
+空の場合, HTTPキャッシュは無効になります. 
+相対パスが指定されている場合は, プロジェクトデータディレクトリに対して相対パスが使用されます. 
+詳細は,  :ref:`topics-project-structure` を参照してください.
 
 .. setting:: HTTPCACHE_IGNORE_HTTP_CODES
 
@@ -566,8 +561,8 @@ HTTPCACHE_DBM_MODULE
 
 デフォルト: ``'anydbm'``
 
-The database module to use in the :ref:`DBM storage backend
-<httpcache-storage-dbm>`. This setting is specific to the DBM backend.
+:ref:`DBMストレージバックエンド <httpcache-storage-dbm>` で使用するデータベースモジュール. 
+この設定は, DBMバックエンド特有です.
 
 .. setting:: HTTPCACHE_POLICY
 
@@ -589,8 +584,7 @@ HTTPCACHE_GZIP
 
 デフォルト: ``False``
 
-If enabled, will compress all cached data with gzip.
-This setting is specific to the Filesystem backend.
+有効にすると, キャッシュされたすべてのデータがgzipで圧縮されます. この設定はファイルシステムのバックエンド特有です.
 
 .. setting:: HTTPCACHE_ALWAYS_STORE
 
@@ -643,7 +637,7 @@ HttpCompressionMiddleware
    This middleware allows compressed (gzip, deflate) traffic to be
    sent/received from web sites.
 
-HttpCompressionMiddleware Settings
+HttpCompressionMiddleware 設定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. setting:: COMPRESSION_ENABLED
@@ -653,7 +647,7 @@ COMPRESSION_ENABLED
 
 デフォルト: ``True``
 
-Compressionミドルウェアを有効にするかどうか.
+HttpCompressionMiddleware を有効にするかどうか.
 
 
 HttpProxyMiddleware
@@ -726,7 +720,7 @@ allow on a per-request basis. You can also set the meta key
 for a request.
 
 
-RedirectMiddleware settings
+RedirectMiddleware 設定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. setting:: REDIRECT_ENABLED
@@ -738,7 +732,7 @@ REDIRECT_ENABLED
 
 デフォルト: ``True``
 
-リダイレクトミドルウェアを有効にするかどうか.
+RedirectMiddleware を有効にするかどうか.
 
 .. setting:: REDIRECT_MAX_TIMES
 
@@ -766,7 +760,7 @@ This middleware obey :setting:`REDIRECT_MAX_TIMES` setting, :reqmeta:`dont_redir
 and :reqmeta:`redirect_urls` request meta keys as described for :class:`RedirectMiddleware`
 
 
-MetaRefreshMiddleware settings
+MetaRefreshMiddleware 設定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. setting:: METAREFRESH_ENABLED
@@ -778,7 +772,7 @@ METAREFRESH_ENABLED
 
 デフォルト: ``True``
 
-Meta Refreshミドルウェアを有効にするかどうか.
+MetaRefreshMiddleware を有効にするかどうか.
 
 .. setting:: METAREFRESH_MAXDELAY
 
@@ -819,7 +813,7 @@ settings (see the settings documentation for more info):
 If :attr:`Request.meta <scrapy.http.Request.meta>` has ``dont_retry`` key
 set to True, the request will be ignored by this middleware.
 
-RetryMiddleware Settings
+RetryMiddleware 設定
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. setting:: RETRY_ENABLED
@@ -831,7 +825,7 @@ RETRY_ENABLED
 
 デフォルト: ``True``
 
-リトライミドルウェアを有効にするかどうか.
+RetryMiddleware を有効にするかどうか.
 
 .. setting:: RETRY_TIMES
 
@@ -929,7 +923,7 @@ AjaxCrawlMiddleware
        AjaxCrawlMiddleware is necessary when URL doesn't contain ``'!#'``.
        This is often a case for 'index' or 'main' website pages.
 
-AjaxCrawlMiddleware Settings
+AjaxCrawlMiddleware 設定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. setting:: AJAXCRAWL_ENABLED
@@ -944,7 +938,7 @@ AJAXCRAWL_ENABLED
 Whether the AjaxCrawlMiddleware will be enabled. You may want to
 enable it for :ref:`broad crawls <topics-broad-crawls>`.
 
-HttpProxyMiddleware settings
+HttpProxyMiddleware 設定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. setting:: HTTPPROXY_AUTH_ENCODING

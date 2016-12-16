@@ -62,91 +62,84 @@ scrapy.Spider
 
    .. note:: Python 2 では, ASCIIのみでなければなりません.
        
-
    .. attribute:: allowed_domains
 
-       An optional list of strings containing domains that this spider is
-       allowed to crawl. Requests for URLs not belonging to the domain names
-       specified in this list (or their subdomains) won't be followed if
-       :class:`~scrapy.spidermiddlewares.offsite.OffsiteMiddleware` is enabled.
+       このスパイダーがクロールできるドメインを含む文字列のオプションのリスト. 
+       :class:`~scrapy.spidermiddlewares.offsite.OffsiteMiddleware` 
+       が有効になっている場合、このリスト（またはそのサブドメイン）で指定された
+       ドメイン名に属していないURLに対するリクエストは追跡されません.
 
    .. attribute:: start_urls
 
-       A list of URLs where the spider will begin to crawl from, when no
-       particular URLs are specified. So, the first pages downloaded will be those
-       listed here. The subsequent URLs will be generated successively from data
-       contained in the start URLs.
+       特定のURLが指定されていない場合、スパイダーがクロールを開始するURLのリスト. 
+       したがって、ダウンロードされる最初のページはここにリストされたページになります。
+       後続のURLは、開始URLに含まれるデータから順番に生成されます.
 
    .. attribute:: custom_settings
 
-      A dictionary of settings that will be overridden from the project wide
-      configuration when running this spider. It must be defined as a class
-      attribute since the settings are updated before instantiation.
+      このスパイダーを実行するときにオーバーライドされるプロジェクトの設定の辞書. 
+      インスタンス化前に設定が更新されるため、クラス属性として定義する必要があります.
 
-      For a list of available built-in settings see:
-      :ref:`topics-settings-ref`.
+      F使用可能なビルトイン設定のリストについては、
+      :ref:`topics-settings-ref` を参照してください.
 
    .. attribute:: crawler
 
-      This attribute is set by the :meth:`from_crawler` class method after
-      initializating the class, and links to the
-      :class:`~scrapy.crawler.Crawler` object to which this spider instance is
-      bound.
+      この属性は、クラスを初期化した後の :meth:`from_crawler` クラスメソッドによって設定され、
+      このスパイダーインスタンスがバインドされている
+      :class:`~scrapy.crawler.Crawler` オブジェクトへのリンクになります.
 
-      Crawlers encapsulate a lot of components in the project for their single
-      entry access (such as extensions, middlewares, signals managers, etc).
-      See :ref:`topics-api-crawler` to know more about them.
+      クローラは、単一エントリアクセス（エクステンション、ミドルウェア、シグナルマネージャなど）のために、
+      プロジェクト内の多くのコンポーネントをカプセル化します.
+      詳細については :ref:`topics-api-crawler` を参照してください.
 
    .. attribute:: settings
 
-      Configuration for running this spider. This is a
-      :class:`~scrapy.settings.Settings` instance, see the
-      :ref:`topics-settings` topic for a detailed introduction on this subject.
+      このスパイダーを実行するための設定. これは
+      :class:`~scrapy.settings.Settings` インスタンスです。 
+      このトピックの詳細な紹介については、
+      :ref:`topics-settings` を参照してください.
 
    .. attribute:: logger
 
-      Python logger created with the Spider's :attr:`name`. You can use it to
-      send log messages through it as described on
-      :ref:`topics-logging-from-spiders`.
+      スパイダーの :attr:`name` で作成された Python ロガー. 
+      :ref:`topics-logging-from-spiders` で説明しているように、
+      これを使ってログメッセージを送信することができます.
 
    .. method:: from_crawler(crawler, \*args, \**kwargs)
 
-       This is the class method used by Scrapy to create your spiders.
+       これは Scrapy があなたのスパイダーを作成するために使用するクラスメソッドです.
 
-       You probably won't need to override this directly because the default
-       implementation acts as a proxy to the :meth:`__init__` method, calling
-       it with the given arguments `args` and named arguments `kwargs`.
+       デフォルトの実装は :meth:`__init__` メソッドへのプロキシとして機能し、
+       与えられた引数 `args` と名前付き引数 `kwargs` を呼び出すので、
+       これを直接オーバーライドする必要はないでしょう.
 
-       Nonetheless, this method sets the :attr:`crawler` and :attr:`settings`
-       attributes in the new instance so they can be accessed later inside the
-       spider's code.
+       それにもかかわらず、このメソッドは :attr:`crawler` と :attr:`settings`
+       属性を新しいインスタンスに設定し、後でスパイダのコード内でアクセスできるようにします.
 
-       :param crawler: crawler to which the spider will be bound
-       :type crawler: :class:`~scrapy.crawler.Crawler` instance
-
-       :param args: arguments passed to the :meth:`__init__` method
+       :param crawler: スパイダーにバインドされるクローラー 
+       :type crawler: :class:`~scrapy.crawler.Crawler` インスタンス
+       
+       :param args: :meth:`__init__` メソッドに渡される引数
        :type args: list
 
-       :param kwargs: keyword arguments passed to the :meth:`__init__` method
+       :param kwargs: :meth:`__init__` メソッドに渡されるキーワード引数
        :type kwargs: dict
 
    .. method:: start_requests()
 
-       This method must return an iterable with the first Requests to crawl for
-       this spider.
+       このメソッドは、スパイダーの最初のクロールリクエストで繰り返し可能な値を返す必要があります.
 
-       This is the method called by Scrapy when the spider is opened for
-       scraping when no particular URLs are specified. If particular URLs are
-       specified, the :meth:`make_requests_from_url` is used instead to create
-       the Requests. This method is also called only once from Scrapy, so it's
-       safe to implement it as a generator.
+       これは、特定のURLが指定されずにスパイダーを開いてスクレイピングするときに、
+       Scrapy によって呼び出されるメソッドです。特定のURLが指定されている場合、
+       代わりに :meth:`make_requests_from_url` がリクエストを作成するために使用されます. 
+       このメソッドはScrapyから1回だけ呼び出されるため、安全にジェネレータとして実装することができます.
 
-       The default implementation uses :meth:`make_requests_from_url` to
-       generate Requests for each url in :attr:`start_urls`.
+       デフォルトの実装では、 :meth:`make_requests_from_url` を使用して、
+       :attr:`start_urls` 内の各URLのリクエストを生成します.
 
-       If you want to change the Requests used to start scraping a domain, this is
-       the method to override. For example, if you need to start by logging in using
-       a POST request, you could do::
+       ドメインのスクレイピングを開始するために使用されるリクエストを変更したい場合は、これをオーバーライドすることができます. 
+       たとえば、POSTリクエストを使用してログインする必要がある場合は::
 
            class MySpider(scrapy.Spider):
                name = 'myspider'
@@ -200,7 +193,7 @@ scrapy.Spider
        Called when the spider closes. This method provides a shortcut to
        signals.connect() for the :signal:`spider_closed` signal.
 
-Let's see an example::
+例を見てみましょう::
 
     import scrapy
 
@@ -216,8 +209,8 @@ Let's see an example::
 
         def parse(self, response):
             self.logger.info('A response from %s just arrived!', response.url)
-
-Return multiple Requests and items from a single callback::
+            
+単一のコールバックから複数のリクエストとアイテムを返します::
 
     import scrapy
 
@@ -237,8 +230,8 @@ Return multiple Requests and items from a single callback::
             for url in response.xpath('//a/@href').extract():
                 yield scrapy.Request(url, callback=self.parse)
 
-Instead of :attr:`~.start_urls` you can use :meth:`~.start_requests` directly;
-to give data more structure you can use :ref:`topics-items`::
+:attr:`~.start_urls` の代わりに :meth:`~.start_requests` を直接使うことができます。
+:ref:`topics-items` を使用することで多くの構造体にデータを与えることができます::
 
     import scrapy
     from myproject.items import MyItem

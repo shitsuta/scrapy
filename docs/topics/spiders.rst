@@ -44,14 +44,14 @@ scrapy.Spider
 =============
 
 .. class:: Spider()
-
+   
    これは最もシンプルなスパイダーで, 他のすべてのスパイダーが継承しなければならないものです（Scrapyにバンドルされたスパイダー, あなた自身で作成したスパイダーを含む）.
    特別な機能は提供しません. 
    :attr:`start_urls` 属性からリクエストを送信し, スパイダーの ``parse`` メソッドを, 
    レスポンス結果ごとに呼び出す :meth:`start_requests` メソッドの実装を提供するだけです.
 
    .. attribute:: name
-   
+      
       スパイダーの名前を定義する文字列. 名前は, スパイダーが Scrapy によってどのように配置（インスタンス化）されているか判別するために, ユニークでなければなりません. 
       ただし, 同じスパイダーのインスタンスは一つだけ作成可能で, 複数インスタンス化することはできません. 
       これは最も重要なスパイダー属性であり, 必須です.
@@ -62,38 +62,38 @@ scrapy.Spider
    .. note:: Python 2 では, ASCIIのみでなければなりません.
        
    .. attribute:: allowed_domains
-
-       このスパイダーがクロールできるドメインを含む文字列のオプションのリスト. 
-       :class:`~scrapy.spidermiddlewares.offsite.OffsiteMiddleware` 
-       が有効になっている場合、このリスト（またはそのサブドメイン）で指定された
-       ドメイン名に属していないURLに対するリクエストは追跡されません.
+      
+      このスパイダーがクロールできるドメインを含む文字列のオプションのリスト. 
+      :class:`~scrapy.spidermiddlewares.offsite.OffsiteMiddleware` 
+      が有効になっている場合、このリスト（またはそのサブドメイン）で指定された
+      ドメイン名に属していないURLに対するリクエストは追跡されません.
 
    .. attribute:: start_urls
-
-       特定のURLが指定されていない場合、スパイダーがクロールを開始するURLのリスト. 
-       したがって、ダウンロードされる最初のページはここにリストされたページになります。
-       後続のURLは、開始URLに含まれるデータから順番に生成されます.
+      
+      特定のURLが指定されていない場合、スパイダーがクロールを開始するURLのリスト. 
+      したがって、ダウンロードされる最初のページはここにリストされたページになります。
+      後続のURLは、開始URLに含まれるデータから順番に生成されます.
 
    .. attribute:: custom_settings
-   
+      
       このスパイダーを実行するときにオーバーライドされるプロジェクトの設定の辞書. 
       インスタンス化前に設定が更新されるため、クラス属性として定義する必要があります.
-
+      
       使用可能なビルトイン設定のリストについては、
       :ref:`topics-settings-ref` を参照してください.
 
    .. attribute:: crawler
-
+      
       この属性は、クラスを初期化した後の :meth:`from_crawler` クラスメソッドによって設定され、
       このスパイダーインスタンスがバインドされている
       :class:`~scrapy.crawler.Crawler` オブジェクトへのリンクになります.
-
+      
       クローラは、単一エントリアクセス（エクステンション、ミドルウェア、シグナルマネージャなど）のために、
       プロジェクト内の多くのコンポーネントをカプセル化します.
       詳細については :ref:`topics-api-crawler` を参照してください.
 
    .. attribute:: settings
-
+      
       このスパイダーを実行するための設定. これは
       :class:`~scrapy.settings.Settings` インスタンスです。 
       このトピックの詳細な紹介については、
@@ -106,24 +106,24 @@ scrapy.Spider
       これを使ってログメッセージを送信することができます.
 
    .. method:: from_crawler(crawler, \*args, \**kwargs)
-
-       これは Scrapy があなたのスパイダーを作成するために使用するクラスメソッドです.
-
-       デフォルトの実装は :meth:`__init__` メソッドへのプロキシとして機能し、
-       与えられた引数 `args` と名前付き引数 `kwargs` を呼び出すので、
-       これを直接オーバーライドする必要はないでしょう.
-
-       それにもかかわらず、このメソッドは :attr:`crawler` と :attr:`settings`
-       属性を新しいインスタンスに設定し、後でスパイダのコード内でアクセスできるようにします.
-
-       :param crawler: スパイダーにバインドされるクローラー 
-       :type crawler: :class:`~scrapy.crawler.Crawler` インスタンス
+      
+      これは Scrapy があなたのスパイダーを作成するために使用するクラスメソッドです.
+       
+      デフォルトの実装は :meth:`__init__` メソッドへのプロキシとして機能し、
+      与えられた引数 `args` と名前付き引数 `kwargs` を呼び出すので、
+      これを直接オーバーライドする必要はないでしょう.
+      
+      それにもかかわらず、このメソッドは :attr:`crawler` と :attr:`settings`
+      属性を新しいインスタンスに設定し、後でスパイダのコード内でアクセスできるようにします.
+      
+      :param crawler: スパイダーにバインドされるクローラー 
+      :type crawler: :class:`~scrapy.crawler.Crawler` インスタンス
        
-       :param args: :meth:`__init__` メソッドに渡される引数
-       :type args: list
-
-       :param kwargs: :meth:`__init__` メソッドに渡されるキーワード引数
-       :type kwargs: dict
+      :param args: :meth:`__init__` メソッドに渡される引数
+      :type args: list
+      
+      :param kwargs: :meth:`__init__` メソッドに渡されるキーワード引数
+      :type kwargs: dict
 
    .. method:: start_requests()
 
@@ -261,7 +261,7 @@ scrapy.Spider
 開始URLを定義するか, サイトの特定のセクションにクロールを制限することですが, 
 スパイダーの機能を構成するために使用できます.
 
-スパイダーの引数は, ``-a`` オプションを使用して :command:`crawl` コマンドに渡されます. 例えば
+スパイダーの引数は, ``-a`` オプションを使用して :command:`crawl` コマンドに渡されます. 例えば::
 
     scrapy crawl myspider -a category=electronics
 

@@ -383,7 +383,7 @@ CrawlSpider の設定例
             # そして, それらのリンクをたどります (なぜならコールバックはデフォルトで follow=True ではないからです).
             Rule(LinkExtractor(allow=('category\.php', ), deny=('subsection\.php', ))),
 
-            # と一致するリンクを抽出し, スパイダーの parse_item() メソッドで解析します
+            # 'allow' と一致するリンクを抽出し, スパイダーの parse_item() メソッドで解析します
             Rule(LinkExtractor(allow=('item\.php', )), callback='parse_item'),
         )
 

@@ -101,14 +101,13 @@ Scrapyを使用するときは, 環境変数 ``SCRAPY_SETTINGS_MODULE`` を使�
             print("Existing settings: %s" % self.settings.attributes.keys())
 
 .. note::
-    The ``settings`` attribute is set in the base Spider class after the spider
-    is initialized.  If you want to use the settings before the initialization
-    (e.g., in your spider's ``__init__()`` method), you'll need to override the
-    :meth:`~scrapy.spiders.Spider.from_crawler` method.
+   ``settings`` 属性は、スパイダーが初期化された後、
+   ベース Spider クラスに設定されます。
+   初期化の前に設定を使用する場合（たとえば、スパイダーの ``__init__()`` メソッド）、
+   :meth:`~scrapy.spiders.Spider.from_crawler`メソッドをオーバーライドする必要があります.
 
-Settings can be accessed through the :attr:`scrapy.crawler.Crawler.settings`
-attribute of the Crawler that is passed to ``from_crawler`` method in
-extensions, middlewares and item pipelines::
+設定は、拡張機能、ミドルウェアおよびアイテムパイプラインの ``from_crawler`` メソッドに渡される、
+クローラの :attr:`scrapy.crawler.Crawler.settings` 属性を介してアクセスできます。
 
     class MyExtension(object):
         def __init__(self, log_is_enabled=False):
@@ -120,10 +119,9 @@ extensions, middlewares and item pipelines::
             settings = crawler.settings
             return cls(settings.getbool('LOG_ENABLED'))
 
-The settings object can be used like a dict (e.g.,
-``settings['LOG_ENABLED']``), but it's usually preferred to extract the setting
-in the format you need it to avoid type errors, using one of the methods
-provided by the :class:`~scrapy.settings.Settings` API.
+設定オブジェクトは ``dict'' (例： ``settings['LOG_ENABLED']`` ) のように使用できますが, 
+:class:`~scrapy.settings.Settings` API で提供されるメソッドの1つを使用して、
+タイプエラーを回避するために必要な形式で設定を抽出することをお勧めします.
 
 名前を設定する理由
 ===========================
@@ -138,12 +136,11 @@ provided by the :class:`~scrapy.settings.Settings` API.
 ビルトイン設定リファレンス
 ===========================
 
-ここでは, アルファベット順に使用可能なすべてのScrapy設定のリストと, デフォルト値, 適用されるスコープが示されています.
+ここでは, アルファベット順に使用可能なすべての Scrapy 設定のリストと, デフォルト値, 適用されるスコープが示されています.
 
-The scope, where available, shows where the setting is being used, if it's tied
-to any particular component. In that case the module of that component will be
-shown, typically an extension, middleware or pipeline. It also means that the
-component must be enabled in order for the setting to have any effect.
+使用可能な場合スコープは、特定のコンポーネントに関連付けられていれば、設定が使用されている場所を示します. 
+その場合、そのコンポーネントのモジュール、通常は拡張モジュール、ミドルウェアまたはパイプラインが表示されます。
+また、設定を有効にするためにコンポーネントを有効にする必要があることも意味します.
 
 .. setting:: AWS_ACCESS_KEY_ID
 
@@ -182,8 +179,8 @@ CONCURRENT_ITEMS
 
 デフォルト: ``100``
 
-Maximum number of concurrent items (per response) to process in parallel in the
-Item Processor (also known as the :ref:`Item Pipeline <topics-item-pipeline>`).
+アイテムプロセッサ ( :ref:`アイテムパイプライン <topics-item-pipeline>` とも呼ばれます) 
+で並列処理する同時アイテムの最大数（応答あたり）.
 
 .. setting:: CONCURRENT_REQUESTS
 
@@ -192,8 +189,7 @@ CONCURRENT_REQUESTS
 
 デフォルト: ``16``
 
-The maximum number of concurrent (ie. simultaneous) requests that will be
-performed by the Scrapy downloader.
+Scrapyダウンローダによって実行される並行（つまり同時の）リクエストの最大数.
 
 .. setting:: CONCURRENT_REQUESTS_PER_DOMAIN
 
@@ -202,11 +198,10 @@ CONCURRENT_REQUESTS_PER_DOMAIN
 
 デフォルト: ``8``
 
-The maximum number of concurrent (ie. simultaneous) requests that will be
-performed to any single domain.
+単一のドメインに対して実行される並行（つまり同時）リクエストの最大数.
 
-See also: :ref:`topics-autothrottle` and its
-:setting:`AUTOTHROTTLE_TARGET_CONCURRENCY` option.
+:ref:`topics-autothrottle` と 
+:setting:`AUTOTHROTTLE_TARGET_CONCURRENCY` オプションも参照してください.
 
 
 .. setting:: CONCURRENT_REQUESTS_PER_IP
@@ -216,15 +211,13 @@ CONCURRENT_REQUESTS_PER_IP
 
 デフォルト: ``0``
 
-The maximum number of concurrent (ie. simultaneous) requests that will be
-performed to any single IP. If non-zero, the
-:setting:`CONCURRENT_REQUESTS_PER_DOMAIN` setting is ignored, and this one is
-used instead. In other words, concurrency limits will be applied per IP, not
-per domain.
+単一の IP に対して実行される並行（つまり同時）要求の最大数. 
+0以外の場合, :setting:`CONCURRENT_REQUESTS_PER_DOMAIN` 設定は無視され、
+代わりにこの設定が使用されます。つまり、ドメインごとではなく、IPごとに並行処理の制限が適用されます.
 
-This setting also affects :setting:`DOWNLOAD_DELAY` and
-:ref:`topics-autothrottle`: if :setting:`CONCURRENT_REQUESTS_PER_IP`
-is non-zero, download delay is enforced per IP, not per domain.
+この設定は、 :setting:`DOWNLOAD_DELAY` 及び 
+:ref:`topics-autothrottle`: にも影響します。 :setting:`CONCURRENT_REQUESTS_PER_IP`
+がゼロ以外の場合, ドメインごとではなくIPごとにダウンロード遅延が強制されます.
 
 
 .. setting:: DEFAULT_ITEM_CLASS
@@ -234,8 +227,7 @@ DEFAULT_ITEM_CLASS
 
 デフォルト: ``'scrapy.item.Item'``
 
-The default class that will be used for instantiating items in the :ref:`the
-Scrapy shell <topics-shell>`.
+:ref:`Scrapy shell <topics-shell>` でアイテムをインスタンス化するために使用されるデフォルトクラスです.
 
 .. setting:: DEFAULT_REQUEST_HEADERS
 
@@ -249,8 +241,9 @@ DEFAULT_REQUEST_HEADERS
         'Accept-Language': 'en',
     }
 
-The default headers used for Scrapy HTTP Requests. They're populated in the
-:class:`~scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware`.
+Scrapy HTTP Request に使用されるデフォルトのヘッダー. これらは、
+:class:`~scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware` 
+に設定されています.
 
 .. setting:: DEPTH_LIMIT
 
@@ -261,8 +254,7 @@ DEPTH_LIMIT
 
 スコープ: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
 
-The maximum depth that will be allowed to crawl for any site. If zero, no limit
-will be imposed.
+どのサイトでもクロールできる最大の深さ。ゼロの場合、制限は課されません.
 
 .. setting:: DEPTH_PRIORITY
 
@@ -273,22 +265,19 @@ DEPTH_PRIORITY
 
 スコープ: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
 
-An integer that is used to adjust the request priority based on its depth:
+深さに基づいてリクエストの優先度を調整するために使用される整数:
 
-- if zero (default), no priority adjustment is made from depth
-- **a positive value will decrease the priority, i.e. higher depth
-  requests will be processed later** ; this is commonly used when doing
-  breadth-first crawls (BFO)
-- a negative value will increase priority, i.e., higher depth requests
-  will be processed sooner (DFO)
+- 0（デフォルト）の場合、深度からの優先調整は行われません
+- **正の値は優先度を下げます。つまり、深度の高い要求が後で処理されます。**  
+  これは、幅優先のクロール（BFO）を行うときによく使用されます
+- 負の値は優先度を増加させます。すなわち、より深い深度要求がより早く処理されます（DFO）
 
-See also: :ref:`faq-bfo-dfo` about tuning Scrapy for BFO or DFO.
+BFO または DFO のチューニングに関しては :ref:`faq-bfo-dfo` を参照してください.
 
 .. note::
 
-    This setting adjusts priority **in the opposite way** compared to
-    other priority settings :setting:`REDIRECT_PRIORITY_ADJUST`
-    and :setting:`RETRY_PRIORITY_ADJUST`.
+    この設定は、他の優先度設定である :setting:`REDIRECT_PRIORITY_ADJUST`
+    及び :setting:`RETRY_PRIORITY_ADJUST` と比較して、優先度を調整します.
 
 .. setting:: DEPTH_STATS
 
@@ -310,8 +299,7 @@ DEPTH_STATS_VERBOSE
 
 スコープ: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
 
-Whether to collect verbose depth stats. If this is enabled, the number of
-requests for each depth is collected in the stats.
+冗長な深さ統計を収集するかどうか。これを有効にすると、各深さのリクエスト数が統計情報に収集されます.
 
 .. setting:: DNSCACHE_ENABLED
 
@@ -356,8 +344,8 @@ DOWNLOADER_HTTPCLIENTFACTORY
 
 デフォルト: ``'scrapy.core.downloader.webclient.ScrapyHTTPClientFactory'``
 
-Defines a Twisted ``protocol.ClientFactory``  class to use for HTTP/1.0
-connections (for ``HTTP10DownloadHandler``).
+HTTP / 1.0接続（ ``HTTP10DownloadHandler`` の場合）に使用する、
+Twisted の ``protocol.ClientFactory`` クラスを定義します。
 
 .. note::
 
@@ -374,11 +362,11 @@ DOWNLOADER_CLIENTCONTEXTFACTORY
 
 デフォルト: ``'scrapy.core.downloader.contextfactory.ScrapyClientContextFactory'``
 
-Represents the classpath to the ContextFactory to use.
+使用する ContextFactory へのクラスパスを表します.
 
-Here, "ContextFactory" is a Twisted term for SSL/TLS contexts, defining
-the TLS/SSL protocol version to use, whether to do certificate verification,
-or even enable client-side authentication (and various other things).
+ContextFactory は、 SSL / TLS コンテキストの Twisted の用語で、
+使用するTLS / SSLプロトコルのバージョン、証明書の検証の有無、
+クライアント側の認証（およびその他のさまざまなもの）の有効化を定義します。
 
 .. note::
 
@@ -391,9 +379,9 @@ or even enable client-side authentication (and various other things).
     which uses the platform's certificates to validate remote endpoints.
     **This is only available if you use Twisted>=14.0.**
 
-If you do use a custom ContextFactory, make sure it accepts a ``method``
-parameter at init (this is the ``OpenSSL.SSL`` method mapping
-:setting:`DOWNLOADER_CLIENT_TLS_METHOD`).
+カスタムContextFactoryを使用する場合は、
+init で ``method`` パラメータを受け入れるようにしてください
+（これは ``OpenSSL.SSL`` メソッドの:setting:`DOWNLOADER_CLIENT_TLS_METHOD` のマッピングです）。
 
 .. setting:: DOWNLOADER_CLIENT_TLS_METHOD
 
@@ -402,24 +390,21 @@ DOWNLOADER_CLIENT_TLS_METHOD
 
 デフォルト: ``'TLS'``
 
-Use this setting to customize the TLS/SSL method used by the default
-HTTP/1.1 downloader.
+この設定を使用して、デフォルトの HTTP/1.1 ダウンローダが使用する TLS/SSL 方式をカスタマイズします.
 
-This setting must be one of these string values:
+この設定は、これらの文字列値のいずれかでなければなりません:
 
-- ``'TLS'``: maps to OpenSSL's ``TLS_method()`` (a.k.a ``SSLv23_method()``),
-  which allows protocol negotiation, starting from the highest supported
-  by the platform; **default, recommended**
-- ``'TLSv1.0'``: this value forces HTTPS connections to use TLS version 1.0 ;
-  set this if you want the behavior of Scrapy<1.1
-- ``'TLSv1.1'``: forces TLS version 1.1
-- ``'TLSv1.2'``: forces TLS version 1.2
-- ``'SSLv3'``: forces SSL version 3 (**not recommended**)
+- ``'TLS'``: OpenSSLの ``TLS_method()`` (a.k.a ``SSLv23_method()``), 
+  にマップされています。これにより、プラットフォームでサポートされている最高位から始まる
+  プロトコルネゴシエーションが可能になります; **デフォルト、推奨**
+- ``'TLSv1.0'``: この値を指定すると、HTTPS接続はTLSバージョン1.0を使用します。 Scrapy < 1.1 の動作が必要な場合にこれを設定します
+- ``'TLSv1.1'``: TLS バージョン 1.1 を強制します
+- ``'TLSv1.2'``: TLS バージョン 1.2 を強制します
+- ``'SSLv3'``: SSL バージョン 3 を強制します (**非推奨**)
 
 .. note::
 
-    We recommend that you use PyOpenSSL>=0.13 and Twisted>=0.13
-    or above (Twisted>=14.0 if you can).
+    PyOpenSSL >= 0.13、Twisted >= 0.13 以上を使用することをお勧めします（出来れば Twisted> = 14.0）.
 
 .. setting:: DOWNLOADER_MIDDLEWARES
 
@@ -428,8 +413,8 @@ DOWNLOADER_MIDDLEWARES
 
 デフォルト:: ``{}``
 
-A dict containing the downloader middlewares enabled in your project, and their
-orders. For more info see :ref:`topics-downloader-middleware-setting`.
+あなたのプロジェクトで有効になっているダウンローダミドルウェアとその注文を含む辞書。
+詳細については :ref:`topics-downloader-middleware-setting` を参照してください.
 
 .. setting:: DOWNLOADER_MIDDLEWARES_BASE
 
@@ -455,11 +440,11 @@ DOWNLOADER_MIDDLEWARES_BASE
         'scrapy.downloadermiddlewares.httpcache.HttpCacheMiddleware': 900,
     }
 
-A dict containing the downloader middlewares enabled by default in Scrapy. Low
-orders are closer to the engine, high orders are closer to the downloader. You
-should never modify this setting in your project, modify
-:setting:`DOWNLOADER_MIDDLEWARES` instead.  For more info see
-:ref:`topics-downloader-middleware-setting`.
+Scrapyでデフォルトで有効になっているダウンローダミドルウェアを含む辞書. 
+ローオーダーはエンジンに近く、ハイオーダーはダウンローダーに近くなっています. 
+プロジェクトでこの設定を変更しないでください。代わりに 
+:setting:`DOWNLOADER_MIDDLEWARES` を変更してください. 詳細については、
+:ref:`topics-downloader-middleware-setting` を参照してください.
 
 .. setting:: DOWNLOADER_STATS
 
@@ -468,7 +453,7 @@ DOWNLOADER_STATS
 
 デフォルト: ``True``
 
-Whether to enable downloader stats collection.
+ダウンローダの統計情報収集を有効にするかどうか.
 
 .. setting:: DOWNLOAD_DELAY
 
@@ -477,22 +462,20 @@ DOWNLOAD_DELAY
 
 デフォルト: ``0``
 
-The amount of time (in secs) that the downloader should wait before downloading
-consecutive pages from the same website. This can be used to throttle the
-crawling speed to avoid hitting servers too hard. Decimal numbers are
-supported.  Example::
+ダウンローダが同じWebサイトから連続したページをダウンロードするまで待機する時間（秒）. 
+これは、サーバに負荷がかかることを避けるために、クロール速度を抑えるために使用できます。 
+10進数がサポートされています。例::
 
     DOWNLOAD_DELAY = 0.25    # 250 ms of delay
+    
+この設定は、 :setting:`RANDOMIZE_DOWNLOAD_DELAY` 
+設定の影響を受けます（デフォルトで有効）. 既定では, 
+Scrapyは要求間の固定時間を待機しませんが、0.5 * :setting:`DOWNLOAD_DELAY` から 1.5 * :setting:`DOWNLOAD_DELAY` 
+までのランダムな間隔を使用します.
 
-This setting is also affected by the :setting:`RANDOMIZE_DOWNLOAD_DELAY`
-setting (which is enabled by default). By default, Scrapy doesn't wait a fixed
-amount of time between requests, but uses a random interval between 0.5 * :setting:`DOWNLOAD_DELAY` and 1.5 * :setting:`DOWNLOAD_DELAY`.
+:setting:`CONCURRENT_REQUESTS_PER_IP` がゼロ以外の場合、遅延はドメインごとではなくIPアドレスごとに適用されます.
 
-When :setting:`CONCURRENT_REQUESTS_PER_IP` is non-zero, delays are enforced
-per ip address instead of per domain.
-
-You can also change this setting per spider by setting ``download_delay``
-spider attribute.
+``download_delay``スパイダー属性を設定することで、スパイダーごとにこの設定を変更することもできます.
 
 .. setting:: DOWNLOAD_HANDLERS
 
@@ -501,8 +484,8 @@ DOWNLOAD_HANDLERS
 
 デフォルト: ``{}``
 
-A dict containing the request downloader handlers enabled in your project.
-See :setting:`DOWNLOAD_HANDLERS_BASE` for example format.
+プロジェクトで有効になっているリクエストダウンローダーハンドラを含む ``dict``.
+形式のサンプルについては :setting:`DOWNLOAD_HANDLERS_BASE` を参照してください.
 
 .. setting:: DOWNLOAD_HANDLERS_BASE
 
@@ -520,13 +503,12 @@ DOWNLOAD_HANDLERS_BASE
     }
 
 
-A dict containing the request download handlers enabled by default in Scrapy.
-You should never modify this setting in your project, modify
-:setting:`DOWNLOAD_HANDLERS` instead.
+デフォルトで Scrapy で有効になっているリクエストハンドラを含む ``dict`` 。プロジェクトでこの設定を変更しないでください。代わりに 
+:setting:`DOWNLOAD_HANDLERS` を変更してください.
 
-You can disable any of these download handlers by assigning ``None`` to their
-URI scheme in :setting:`DOWNLOAD_HANDLERS`. E.g., to disable the built-in FTP
-handler (without replacement), place this in your ``settings.py``::
+これらのダウンロードハンドラのいずれかを無効にするには、
+ :setting:`DOWNLOAD_HANDLERS` の URI スキームにNoneを割り当てます。
+たとえば、組み込みのFTPハンドラを無効にするには（置き換えずに）、これを settings.py に記述子ます::
 
     DOWNLOAD_HANDLERS = {
         'ftp': None,
@@ -539,13 +521,13 @@ DOWNLOAD_TIMEOUT
 
 デフォルト: ``180``
 
-The amount of time (in secs) that the downloader will wait before timing out.
+ダウンローダーがタイムアウトするまで待機する時間（秒単位）。
 
 .. note::
 
-    This timeout can be set per spider using :attr:`download_timeout`
-    spider attribute and per-request using :reqmeta:`download_timeout`
-    Request.meta key.
+    このタイムアウトは、 :attr:`download_timeout`
+    スパイダ属性と :reqmeta:`download_timeout`
+    Request.meta キーを使用したリクエストごとに設定できます.
 
 .. setting:: DOWNLOAD_MAXSIZE
 
@@ -554,19 +536,18 @@ DOWNLOAD_MAXSIZE
 
 デフォルト: `1073741824` (1024MB)
 
-The maximum response size (in bytes) that downloader will download.
+ダウンローダがダウンロードする最大応答サイズ（バイト単位）.
 
-If you want to disable it set to 0.
+無効にする場合は、0に設定します.
 
 .. reqmeta:: download_maxsize
 
 .. note::
 
-    This size can be set per spider using :attr:`download_maxsize`
-    spider attribute and per-request using :reqmeta:`download_maxsize`
-    Request.meta key.
+    このサイズは、 :attr:`download_maxsize` Request.metaキーを使用して、
+    :attr:`download_maxsize` スパイダ属性とper-requestを使用してスパイダごとに設定できます。
 
-    This feature needs Twisted >= 11.1.
+    この機能には Twisted >= 11.1 が必要です.
 
 .. setting:: DOWNLOAD_WARNSIZE
 

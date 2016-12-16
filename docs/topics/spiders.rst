@@ -11,31 +11,27 @@
 
 スパイダーの場合, スクレイピングのライフサイクルは以下のようになります:
 
-1. You start by generating the initial Requests to crawl the first URLs, and
-   specify a callback function to be called with the response downloaded from
-   those requests.
+1. 最初のURLをクロールする最初のリクエストを生成し, それらのリクエストからダウンロードされたレスポンスで呼び出されるコールバック関数を指定します.
 
-   The first requests to perform are obtained by calling the
-   :meth:`~scrapy.spiders.Spider.start_requests` method which (by default)
-   generates :class:`~scrapy.http.Request` for the URLs specified in the
-   :attr:`~scrapy.spiders.Spider.start_urls` and the
-   :attr:`~scrapy.spiders.Spider.parse` method as callback function for the
-   Requests.
+   実行する最初のリクエストは, 
+   :meth:`~scrapy.spiders.Spider.start_requests` メソッドを呼び出すことによって取得されます。
+   このメソッドは, デフォルトで
+   :attr:`~scrapy.spiders.Spider.start_urls` で指定されたURLと
+   :class:`~scrapy.http.Request` のコールバック関数として呼ばれる :attr:`~scrapy.spiders.Spider.parse` メソッドで, 
+   :class:`~scrapy.http.Request` を生成します.
 
-2. In the callback function, you parse the response (web page) and return either
-   dicts with extracted data, :class:`~scrapy.item.Item` objects,
-   :class:`~scrapy.http.Request` objects, or an iterable of these objects.
-   Those Requests will also contain a callback (maybe
-   the same) and will then be downloaded by Scrapy and then their
-   response handled by the specified callback.
+2. コールバック関数では, レスポンス（Webページ）を解析し, 抽出されたデータ, 
+   :class:`~scrapy.item.Item` オブジェクト, :class:`~scrapy.http.Request` オブジェクト, 
+   またはこれらのオブジェクトの反復可能なものを返します
+   これらのリクエストには, コールバックが含まれ, 
+   Scrapyによってダウンロードされ, その後指定されたコールバックによってリクエストが処理されます.
 
-3. In callback functions, you parse the page contents, typically using
-   :ref:`topics-selectors` (but you can also use BeautifulSoup, lxml or whatever
-   mechanism you prefer) and generate items with the parsed data.
+3. コールバック関数では,  :ref:`topics-selectors` 
+   を使用してページの内容を解析します（ただし, BeautifulSoup, lxmlなどの任意のメカニズムを使用することもできます）.
 
-4. Finally, the items returned from the spider will be typically persisted to a
-   database (in some :ref:`Item Pipeline <topics-item-pipeline>`) or written to
-   a file using :ref:`topics-feed-exports`.
+4. 最後に, スパイダーから返されたアイテムは, 
+   通常, データベース（一部の :ref:`アイテムパイプライン <topics-item-pipeline>` 内）に永続化されるか, 
+   または :ref:`topics-feed-exports` を使用してファイルに書き込まれます.
 
 このサイクルはどんな種類のスパイダーにも（多かれ少なかれ）適用されますが, さまざまな種類のデフォルトのスパイダーが Scrapy にバンドルされています. これらのタイプについてはここで説明します.
 
@@ -60,7 +56,7 @@ scrapy.Spider
       ただし, 同じスパイダーのインスタンスは一つだけ作成可能で, 複数インスタンス化することはできません. 
       これは最も重要なスパイダー属性であり, 必須です.
       
-      スパイダーが単一のドメインをスクラップする場合, 一般的には,  `TLD`_ の有無にかかわらず, ドメイン名と同じの名前を付けます. 
+      スパイダーが単一のドメインをスクラップする場合, 一般的には,  `TLD`_ の有無にかかわらず, ドメイン名と同じの名前を付けます. 
       したがって, たとえば, ``mywebsite.com`` をクロールするスパイダーには,  ``mywebsite`` という名前をつけます.
 
 

@@ -7,7 +7,7 @@
 Scrapyの設定では, コア, 拡張機能, パイプライン, スパイダー自体を含むすべての Scrapy コンポーネントの動作をカスタマイズすることができます.
 
 設定のインフラストラクチャは, コードで値を取得するために使用できる, キーと値のマッピングのグローバルな名前空間を提供します. 
-この設定は、以下で説明するさまざまなメカニズムによって設定できます.
+この設定は, 以下で説明するさまざまなメカニズムによって設定できます.
 
 この設定は, 現在アクティブなScrapyプロジェクトを選択するためのメカニズムでもあります.
 
@@ -69,7 +69,7 @@ Scrapyを使用するときは, 環境変数 ``SCRAPY_SETTINGS_MODULE`` を使�
 3. プロジェクト設定モジュール
 --------------------------
 
-プロジェクト設定モジュールは、Scrapyプロジェクトの標準設定ファイルです. 
+プロジェクト設定モジュールは, Scrapyプロジェクトの標準設定ファイルです. 
 カスタム設定の大部分が設定されます. 
 標準の Scrapy プロジェクトでは, プロジェクト用に作成された ``settings.py`` ファイルの設定を追加または変更することになります.
 
@@ -101,13 +101,13 @@ Scrapyを使用するときは, 環境変数 ``SCRAPY_SETTINGS_MODULE`` を使�
             print("Existing settings: %s" % self.settings.attributes.keys())
 
 .. note::
-   ``settings`` 属性は、スパイダーが初期化された後、
-   ベース Spider クラスに設定されます。
-   初期化の前に設定を使用する場合（たとえば、スパイダーの ``__init__()`` メソッド）、
+   ``settings`` 属性は, スパイダーが初期化された後, 
+   ベース Spider クラスに設定されます. 
+   初期化の前に設定を使用する場合（たとえば, スパイダーの ``__init__()`` メソッド）, 
    :meth:`~scrapy.spiders.Spider.from_crawler`メソッドをオーバーライドする必要があります.
 
-設定は、拡張機能、ミドルウェアおよびアイテムパイプラインの ``from_crawler`` メソッドに渡される、
-クローラの :attr:`scrapy.crawler.Crawler.settings` 属性を介してアクセスできます。
+設定は, 拡張機能, ミドルウェアおよびアイテムパイプラインの ``from_crawler`` メソッドに渡される, 
+クローラの :attr:`scrapy.crawler.Crawler.settings` 属性を介してアクセスできます. 
 
     class MyExtension(object):
         def __init__(self, log_is_enabled=False):
@@ -120,7 +120,7 @@ Scrapyを使用するときは, 環境変数 ``SCRAPY_SETTINGS_MODULE`` を使�
             return cls(settings.getbool('LOG_ENABLED'))
 
 設定オブジェクトは ``dict'' (例： ``settings['LOG_ENABLED']`` ) のように使用できますが, 
-:class:`~scrapy.settings.Settings` API で提供されるメソッドの1つを使用して、
+:class:`~scrapy.settings.Settings` API で提供されるメソッドの1つを使用して, 
 タイプエラーを回避するために必要な形式で設定を抽出することをお勧めします.
 
 名前を設定する理由
@@ -138,9 +138,9 @@ Scrapyを使用するときは, 環境変数 ``SCRAPY_SETTINGS_MODULE`` を使�
 
 ここでは, アルファベット順に使用可能なすべての Scrapy 設定のリストと, デフォルト値, 適用されるスコープが示されています.
 
-使用可能な場合スコープは、特定のコンポーネントに関連付けられていれば、設定が使用されている場所を示します. 
-その場合、そのコンポーネントのモジュール、通常は拡張モジュール、ミドルウェアまたはパイプラインが表示されます。
-また、設定を有効にするためにコンポーネントを有効にする必要があることも意味します.
+使用可能な場合スコープは, 特定のコンポーネントに関連付けられていれば, 設定が使用されている場所を示します. 
+その場合, そのコンポーネントのモジュール, 通常は拡張モジュール, ミドルウェアまたはパイプラインが表示されます. 
+また, 設定を有効にするためにコンポーネントを有効にする必要があることも意味します.
 
 .. setting:: AWS_ACCESS_KEY_ID
 
@@ -168,7 +168,7 @@ BOT_NAME
 デフォルト: ``'scrapybot'``
 
 このScrapyプロジェクトによって実装されたボットの名前（プロジェクト名とも呼ばれます）. 
-これは、デフォルトで User-Agent, ロギングに使用されます.
+これは, デフォルトで User-Agent, ロギングに使用されます.
 
 :command:`startproject` コマンドを使用してプロジェクトを作成すると, プロジェクト名が自動的に入力されます.
 
@@ -212,11 +212,11 @@ CONCURRENT_REQUESTS_PER_IP
 デフォルト: ``0``
 
 単一の IP に対して実行される並行（つまり同時）要求の最大数. 
-0以外の場合, :setting:`CONCURRENT_REQUESTS_PER_DOMAIN` 設定は無視され、
-代わりにこの設定が使用されます。つまり、ドメインごとではなく、IPごとに並行処理の制限が適用されます.
+0以外の場合, :setting:`CONCURRENT_REQUESTS_PER_DOMAIN` 設定は無視され, 
+代わりにこの設定が使用されます. つまり, ドメインごとではなく, IPごとに並行処理の制限が適用されます.
 
-この設定は、 :setting:`DOWNLOAD_DELAY` 及び 
-:ref:`topics-autothrottle`: にも影響します。 :setting:`CONCURRENT_REQUESTS_PER_IP`
+この設定は,  :setting:`DOWNLOAD_DELAY` 及び 
+:ref:`topics-autothrottle`: にも影響します.  :setting:`CONCURRENT_REQUESTS_PER_IP`
 がゼロ以外の場合, ドメインごとではなくIPごとにダウンロード遅延が強制されます.
 
 
@@ -241,7 +241,7 @@ DEFAULT_REQUEST_HEADERS
         'Accept-Language': 'en',
     }
 
-Scrapy HTTP Request に使用されるデフォルトのヘッダー. これらは、
+Scrapy HTTP Request に使用されるデフォルトのヘッダー. これらは, 
 :class:`~scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware` 
 に設定されています.
 
@@ -254,7 +254,7 @@ DEPTH_LIMIT
 
 スコープ: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
 
-どのサイトでもクロールできる最大の深さ。ゼロの場合、制限は課されません.
+どのサイトでもクロールできる最大の深さ. ゼロの場合, 制限は課されません.
 
 .. setting:: DEPTH_PRIORITY
 
@@ -267,17 +267,17 @@ DEPTH_PRIORITY
 
 深さに基づいてリクエストの優先度を調整するために使用される整数:
 
-- 0（デフォルト）の場合、深度からの優先調整は行われません
-- **正の値は優先度を下げます。つまり、深度の高い要求が後で処理されます。**  
-  これは、幅優先のクロール（BFO）を行うときによく使用されます
-- 負の値は優先度を増加させます。すなわち、より深い深度要求がより早く処理されます（DFO）
+- 0（デフォルト）の場合, 深度からの優先調整は行われません
+- **正の値は優先度を下げます. つまり, 深度の高い要求が後で処理されます.**   
+  これは, 幅優先のクロール（BFO）を行うときによく使用されます
+- 負の値は優先度を増加させます. すなわち, より深い深度要求がより早く処理されます（DFO）
 
 BFO または DFO のチューニングに関しては :ref:`faq-bfo-dfo` を参照してください.
 
 .. note::
 
-    この設定は、他の優先度設定である :setting:`REDIRECT_PRIORITY_ADJUST`
-    及び :setting:`RETRY_PRIORITY_ADJUST` と比較して、優先度を調整します.
+    この設定は, 他の優先度設定である :setting:`REDIRECT_PRIORITY_ADJUST`
+    及び :setting:`RETRY_PRIORITY_ADJUST` と比較して, 優先度を調整します.
 
 .. setting:: DEPTH_STATS
 
@@ -299,7 +299,7 @@ DEPTH_STATS_VERBOSE
 
 スコープ: ``scrapy.spidermiddlewares.depth.DepthMiddleware``
 
-冗長な深さ統計を収集するかどうか。これを有効にすると、各深さのリクエスト数が統計情報に収集されます.
+冗長な深さ統計を収集するかどうか. これを有効にすると, 各深さのリクエスト数が統計情報に収集されます.
 
 .. setting:: DNSCACHE_ENABLED
 
@@ -344,8 +344,8 @@ DOWNLOADER_HTTPCLIENTFACTORY
 
 デフォルト: ``'scrapy.core.downloader.webclient.ScrapyHTTPClientFactory'``
 
-HTTP / 1.0接続（ ``HTTP10DownloadHandler`` の場合）に使用する、
-Twisted の ``protocol.ClientFactory`` クラスを定義します。
+HTTP / 1.0接続（ ``HTTP10DownloadHandler`` の場合）に使用する, 
+Twisted の ``protocol.ClientFactory`` クラスを定義します. 
 
 .. note::
 
@@ -364,9 +364,9 @@ DOWNLOADER_CLIENTCONTEXTFACTORY
 
 使用する ContextFactory へのクラスパスを表します.
 
-ContextFactory は、 SSL / TLS コンテキストの Twisted の用語で、
-使用するTLS / SSLプロトコルのバージョン、証明書の検証の有無、
-クライアント側の認証（およびその他のさまざまなもの）の有効化を定義します。
+ContextFactory は,  SSL / TLS コンテキストの Twisted の用語で, 
+使用するTLS / SSLプロトコルのバージョン, 証明書の検証の有無, 
+クライアント側の認証（およびその他のさまざまなもの）の有効化を定義します. 
 
 .. note::
 
@@ -379,9 +379,9 @@ ContextFactory は、 SSL / TLS コンテキストの Twisted の用語で、
     which uses the platform's certificates to validate remote endpoints.
     **This is only available if you use Twisted>=14.0.**
 
-カスタムContextFactoryを使用する場合は、
+カスタム ContextFactory を使用する場合は, 
 init で ``method`` パラメータを受け入れるようにしてください
-（これは ``OpenSSL.SSL`` メソッドの:setting:`DOWNLOADER_CLIENT_TLS_METHOD` のマッピングです）。
+（これは ``OpenSSL.SSL`` メソッドの :setting:`DOWNLOADER_CLIENT_TLS_METHOD` のマッピングです）. 
 
 .. setting:: DOWNLOADER_CLIENT_TLS_METHOD
 
@@ -390,21 +390,21 @@ DOWNLOADER_CLIENT_TLS_METHOD
 
 デフォルト: ``'TLS'``
 
-この設定を使用して、デフォルトの HTTP/1.1 ダウンローダが使用する TLS/SSL 方式をカスタマイズします.
+この設定を使用して, デフォルトの HTTP/1.1 ダウンローダが使用する TLS/SSL 方式をカスタマイズします.
 
-この設定は、これらの文字列値のいずれかでなければなりません:
+この設定は, これらの文字列値のいずれかでなければなりません:
 
 - ``'TLS'``: OpenSSLの ``TLS_method()`` (a.k.a ``SSLv23_method()``), 
-  にマップされています。これにより、プラットフォームでサポートされている最高位から始まる
-  プロトコルネゴシエーションが可能になります; **デフォルト、推奨**
-- ``'TLSv1.0'``: この値を指定すると、HTTPS接続はTLSバージョン1.0を使用します。 Scrapy < 1.1 の動作が必要な場合にこれを設定します
+  にマップされています. これにより, プラットフォームでサポートされている最高位から始まる
+  プロトコルネゴシエーションが可能になります; **デフォルト, 推奨**
+- ``'TLSv1.0'``: この値を指定すると, HTTPS接続はTLSバージョン1.0を使用します.  Scrapy < 1.1 の動作が必要な場合にこれを設定します
 - ``'TLSv1.1'``: TLS バージョン 1.1 を強制します
 - ``'TLSv1.2'``: TLS バージョン 1.2 を強制します
 - ``'SSLv3'``: SSL バージョン 3 を強制します (**非推奨**)
 
 .. note::
 
-    PyOpenSSL >= 0.13、Twisted >= 0.13 以上を使用することをお勧めします（出来れば Twisted> = 14.0）.
+    PyOpenSSL >= 0.13, Twisted >= 0.13 以上を使用することをお勧めします（出来れば Twisted> = 14.0）.
 
 .. setting:: DOWNLOADER_MIDDLEWARES
 
@@ -413,7 +413,7 @@ DOWNLOADER_MIDDLEWARES
 
 デフォルト:: ``{}``
 
-あなたのプロジェクトで有効になっているダウンローダミドルウェアとその注文を含む辞書。
+あなたのプロジェクトで有効になっているダウンローダミドルウェアとその注文を含む辞書. 
 詳細については :ref:`topics-downloader-middleware-setting` を参照してください.
 
 .. setting:: DOWNLOADER_MIDDLEWARES_BASE
@@ -441,9 +441,9 @@ DOWNLOADER_MIDDLEWARES_BASE
     }
 
 Scrapyでデフォルトで有効になっているダウンローダミドルウェアを含む辞書. 
-ローオーダーはエンジンに近く、ハイオーダーはダウンローダーに近くなっています. 
-プロジェクトでこの設定を変更しないでください。代わりに 
-:setting:`DOWNLOADER_MIDDLEWARES` を変更してください. 詳細については、
+ローオーダーはエンジンに近く, ハイオーダーはダウンローダーに近くなっています. 
+プロジェクトでこの設定を変更しないでください. 代わりに 
+:setting:`DOWNLOADER_MIDDLEWARES` を変更してください. 詳細については, 
 :ref:`topics-downloader-middleware-setting` を参照してください.
 
 .. setting:: DOWNLOADER_STATS
@@ -463,19 +463,19 @@ DOWNLOAD_DELAY
 デフォルト: ``0``
 
 ダウンローダが同じWebサイトから連続したページをダウンロードするまで待機する時間（秒）. 
-これは、サーバに負荷がかかることを避けるために、クロール速度を抑えるために使用できます。 
-10進数がサポートされています。例::
+これは, サーバに負荷がかかることを避けるために, クロール速度を抑えるために使用できます.  
+10進数がサポートされています. 例::
 
     DOWNLOAD_DELAY = 0.25    # 250 ms of delay
     
-この設定は、 :setting:`RANDOMIZE_DOWNLOAD_DELAY` 
+この設定は,  :setting:`RANDOMIZE_DOWNLOAD_DELAY` 
 設定の影響を受けます（デフォルトで有効）. 既定では, 
-Scrapyは要求間の固定時間を待機しませんが、0.5 * :setting:`DOWNLOAD_DELAY` から 1.5 * :setting:`DOWNLOAD_DELAY` 
+Scrapyは要求間の固定時間を待機しませんが, 0.5 * :setting:`DOWNLOAD_DELAY` から 1.5 * :setting:`DOWNLOAD_DELAY` 
 までのランダムな間隔を使用します.
 
-:setting:`CONCURRENT_REQUESTS_PER_IP` がゼロ以外の場合、遅延はドメインごとではなくIPアドレスごとに適用されます.
+:setting:`CONCURRENT_REQUESTS_PER_IP` がゼロ以外の場合, 遅延はドメインごとではなくIPアドレスごとに適用されます.
 
-``download_delay``スパイダー属性を設定することで、スパイダーごとにこの設定を変更することもできます.
+``download_delay``スパイダー属性を設定することで, スパイダーごとにこの設定を変更することもできます.
 
 .. setting:: DOWNLOAD_HANDLERS
 
@@ -503,12 +503,12 @@ DOWNLOAD_HANDLERS_BASE
     }
 
 
-デフォルトで Scrapy で有効になっているリクエストハンドラを含む ``dict`` 。プロジェクトでこの設定を変更しないでください。代わりに 
+デフォルトで Scrapy で有効になっているリクエストハンドラを含む ``dict`` . プロジェクトでこの設定を変更しないでください. 代わりに 
 :setting:`DOWNLOAD_HANDLERS` を変更してください.
 
-これらのダウンロードハンドラのいずれかを無効にするには、
- :setting:`DOWNLOAD_HANDLERS` の URI スキームにNoneを割り当てます。
-たとえば、組み込みのFTPハンドラを無効にするには（置き換えずに）、これを settings.py に記述子ます::
+これらのダウンロードハンドラのいずれかを無効にするには, 
+ :setting:`DOWNLOAD_HANDLERS` の URI スキームにNoneを割り当てます. 
+たとえば, 組み込みのFTPハンドラを無効にするには（置き換えずに）, これを settings.py に記述子ます::
 
     DOWNLOAD_HANDLERS = {
         'ftp': None,
@@ -521,11 +521,11 @@ DOWNLOAD_TIMEOUT
 
 デフォルト: ``180``
 
-ダウンローダーがタイムアウトするまで待機する時間（秒単位）。
+ダウンローダーがタイムアウトするまで待機する時間（秒単位）. 
 
 .. note::
 
-    このタイムアウトは、 :attr:`download_timeout`
+    このタイムアウトは,  :attr:`download_timeout`
     スパイダ属性と :reqmeta:`download_timeout`
     Request.meta キーを使用したリクエストごとに設定できます.
 
@@ -538,14 +538,14 @@ DOWNLOAD_MAXSIZE
 
 ダウンローダがダウンロードする最大応答サイズ（バイト単位）.
 
-無効にする場合は、0に設定します.
+無効にする場合は, 0に設定します.
 
 .. reqmeta:: download_maxsize
 
 .. note::
 
-    このサイズは、 :attr:`download_maxsize` Request.metaキーを使用して、
-    :attr:`download_maxsize` スパイダ属性とper-requestを使用してスパイダごとに設定できます。
+    このサイズは,  :attr:`download_maxsize` Request.metaキーを使用して, 
+    :attr:`download_maxsize` スパイダ属性とper-requestを使用してスパイダごとに設定できます. 
 
     この機能には Twisted >= 11.1 が必要です.
 

@@ -622,7 +622,7 @@ HTTPCACHE_IGNORE_RESPONSE_CACHE_CONTROLS
 Cache-Control ディレクティブを選択的に無視することができます.
 
 スパイダーは実際に Cache-Control ディレクティブを必要としない限り, 
- Cache-Control ディレクティブを発行しないので, リクエスト内のディレクティブはフィルタリングされません.
+Cache-Control ディレクティブを発行しないので, リクエスト内のディレクティブはフィルタリングされません.
 
 HttpCompressionMiddleware
 -------------------------

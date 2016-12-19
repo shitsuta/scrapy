@@ -4,61 +4,54 @@
 スパイダーミドルウェア
 =================
 
-The spider middleware is a framework of hooks into Scrapy's spider processing
-mechanism where you can plug custom functionality to process the responses that
-are sent to :ref:`topics-spiders` for processing and to process the requests
-and items that are generated from spiders.
+スパイダーミドルウェアは, Scrapyのスパイダー処理機構へのフックのフレームワークで, スパイダーに送信された応答を処理し, 
+:ref:`topics-spiders` から生成されたリクエストとアイテムを処理するカスタム機能をプラグインできます.
 
 .. _topics-spider-middleware-setting:
 
 スパイダーミドルウェアの有効化
 ==============================
 
-To activate a spider middleware component, add it to the
-:setting:`SPIDER_MIDDLEWARES` setting, which is a dict whose keys are the
-middleware class path and their values are the middleware orders.
+スパイダーミドルウェアコンポーネントをアクティブにするには, 
+:setting:`SPIDER_MIDDLEWARES` 設定に追加します. 
+これは, キーがミドルウェアクラスのパスであり, その値がミドルウェアオーダーです.
 
-Here's an example::
+例::
 
     SPIDER_MIDDLEWARES = {
         'myproject.middlewares.CustomSpiderMiddleware': 543,
     }
 
-The :setting:`SPIDER_MIDDLEWARES` setting is merged with the
-:setting:`SPIDER_MIDDLEWARES_BASE` setting defined in Scrapy (and not meant to
-be overridden) and then sorted by order to get the final sorted list of enabled
-middlewares: the first middleware is the one closer to the engine and the last
-is the one closer to the spider. In other words,
-the :meth:`~scrapy.spidermiddlewares.SpiderMiddleware.process_spider_input`
-method of each middleware will be invoked in increasing
-middleware order (100, 200, 300, ...), and the
-:meth:`~scrapy.spidermiddlewares.SpiderMiddleware.process_spider_output` method
-of each middleware will be invoked in decreasing order.
+:setting:`SPIDER_MIDDLEWARES` 設定は, Scrapyで定義された
+:setting:`SPIDER_MIDDLEWARES_BASE` 設定にマージされます（上書きされるという意味ではありません）. 
+次に, 使用可能なミドルウェアの最終的なリストを取得するために, 並べ替えられます. 
+値の小さいミドルウェアはエンジンに近いもので,  大きいものはスパイダーに近いです. 言い換えれば,
+:meth:`~scrapy.spidermiddlewares.SpiderMiddleware.process_spider_input`
+メソッドは, ミドルウェアの順番が増加する (100, 200, 300, ...), ように呼び出され, 各ミドルウェアの
+:meth:`~scrapy.spidermiddlewares.SpiderMiddleware.process_spider_output` 
+メソッドが降順で呼び出されます.
 
-To decide which order to assign to your middleware see the
-:setting:`SPIDER_MIDDLEWARES_BASE` setting and pick a value according to where
-you want to insert the middleware. The order does matter because each
-middleware performs a different action and your middleware could depend on some
-previous (or subsequent) middleware being applied.
+ミドルウェアに割り当てる順序を決定するには, 
+:setting:`SPIDER_MIDDLEWARES_BASE` 設定を参照し, ミドルウェアを挿入する場所に応じて値を選択します. 
+各ミドルウェアが異なるアクションを実行し, ミドルウェアが適用されている以前の
+（または後続の）ミドルウェアに依存する可能性があるため, 順序は重要です.
 
-If you want to disable a builtin middleware (the ones defined in
-:setting:`SPIDER_MIDDLEWARES_BASE`, and enabled by default) you must define it
-in your project :setting:`SPIDER_MIDDLEWARES` setting and assign `None` as its
-value.  For example, if you want to disable the off-site middleware::
+組み込みミドルウェア ( :setting:`SPIDER_MIDDLEWARES_BASE` で定義され, デフォルトで有効になっているもの) 
+を無効にするには, プロジェクトの :setting:`SPIDER_MIDDLEWARES` 設定で定義し, 
+その値にNoneを割り当てる必要があります.  たとえば, off-site ミドルウェアを無効にする場合は::
 
     SPIDER_MIDDLEWARES = {
         'myproject.middlewares.CustomSpiderMiddleware': 543,
         'scrapy.spidermiddlewares.offsite.OffsiteMiddleware': None,
     }
 
-Finally, keep in mind that some middlewares may need to be enabled through a
-particular setting. See each middleware documentation for more info.
+最後に, 特定の設定によっていくつかのミドルウェアを有効にする必要があるかもしれないことに留意してください. 
+詳細は各ミドルウェアのドキュメントを参照してください.
 
 独自のスパイダーミドルウェアの作成
 ==================================
 
-Each middleware component is a Python class that defines one or more of the
-following methods:
+各ミドルウェアコンポーネントは, 以下のメソッドの1つ以上を定義する Python クラスです:
 
 .. module:: scrapy.spidermiddlewares
 
@@ -173,12 +166,12 @@ following methods:
 ビルトインスパイダーミドルウェアリファレンス
 ====================================
 
-This page describes all spider middleware components that come with Scrapy. For
-information on how to use them and how to write your own spider middleware, see
-the :ref:`spider middleware usage guide <topics-spider-middleware>`.
+このページでは, Scrapyに付属するすべてのスパイダーミドルウェアコンポーネントについて説明します. 
+それらの使用方法と独自のスパイダーミドルウェアの作成方法については,  
+:ref:`スパイダーミドルウェア使用方法ガイド <topics-spider-middleware>` を参照してください.
 
-For a list of the components enabled by default (and their orders) see the
-:setting:`SPIDER_MIDDLEWARES_BASE` setting.
+デフォルトで有効になっているコンポーネントの一覧（およびそのオーダー）については, 
+:setting:`SPIDER_MIDDLEWARES_BASE` 設定を参照してください.
 
 DepthMiddleware
 ---------------
@@ -188,18 +181,14 @@ DepthMiddleware
 
 .. class:: DepthMiddleware
 
-   DepthMiddleware is a scrape middleware used for tracking the depth of each
-   Request inside the site being scraped. It can be used to limit the maximum
-   depth to scrape or things like that.
+   DepthMiddleware は, スクレイプされているサイト内の各リクエストの深さを追跡するために使用されるスクレイプミドルウェアです. 
+   これは, スクレイピングなのどの最大深さを制限するために使用することができます.
 
-   The :class:`DepthMiddleware` can be configured through the following
-   settings (see the settings documentation for more info):
+   :class:`DepthMiddleware` は以下の設定で設定することができます（詳細については各設定を参照してください）:
 
-      * :setting:`DEPTH_LIMIT` - The maximum depth that will be allowed to
-        crawl for any site. If zero, no limit will be imposed.
-      * :setting:`DEPTH_STATS` - Whether to collect depth stats.
-      * :setting:`DEPTH_PRIORITY` - Whether to prioritize the requests based on
-        their depth.
+      * :setting:`DEPTH_LIMIT` - クロールできる最大の深さ. ゼロの場合, 制限は課されません.
+      * :setting:`DEPTH_STATS` - 深度統計を収集するかどうか.
+      * :setting:`DEPTH_PRIORITY` - リクエストを深さに基づいて優先順位付けするかどうか.
 
 HttpErrorMiddleware
 -------------------
@@ -255,7 +244,7 @@ HTTPERROR_ALLOWED_CODES
 
 Default: ``[]``
 
-Pass all responses with non-200 status codes contained in this list.
+このリストに含まれる200以外のステータスコードを含むすべての応答を渡します.
 
 .. setting:: HTTPERROR_ALLOW_ALL
 
@@ -264,7 +253,7 @@ HTTPERROR_ALLOW_ALL
 
 Default: ``False``
 
-Pass all responses, regardless of its status code.
+ステータスコードに関係なくすべての応答を渡します.
 
 OffsiteMiddleware
 -----------------
@@ -311,8 +300,7 @@ RefererMiddleware
 
 .. class:: RefererMiddleware
 
-   Populates Request ``Referer`` header, based on the URL of the Response which
-   generated it.
+   リクエストの ``Referer`` ヘッダーに, レスポンスのURLに基づいてヘッダーを挿入します.
 
 RefererMiddleware 設定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -324,9 +312,9 @@ REFERER_ENABLED
 
 .. versionadded:: 0.15
 
-Default: ``True``
+デフォルト: ``True``
 
-Whether to enable referer middleware.
+リファラーミドルウェアを有効にするかどうか.
 
 UrlLengthMiddleware
 -------------------
@@ -336,10 +324,9 @@ UrlLengthMiddleware
 
 .. class:: UrlLengthMiddleware
 
-   Filters out requests with URLs longer than URLLENGTH_LIMIT
+   URL が URLLENGTH_LIMIT より長い場合, リクエストをフィルタリングします
+   
+   The :class:`UrlLengthMiddleware` は, 以下の設定によって構成することができます（詳細については, 設定ドキュメントを参照してください）:
 
-   The :class:`UrlLengthMiddleware` can be configured through the following
-   settings (see the settings documentation for more info):
-
-      * :setting:`URLLENGTH_LIMIT` - The maximum URL length to allow for crawled URLs.
+      * :setting:`URLLENGTH_LIMIT` - クロールするURLで許可されるURLの最大長.
 

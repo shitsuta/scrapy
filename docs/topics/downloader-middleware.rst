@@ -519,7 +519,7 @@ HTTPCACHE_IGNORE_HTTP_CODES
 
 デフォルト: ``[]``
 
-これらのHTTPコードでレスポンスをキャッシュしないでください.
+キャッシュしないレスポンスの HTTP コード.
 
 .. setting:: HTTPCACHE_IGNORE_MISSING
 

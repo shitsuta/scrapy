@@ -4,9 +4,8 @@
 ダウンローダーミドルウェア
 =====================
 
-The downloader middleware is a framework of hooks into Scrapy's
-request/response processing.  It's a light, low-level system for globally
-altering Scrapy's requests and responses.
+ダウンローダーミドルウェアは, Scrapy のリクエスト/レスポンス処理へのフックのフレームワークです.  
+Scrapy のリクエストとレスポンスをグローバルに変更するための軽量で低レベルのシステムです.
 
 .. _topics-downloader-middleware-setting:
 
@@ -17,7 +16,7 @@ To activate a downloader middleware component, add it to the
 :setting:`DOWNLOADER_MIDDLEWARES` setting, which is a dict whose keys are the
 middleware class paths and their values are the middleware orders.
 
-Here's an example::
+例::
 
     DOWNLOADER_MIDDLEWARES = {
         'myproject.middlewares.CustomDownloaderMiddleware': 543,
@@ -55,14 +54,13 @@ particular setting. See each middleware documentation for more info.
 独自のダウンローダーミドルウェアの作成
 ======================================
 
-Each middleware component is a Python class that defines one or
-more of the following methods:
+各ミドルウェアコンポーネントは, 以下のメソッドの1つ以上を定義する Python クラスです:
 
 .. module:: scrapy.downloadermiddlewares
 
 .. class:: DownloaderMiddleware
 
-   .. note::  Any of the downloader middleware methods may also return a deferred.
+   .. note::  ダウンローダーミドルウェアメソッドのいずれも, 遅延したものを返す可能性があります.
 
    .. method:: process_request(request, spider)
 
@@ -167,8 +165,8 @@ Scrapy. For information on how to use them and how to write your own downloader
 middleware, see the :ref:`downloader middleware usage guide
 <topics-downloader-middleware>`.
 
-For a list of the components enabled by default (and their orders) see the
-:setting:`DOWNLOADER_MIDDLEWARES_BASE` setting.
+デフォルトで有効になっているコンポーネントの一覧（およびそのオーダー）については, 
+:setting:`DOWNLOADER_MIDDLEWARES_BASE` 設定を参照してください.
 
 .. _cookies-mw:
 
@@ -192,7 +190,7 @@ The following settings can be used to configure the cookie middleware:
 
 .. reqmeta:: cookiejar
 
-Multiple cookie sessions per spider
+スパイダーごとに複数のCookieセッション
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 0.15
@@ -201,7 +199,7 @@ There is support for keeping multiple cookie sessions per spider by using the
 :reqmeta:`cookiejar` Request meta key. By default it uses a single cookie jar
 (session), but you can pass an identifier to use different ones.
 
-For example::
+たとえば::
 
     for i, url in enumerate(urls):
         yield scrapy.Request(url, meta={'cookiejar': i},
@@ -285,11 +283,11 @@ HttpAuthMiddleware
 
 .. class:: HttpAuthMiddleware
 
-    This middleware authenticates all requests generated from certain spiders
-    using `Basic access authentication`_ (aka. HTTP auth).
+    このミドルウェアは,  `Basic access authentication`_ 
+    （別名HTTP認証）を使用して, 特定のスパイダーから生成されたすべての要求を認証します.
 
-    To enable HTTP authentication from certain spiders, set the ``http_user``
-    and ``http_pass`` attributes of those spiders.
+    特定のスパイダーからHTTP認証を有効にするには, これらのスパイダーの ``http_user`` 
+    および ``http_pass`` 属性を設定します.
 
     例::
 
@@ -301,7 +299,7 @@ HttpAuthMiddleware
             http_pass = 'somepass'
             name = 'intranet.example.com'
 
-            # .. rest of the spider code omitted ...
+            # .. 残りのスパイダーコードは省略されています ...
 
 .. _Basic access authentication: https://en.wikipedia.org/wiki/Basic_access_authentication
 
@@ -597,14 +595,15 @@ HTTPCACHE_ALWAYS_STORE
 
 有効にすると, 無条件にページをキャッシュします.
 
-A spider may wish to have all responses available in the cache, for
-future use with `Cache-Control: max-stale`, for instance. The
-DummyPolicy caches all responses but never revalidates them, and
-sometimes a more nuanced policy is desirable.
+スパイダーは,  `Cache-Control: max-stale` などを将来使用するために, 
+すべてのレスポンスをキャッシュで利用できるようにすることができます. 
+DummyPolicy はすべてのレスポンスをキャッシュしますが, 
+それを再検証することはありません. 
+また, 別のポリシーが望ましい場合もあります.
 
-This setting still respects `Cache-Control: no-store` directives in responses.
-If you don't want that, filter `no-store` out of the Cache-Control headers in
-responses you feedto the cache middleware.
+この設定は, 依然として `Cache-Control: no-store` ディレクティブを尊重します.
+必要がない場合は, キャッシュミドルウェアにフィードしたレスポンスの Cache-Control ヘッダーから 
+`no-store` を除外します.
 
 .. setting:: HTTPCACHE_IGNORE_RESPONSE_CACHE_CONTROLS
 
@@ -617,14 +616,13 @@ HTTPCACHE_IGNORE_RESPONSE_CACHE_CONTROLS
 
 無視されるレスポンスのキャッシュ制御ディレクティブのリスト.
 
-Sites often set "no-store", "no-cache", "must-revalidate", etc., but get
-upset at the traffic a spider can generate if it respects those
-directives. This allows to selectively ignore Cache-Control directives
-that are known to be unimportant for the sites being crawled.
+サイトはしばしば "no-store", "no-cache", "must-revalidate", などを設定しますが, 
+スパイダーがそれらのディレクティブを尊重するならば生成できるトラフィックで動揺します. 
+これにより, クロールしているサイトの重要でないことがわかっている 
+Cache-Control ディレクティブを選択的に無視することができます.
 
-We assume that the spider will not issue Cache-Control directives
-in requests unless it actually needs them, so directives in requests are
-not filtered.
+スパイダーは実際に Cache-Control ディレクティブを必要としない限り, 
+ Cache-Control ディレクティブを発行しないので, リクエスト内のディレクティブはフィルタリングされません.
 
 HttpCompressionMiddleware
 -------------------------
@@ -634,8 +632,7 @@ HttpCompressionMiddleware
 
 .. class:: HttpCompressionMiddleware
 
-   This middleware allows compressed (gzip, deflate) traffic to be
-   sent/received from web sites.
+   このミドルウェアは, 圧縮された（gzip, deflate）トラフィックをWebサイトから送受信できるようにします.
 
 HttpCompressionMiddleware 設定
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

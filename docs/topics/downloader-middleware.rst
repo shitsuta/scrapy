@@ -350,8 +350,7 @@ HttpCacheMiddleware
 
 このポリシーを使用するには:
 
-* :setting:`HTTPCACHE_POLICY` to ``scrapy.extensions.httpcache.DummyPolicy``
-
+* :setting:`HTTPCACHE_POLICY` に ``scrapy.extensions.httpcache.DummyPolicy`` を設定します. 
 
 .. _httpcache-policy-rfc2616:
 
@@ -395,8 +394,7 @@ RFC2616 ポリシー
 
 このポリシーを使用するには:
 
-* :setting:`HTTPCACHE_POLICY` to ``scrapy.extensions.httpcache.RFC2616Policy``
-
+* :setting:`HTTPCACHE_POLICY` に ``scrapy.extensions.httpcache.RFC2616Policy`` を設定します. 
 
 .. _httpcache-storage-fs:
 
@@ -407,7 +405,7 @@ RFC2616 ポリシー
 
 このストレージバックエンドを使用するには:
 
-* :setting:`HTTPCACHE_STORAGE` to ``scrapy.extensions.httpcache.FilesystemCacheStorage``
+* :setting:`HTTPCACHE_STORAGE` に ``scrapy.extensions.httpcache.FilesystemCacheStorage`` を設定します. 
 
 各 request/response のペアは, 次のファイルを含む別のディレクトリに格納されます:
 
@@ -440,7 +438,7 @@ DBM_ ストレージバックエンドは, HTTPキャッシュミドルウェア
 
 このストレージバックエンドを使用するには:
 
-* :setting:`HTTPCACHE_STORAGE` to ``scrapy.extensions.httpcache.DbmCacheStorage``
+* :setting:`HTTPCACHE_STORAGE` に ``scrapy.extensions.httpcache.DbmCacheStorage`` を設定します. 
 
 .. _httpcache-storage-leveldb:
 
@@ -539,7 +537,7 @@ HTTPCACHE_IGNORE_SCHEMES
 
 デフォルト: ``['file']``
 
-これらのURIスキームでレスポンスをキャッシュしないでください.
+キャッシュしないレスポンスのURIスキーム.
 
 .. setting:: HTTPCACHE_STORAGE
 

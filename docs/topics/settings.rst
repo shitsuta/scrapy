@@ -469,13 +469,13 @@ DOWNLOAD_DELAY
     DOWNLOAD_DELAY = 0.25    # 250 ms of delay
     
 この設定は,  :setting:`RANDOMIZE_DOWNLOAD_DELAY` 
-設定の影響を受けます（デフォルトで有効）. 既定では, 
+設定の影響を受けます(デフォルトで有効). 既定では, 
 Scrapyは要求間の固定時間を待機しませんが, 0.5 * :setting:`DOWNLOAD_DELAY` から 1.5 * :setting:`DOWNLOAD_DELAY` 
 までのランダムな間隔を使用します.
 
 :setting:`CONCURRENT_REQUESTS_PER_IP` がゼロ以外の場合, 遅延はドメインごとではなくIPアドレスごとに適用されます.
 
-``download_delay``スパイダー属性を設定することで, スパイダーごとにこの設定を変更することもできます.
+``download_delay`` スパイダー属性を設定することで, スパイダーごとにこの設定を変更することもできます.
 
 .. setting:: DOWNLOAD_HANDLERS
 
@@ -507,7 +507,7 @@ DOWNLOAD_HANDLERS_BASE
 :setting:`DOWNLOAD_HANDLERS` を変更してください.
 
 これらのダウンロードハンドラのいずれかを無効にするには, 
- :setting:`DOWNLOAD_HANDLERS` の URI スキームにNoneを割り当てます. 
+:setting:`DOWNLOAD_HANDLERS` の URI スキームにNoneを割り当てます. 
 たとえば, 組み込みのFTPハンドラを無効にするには（置き換えずに）, これを settings.py に記述子ます::
 
     DOWNLOAD_HANDLERS = {
@@ -556,17 +556,16 @@ DOWNLOAD_WARNSIZE
 
 デフォルト: `33554432` (32MB)
 
-The response size (in bytes) that downloader will start to warn.
+ダウンローダが警告を開始するレスポンスサイズ（バイト単位）.
 
-If you want to disable it set to 0.
+無効にする場合は、0に設定します.
 
 .. note::
 
-    This size can be set per spider using :attr:`download_warnsize`
-    spider attribute and per-request using :reqmeta:`download_warnsize`
-    Request.meta key.
+    このサイズは、 :attr:`download_warnsize` Request.metaキーを使用して、
+    :reqmeta:`download_warnsize` スパイダ属性およびper-requestを使用してスパイダごとに設定できます。
 
-    This feature needs Twisted >= 11.1.
+    これには、 Twisted >= 11.1 が必要です.
 
 .. setting:: DUPEFILTER_CLASS
 
@@ -575,14 +574,13 @@ DUPEFILTER_CLASS
 
 デフォルト: ``'scrapy.dupefilters.RFPDupeFilter'``
 
-The class used to detect and filter duplicate requests.
+重複リクエストを検出してフィルタリングするために使用されるクラス.
 
-The default (``RFPDupeFilter``) filters based on request fingerprint using
-the ``scrapy.utils.request.request_fingerprint`` function. In order to change
-the way duplicates are checked you could subclass ``RFPDupeFilter`` and
-override its ``request_fingerprint`` method. This method should accept
-scrapy :class:`~scrapy.http.Request` object and return its fingerprint
-(a string).
+デフォルトのフィルタ (``RFPDupeFilter``) は、 
+``scrapy.utils.request.request_fingerprint`` 関数を使用してリクエストフィンガープリントに基づいてフィルタリングします. 
+重複をチェックする方法を変更するには、 ``RFPDupeFilter`` をサブクラス化し、
+``request_fingerprint`` メソッドをオーバーライドすることができます. 
+このメソッドは :class:`~scrapy.http.Request` オブジェクトを受け入れ、そのフィンガープリント（文字列）を返す必要があります.
 
 .. setting:: DUPEFILTER_DEBUG
 
@@ -591,19 +589,19 @@ DUPEFILTER_DEBUG
 
 デフォルト: ``False``
 
-By default, ``RFPDupeFilter`` only logs the first duplicate request.
-Setting :setting:`DUPEFILTER_DEBUG` to ``True`` will make it log all duplicate requests.
+デフォルトでは, ``RFPDupeFilter`` は最初の重複要求のみを記録します.
+:setting:`DUPEFILTER_DEBUG` を ``True`` に設定すると、すべての重複リクエストが記録されます.
 
 .. setting:: EDITOR
 
 EDITOR
 ------
 
-デフォルト: `depends on the environment`
+デフォルト: `環境依存`
 
-The editor to use for editing spiders with the :command:`edit` command. It
-defaults to the ``EDITOR`` environment variable, if set. Otherwise, it defaults
-to ``vi`` (on Unix systems) or the IDLE editor (on Windows).
+:command:`edit` マンドでスパイダーを編集するために使用するエディター. 
+``EDITOR`` 環境変数が設定されていると、デフォルトで使用されます。
+それ以外の場合、デフォルトは ``vi`` Unixシステムの場合）または IDLE エディター（Windowsの場合）になります.
 
 .. setting:: EXTENSIONS
 
@@ -612,7 +610,7 @@ EXTENSIONS
 
 デフォルト:: ``{}``
 
-A dict containing the extensions enabled in your project, and their orders.
+プロジェクトで有効になっている拡張機能と、そのオーダーを含む ``dict``.
 
 .. setting:: EXTENSIONS_BASE
 
@@ -633,12 +631,12 @@ EXTENSIONS_BASE
         'scrapy.extensions.throttle.AutoThrottle': 0,
     }
 
-A dict containing the extensions available by default in Scrapy, and their
-orders. This setting contains all stable built-in extensions. Keep in mind that
-some of them need to be enabled through a setting.
+Scrapy のデフォルトで利用可能な拡張機能とそのオーダーを含む ``dict`` . 
+この設定には、すべての安定したビルトイン拡張機能が含まれています。
+そのうちのいくつかは設定によって有効にする必要があることに注意してください.
 
-For more information See the :ref:`extensions user guide  <topics-extensions>`
-and the :ref:`list of available extensions <topics-extensions-ref>`.
+詳細については、 :ref:`拡張機能ユーザーガイド  <topics-extensions>`
+及び :ref:`使用可能な拡張機能の一覧 <topics-extensions-ref>` を参照してください.
 
 
 .. setting:: FEED_TEMPDIR
@@ -646,9 +644,10 @@ and the :ref:`list of available extensions <topics-extensions-ref>`.
 FEED_TEMPDIR
 ------------
 
-The Feed Temp dir allows you to set a custom folder to save crawler
-temporary files before uploading with :ref:`FTP feed storage <topics-feed-storage-ftp>` and
-:ref:`Amazon S3 <topics-feed-storage-s3>`.
+Feed Temp ディレクトリでは、 
+:ref:`FTP フィードストレージ <topics-feed-storage-ftp>` と
+:ref:`Amazon S3 <topics-feed-storage-s3>` にアップロードする前に、
+クローラの一時ファイルを保存するカスタムフォルダを設定できます.
 
 
 .. setting:: ITEM_PIPELINES
@@ -658,11 +657,11 @@ ITEM_PIPELINES
 
 デフォルト: ``{}``
 
-A dict containing the item pipelines to use, and their orders. Order values are
-arbitrary, but it is customary to define them in the 0-1000 range. Lower orders
-process before higher orders.
+使用するアイテムパイプラインとその注文を含む ``dict`` 。
+順序値は任意ですが、0〜1000の範囲で定義するのが通例です。
+下位の注文は高次のオーダーの前に処理されます.
 
-Example::
+例::
 
    ITEM_PIPELINES = {
        'mybot.pipelines.validate.ValidateMyItem': 300,
@@ -676,8 +675,9 @@ ITEM_PIPELINES_BASE
 
 デフォルト: ``{}``
 
-A dict containing the pipelines enabled by default in Scrapy. You should never
-modify this setting in your project, modify :setting:`ITEM_PIPELINES` instead.
+Scrapy でデフォルトで有効になっているパイプラインを含む ``dict`` 。
+プロジェクトでこの設定を変更しないでください。
+代わりに :setting:`ITEM_PIPELINES` を変更してください
 
 .. setting:: LOG_ENABLED
 
@@ -686,7 +686,7 @@ LOG_ENABLED
 
 デフォルト: ``True``
 
-Whether to enable logging.
+ロギングを有効にするかどうか.
 
 .. setting:: LOG_ENCODING
 
@@ -695,7 +695,7 @@ LOG_ENCODING
 
 デフォルト: ``'utf-8'``
 
-The encoding to use for logging.
+ロギングに使用するエンコーディング.
 
 .. setting:: LOG_FILE
 
@@ -704,7 +704,7 @@ LOG_FILE
 
 デフォルト: ``None``
 
-File name to use for logging output. If ``None``, standard error will be used.
+ログ出力に使用するファイル名. ``None`` の場合, 標準エラーが使用されます.
 
 .. setting:: LOG_FORMAT
 
@@ -725,9 +725,8 @@ LOG_DATEFORMAT
 
 デフォルト: ``'%Y-%m-%d %H:%M:%S'``
 
-String for formatting date/time, expansion of the ``%(asctime)s`` placeholder
-in :setting:`LOG_FORMAT`. Refer to the `Python datetime documentation`_ for the whole list of available
-directives.
+日付/時刻の書式設定の文字列,  :setting:`LOG_FORMAT` の ``%(asctime)s`` のプレースホルダの展開。
+使用可能なディレクティブの一覧については、 `Python datetime documentation`_ を参照してください.
 
 .. _Python datetime documentation: https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior
 
@@ -738,8 +737,8 @@ LOG_LEVEL
 
 デフォルト: ``'DEBUG'``
 
-Minimum level to log. Available levels are: CRITICAL, ERROR, WARNING,
-INFO, DEBUG. For more info see :ref:`topics-logging`.
+グに記録する最小レベル。使用可能なレベルは、CRITICAL、ERROR、WARNING、INFO、DEBUGです. 
+詳細は :ref:`topics-logging` を参照してください.
 
 .. setting:: LOG_STDOUT
 
@@ -748,9 +747,8 @@ LOG_STDOUT
 
 デフォルト: ``False``
 
-If ``True``, all standard output (and error) of your process will be redirected
-to the log. For example if you ``print 'hello'`` it will appear in the Scrapy
-log.
+``True`` の場合, プロセスのすべての標準出力（およびエラー）がログにリダイレクトされます. 
+たとえば、 ``print 'hello'`` を実行すると、Scrapyログに表示されます.
 
 .. setting:: MEMDEBUG_ENABLED
 
@@ -759,7 +757,7 @@ MEMDEBUG_ENABLED
 
 デフォルト: ``False``
 
-Whether to enable memory debugging.
+メモリデバッグを有効にするかどうか.
 
 .. setting:: MEMDEBUG_NOTIFY
 
@@ -768,11 +766,10 @@ MEMDEBUG_NOTIFY
 
 デフォルト: ``[]``
 
-When memory debugging is enabled a memory report will be sent to the specified
-addresses if this setting is not empty, otherwise the report will be written to
-the log.
+メモリデバッグが有効になっている場合、この設定が空でなければ、指定されたアドレスにメモリレポートが送信されます。
+そうでない場合、レポートはログに書き込まれます.
 
-Example::
+例::
 
     MEMDEBUG_NOTIFY = ['user@example.com']
 
@@ -783,13 +780,12 @@ MEMUSAGE_ENABLED
 
 デフォルト: ``False``
 
-Scope: ``scrapy.extensions.memusage``
+スコープ: ``scrapy.extensions.memusage``
 
-Whether to enable the memory usage extension that will shutdown the Scrapy
-process when it exceeds a memory limit, and also notify by email when that
-happened.
+メモリ使用量の拡張を有効にして、メモリ制限を超えた場合に Scrapy プロセスをシャットダウンするかどうか。
+また、その場合は電子メールで通知されます.
 
-See :ref:`topics-extensions-ref-memusage`.
+:ref:`topics-extensions-ref-memusage` を参照してください.
 
 .. setting:: MEMUSAGE_LIMIT_MB
 
@@ -798,12 +794,12 @@ MEMUSAGE_LIMIT_MB
 
 デフォルト: ``0``
 
-Scope: ``scrapy.extensions.memusage``
+スコープ: ``scrapy.extensions.memusage``
 
-The maximum amount of memory to allow (in megabytes) before shutting down
-Scrapy  (if MEMUSAGE_ENABLED is True). If zero, no check will be performed.
+(MEMUSAGE_ENABLEDがTrueの場合）Scrapy をシャットダウンする前に許容される
+メモリの最大量（メガバイト単位）。ゼロの場合、チェックは実行されません.
 
-See :ref:`topics-extensions-ref-memusage`.
+:ref:`topics-extensions-ref-memusage` を参照してください.
 
 .. setting:: MEMUSAGE_CHECK_INTERVAL_SECONDS
 
@@ -814,16 +810,15 @@ MEMUSAGE_CHECK_INTERVAL_SECONDS
 
 デフォルト: ``60.0``
 
-Scope: ``scrapy.extensions.memusage``
+スコープ: ``scrapy.extensions.memusage``
 
-The :ref:`Memory usage extension <topics-extensions-ref-memusage>`
-checks the current memory usage, versus the limits set by
-:setting:`MEMUSAGE_LIMIT_MB` and :setting:`MEMUSAGE_WARNING_MB`,
-at fixed time intervals.
+:ref:`メモリ使用量拡張機能 <topics-extensions-ref-memusage>` は、
+:setting:`MEMUSAGE_LIMIT_MB` および :setting:`MEMUSAGE_WARNING_MB` 
+によって設定された制限と現在のメモリ使用量を、一定の時間間隔でチェックします.
 
-This sets the length of these intervals, in seconds.
+これは、これらの間隔の長さを秒単位で設定します.
 
-See :ref:`topics-extensions-ref-memusage`.
+:ref:`topics-extensions-ref-memusage` を参照してください.
 
 .. setting:: MEMUSAGE_NOTIFY_MAIL
 
@@ -832,15 +827,15 @@ MEMUSAGE_NOTIFY_MAIL
 
 デフォルト: ``False``
 
-Scope: ``scrapy.extensions.memusage``
+スコープ: ``scrapy.extensions.memusage``
 
-A list of emails to notify if the memory limit has been reached.
+モリー制限に達したことを通知する電子メールのリスト.
 
-Example::
+例::
 
     MEMUSAGE_NOTIFY_MAIL = ['user@example.com']
 
-See :ref:`topics-extensions-ref-memusage`.
+:ref:`topics-extensions-ref-memusage` を参照してください.
 
 .. setting:: MEMUSAGE_REPORT
 
@@ -849,11 +844,11 @@ MEMUSAGE_REPORT
 
 デフォルト: ``False``
 
-Scope: ``scrapy.extensions.memusage``
+スコープ: ``scrapy.extensions.memusage``
 
-Whether to send a memory usage report after each spider has been closed.
+各スパイダーが閉じられた後にメモリ使用量レポートを送信するかどうか.
 
-See :ref:`topics-extensions-ref-memusage`.
+:ref:`topics-extensions-ref-memusage` を参照してください.
 
 .. setting:: MEMUSAGE_WARNING_MB
 
@@ -862,10 +857,10 @@ MEMUSAGE_WARNING_MB
 
 デフォルト: ``0``
 
-Scope: ``scrapy.extensions.memusage``
+スコープ: ``scrapy.extensions.memusage``
 
-The maximum amount of memory to allow (in megabytes) before sending a warning
-email notifying about it. If zero, no warning will be produced.
+通知する警告電子メールを送信する前に許容されるメモリの最大量（メガバイト単位）。
+ゼロの場合、警告は生成されません.
 
 .. setting:: NEWSPIDER_MODULE
 
@@ -874,9 +869,9 @@ NEWSPIDER_MODULE
 
 デフォルト: ``''``
 
-Module where to create new spiders using the :command:`genspider` command.
+:command:`genspider` コマンドを使用して新しいスパイダーを作成する場所.
 
-Example::
+例::
 
     NEWSPIDER_MODULE = 'mybot.spiders_dev'
 
@@ -887,16 +882,16 @@ RANDOMIZE_DOWNLOAD_DELAY
 
 デフォルト: ``True``
 
-If enabled, Scrapy will wait a random amount of time (between 0.5 * :setting:`DOWNLOAD_DELAY` and 1.5 * :setting:`DOWNLOAD_DELAY`) while fetching requests from the same
-website.
+有効にすると、同じWebサイトからリクエストを取得する間、Scrapyはランダムな時間
+(0.5 * :setting:`DOWNLOAD_DELAY` から 1.5 * :setting:`DOWNLOAD_DELAY` の間まで) 
+待機します.
 
-This randomization decreases the chance of the crawler being detected (and
-subsequently blocked) by sites which analyze requests looking for statistically
-significant similarities in the time between their requests.
+このランダム化は、リクエスト間の時間から統計的に有意な類似性を探し、
+リクエストを分析するサイトによってクローラが検出される（およびその後ブロックされる）可能性を低下させます.
 
-The randomization policy is the same used by `wget`_ ``--random-wait`` option.
+ランダム化ポリシーは、 `wget`_ ``--random-wait`` オプションで使用されるものと同じです.
 
-If :setting:`DOWNLOAD_DELAY` is zero (default) this option has no effect.
+:setting:`DOWNLOAD_DELAY` が 0（デフォルト）の場合、このオプションは無効です.
 
 .. _wget: http://www.gnu.org/software/wget/manual/wget.html
 
@@ -907,10 +902,10 @@ REACTOR_THREADPOOL_MAXSIZE
 
 デフォルト: ``10``
 
-The maximum limit for Twisted Reactor thread pool size. This is common
-multi-purpose thread pool used by various Scrapy components. Threaded
-DNS Resolver, BlockingFeedStorage, S3FilesStore just to name a few. Increase
-this value if you're experiencing problems with insufficient blocking IO.
+Twisted Reactor スレッドプールサイズの最大限度。
+これは、さまざまな Scrapy コンポーネントで使用される汎用スレッドプールです。
+スレッド化された DNS リゾルバ、BlockingFeedStorage、S3 FilesStore などです。
+ブロッキング IO が不十分で問題が発生している場合は、この値を大きくしてください。
 
 .. setting:: REDIRECT_MAX_TIMES
 
@@ -919,9 +914,9 @@ REDIRECT_MAX_TIMES
 
 デフォルト: ``20``
 
-Defines the maximum times a request can be redirected. After this maximum the
-request's response is returned as is. We used Firefox default value for the
-same task.
+要求をリダイレクトできる最大時間を定義します。
+この最大値の後、要求の応答はそのまま返されます。
+私達は、Firefoxのデフォルト値を同じタスクに使用しました.
 
 .. setting:: REDIRECT_PRIORITY_ADJUST
 
@@ -930,12 +925,12 @@ REDIRECT_PRIORITY_ADJUST
 
 デフォルト: ``+2``
 
-Scope: ``scrapy.downloadermiddlewares.redirect.RedirectMiddleware``
+スコープ: ``scrapy.downloadermiddlewares.redirect.RedirectMiddleware``
 
-Adjust redirect request priority relative to original request:
+元のリクエストに対するリダイレクトリクエストの優先度を調整します。
 
-- **a positive priority adjust (default) means higher priority.**
-- a negative priority adjust means lower priority.
+- **正の優先度調整（デフォルト）はより高い優先度を意味します.**
+- 負の優先順位調整は低い優先順位を意味します.
 
 .. setting:: RETRY_PRIORITY_ADJUST
 
@@ -944,12 +939,12 @@ RETRY_PRIORITY_ADJUST
 
 デフォルト: ``-1``
 
-Scope: ``scrapy.downloadermiddlewares.retry.RetryMiddleware``
+スコープ: ``scrapy.downloadermiddlewares.retry.RetryMiddleware``
 
-Adjust retry request priority relative to original request:
+オリジナルのリクエストに対するリトライリクエストの優先度を調整する:
 
-- a positive priority adjust means higher priority.
-- **a negative priority adjust (default) means lower priority.**
+- 正の優先度調整はより高い優先度を意味します.
+- **負の優先順位調整（デフォルト）は低い優先順位を意味します.**
 
 .. setting:: ROBOTSTXT_OBEY
 
@@ -958,16 +953,15 @@ ROBOTSTXT_OBEY
 
 デフォルト: ``False``
 
-Scope: ``scrapy.downloadermiddlewares.robotstxt``
+スコープ: ``scrapy.downloadermiddlewares.robotstxt``
 
-If enabled, Scrapy will respect robots.txt policies. For more information see
-:ref:`topics-dlmw-robots`.
+有効にすると、Scrapy は robots.txt ポリシーを尊重します。詳細については、
+:ref:`topics-dlmw-robots` を参照してください.
 
 .. note::
 
-    While the default value is ``False`` for historical reasons,
-    this option is enabled by default in settings.py file generated
-    by ``scrapy startproject`` command.
+    歴史的な理由からデフォルト値は ``False`` ですが、このオプションは 
+    ``scrapy startproject`` コマンドで生成される settings.py ファイルではデフォルトで有効になっています.
 
 .. setting:: SCHEDULER
 
@@ -976,7 +970,7 @@ SCHEDULER
 
 デフォルト: ``'scrapy.core.scheduler.Scheduler'``
 
-The scheduler to use for crawling.
+クロールに使用するスケジューラ.
 
 .. setting:: SCHEDULER_DEBUG
 

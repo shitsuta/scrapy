@@ -85,11 +85,11 @@ scrapy.Spider
    .. attribute:: crawler
       
       この属性は, クラスを初期化した後の :meth:`from_crawler` クラスメソッドによって設定され, 
-      このスパイダーインスタンスがバインドされている
+      このスパイダーインスタンスがバインドされている
       :class:`~scrapy.crawler.Crawler` オブジェクトへのリンクになります.
       
       クローラは, 単一エントリアクセス（エクステンション, ミドルウェア, シグナルマネージャなど）のために, 
-      プロジェクト内の多くのコンポーネントをカプセル化します. 
+      プロジェクト内の多くのコンポーネントをカプセル化します. 
       詳細については :ref:`topics-api-crawler` を参照してください.
 
    .. attribute:: settings
@@ -154,31 +154,31 @@ scrapy.Spider
                    pass
 
    .. method:: make_requests_from_url(url)
-
-       AURLを受け取って、 :class:`~scrapy.http.Request` オブジェクト
-       （または :class:`~scrapy.http.Request` オブジェクトのリスト) を返すメソッド. 
-       このメソッドは、:meth:`start_requests` メソッドで初期リクエストを作成するために使用され、
-       通常は URL をリクエストに変換するために使用されます.
-
-       オーバーライドされない限り、このメソッドは、callback関数として :meth:`parse`
-       メソッドを使用し, パラメータを有効にしてリクエストを返します
-       (詳細は :class:`~scrapy.http.Request` クラスを参照してください).
+   
+      AURLを受け取って、 :class:`~scrapy.http.Request` オブジェクト
+      （または :class:`~scrapy.http.Request` オブジェクトのリスト) を返すメソッド. 
+      このメソッドは、:meth:`start_requests` メソッドで初期リクエストを作成するために使用され、
+      通常は URL をリクエストに変換するために使用されます.
+      
+      オーバーライドされない限り、このメソッドは、callback関数として :meth:`parse`
+      メソッドを使用し, パラメータを有効にしてリクエストを返します
+      (詳細は :class:`~scrapy.http.Request` クラスを参照してください).
 
    .. method:: parse(response)
+      
+      これは、リクエストがコールバックを指定していないときに、
+      ダウンロードされたレスポンスを処理するために Scrapy に使用されるデフォルトのコールバックです.
+      
+      ``parse`` ソッドは、レスポンスを処理し、スクレイピングされたデータおよび/または、
+      より多くのURLを返すことを担当します。
+      その他のリクエストコールバックは :class:`Spider` クラスと同じ要件を持ちます.      
+      
+      このメソッドおよび他のRequestコールバックは、 イテレータブルな :class:`~scrapy.http.Request` 
+      および/または、 ``dict`` または、
+      :class:`~scrapy.item.Item` オブジェクトを返さなければなりません.
 
-       これは、リクエストがコールバックを指定していないときに、
-       ダウンロードされたレスポンスを処理するために Scrapy に使用されるデフォルトのコールバックです.
-       
-       ``parse`` ソッドは、レスポンスを処理し、スクレイピングされたデータおよび/または、
-       より多くのURLを返すことを担当します。
-       その他のリクエストコールバックは :class:`Spider` クラスと同じ要件を持ちます.
-       
-       このメソッドおよび他のRequestコールバックは、 イテレータブルな :class:`~scrapy.http.Request` 
-       および/または、 ``dict`` または、
-       :class:`~scrapy.item.Item` オブジェクトを返さなければなりません.
-
-       :param response: パースするレスポンス
-       :type response: :class:`~scrapy.http.Response`
+      :param response: パースするレスポンス
+      :type response: :class:`~scrapy.http.Response`
 
    .. method:: log(message, [level, component])
 
@@ -187,7 +187,7 @@ scrapy.Spider
 
    .. method:: closed(reason)
 
-       が閉じたときに呼び出されます。このメソッドは、
+       スパイダーが閉じたときに呼び出されます。このメソッドは、
        :signal:`spider_closed` シグナルを送信するための signals.connect() メソッドのショートカットを提供します.
 
 例を見てみましょう::
@@ -452,9 +452,9 @@ XMLFeedSpider
 
     .. method:: adapt_response(response)
 
-        A method that receives the response as soon as it arrives from the spider
-        middleware, before the spider starts parsing it. It can be used to modify
-        the response body before parsing it. This method receives a response and
+        スパイダーミドルウェアから到着するとすぐに、スパイダーが解析を開始する前に応答を受け取る方法。
+        これは、解析する前に応答本体を変更するために使用できます. 
+        This method receives a response and
         also returns a response (it could be the same or another one).
 
     .. method:: parse_node(response, selector)
@@ -479,7 +479,7 @@ XMLFeedSpider
 XMLFeedSpider の例
 ~~~~~~~~~~~~~~~~~~~~~
 
-これらのスパイダーはかなり使いやすくいです. 一例を見てみましょう::
+これらのスパイダーはかなり使いやすいです. 一例を見てみましょう::
 
     from scrapy.spiders import XMLFeedSpider
     from myproject.items import TestItem
@@ -500,18 +500,17 @@ XMLFeedSpider の例
             item['description'] = node.xpath('description').extract()
             return item
 
-Basically what we did up there was to create a spider that downloads a feed from
-the given ``start_urls``, and then iterates through each of its ``item`` tags,
-prints them out, and stores some random data in an :class:`~scrapy.item.Item`.
+上記は基本的な、指定された ``start_urls`` からフィードをダウンロードし、それぞれの ``item`` タグを繰り返して印刷し、
+ランダムなデータを :class:`~scrapy.item.Item` に格納するスパイダーです.
 
 CSVFeedSpider
 -------------
 
 .. class:: CSVFeedSpider
 
-   This spider is very similar to the XMLFeedSpider, except that it iterates
-   over rows, instead of nodes. The method that gets called in each iteration
-   is :meth:`parse_row`.
+   このスパイダーはXMLFeedSpiderと非常に似ていますが、
+   ノードの代わりに行を反復する点が異なります。
+   各反復で呼び出されるメソッドは、 :meth:`parse_row` です.
 
    .. attribute:: delimiter
 

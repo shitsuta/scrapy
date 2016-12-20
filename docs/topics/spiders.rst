@@ -127,7 +127,7 @@ scrapy.Spider
 
    .. method:: start_requests()
       
-      このメソッドは, スパイダーの最初のクロールリクエストで繰り返し可能な値を返す必要があります.
+      このメソッドは, スパイダーの最初のクロールリクエストで繰り返し可能な値を返す必要があります.
       
       これは, 特定のURLが指定されずにスパイダーを開いてスクレイピングするときに, 
       Scrapy によって呼び出されるメソッドです. 特定のURLが指定されている場合, 
@@ -155,42 +155,40 @@ scrapy.Spider
 
    .. method:: make_requests_from_url(url)
 
-       A method that receives a URL and returns a :class:`~scrapy.http.Request`
-       object (or a list of :class:`~scrapy.http.Request` objects) to scrape. This
-       method is used to construct the initial requests in the
-       :meth:`start_requests` method, and is typically used to convert urls to
-       requests.
+       AURLを受け取って、 :class:`~scrapy.http.Request` オブジェクト
+       （または :class:`~scrapy.http.Request` オブジェクトのリスト) を返すメソッド. 
+       このメソッドは、:meth:`start_requests` メソッドで初期リクエストを作成するために使用され、
+       通常は URL をリクエストに変換するために使用されます.
 
-       Unless overridden, this method returns Requests with the :meth:`parse`
-       method as their callback function, and with dont_filter parameter enabled
-       (see :class:`~scrapy.http.Request` class for more info).
+       オーバーライドされない限り、このメソッドは、callback関数として :meth:`parse`
+       メソッドを使用し, パラメータを有効にしてリクエストを返します
+       (詳細は :class:`~scrapy.http.Request` クラスを参照してください).
 
    .. method:: parse(response)
 
-       This is the default callback used by Scrapy to process downloaded
-       responses, when their requests don't specify a callback.
+       これは、リクエストがコールバックを指定していないときに、
+       ダウンロードされたレスポンスを処理するために Scrapy に使用されるデフォルトのコールバックです.
+       
+       ``parse`` ソッドは、レスポンスを処理し、スクレイピングされたデータおよび/または、
+       より多くのURLを返すことを担当します。
+       その他のリクエストコールバックは :class:`Spider` クラスと同じ要件を持ちます.
+       
+       このメソッドおよび他のRequestコールバックは、 イテレータブルな :class:`~scrapy.http.Request` 
+       および/または、 ``dict`` または、
+       :class:`~scrapy.item.Item` オブジェクトを返さなければなりません.
 
-       The ``parse`` method is in charge of processing the response and returning
-       scraped data and/or more URLs to follow. Other Requests callbacks have
-       the same requirements as the :class:`Spider` class.
-
-       This method, as well as any other Request callback, must return an
-       iterable of :class:`~scrapy.http.Request` and/or
-       dicts or :class:`~scrapy.item.Item` objects.
-
-       :param response: the response to parse
-       :type response: :class:`~scrapy.http.Response`
+       :param response: パースするレスポンス
+       :type response: :class:`~scrapy.http.Response`
 
    .. method:: log(message, [level, component])
 
-       Wrapper that sends a log message through the Spider's :attr:`logger`,
-       kept for backwards compatibility. For more information see
-       :ref:`topics-logging-from-spiders`.
+       スパイダーの :attr:`logger` を介してログメッセージを送信し、下位互換性を保つために保管されたラッパー. 
+       詳細については :ref:`topics-logging-from-spiders` を参照してください.
 
    .. method:: closed(reason)
 
-       Called when the spider closes. This method provides a shortcut to
-       signals.connect() for the :signal:`spider_closed` signal.
+       が閉じたときに呼び出されます。このメソッドは、
+       :signal:`spider_closed` シグナルを送信するための signals.connect() メソッドのショートカットを提供します.
 
 例を見てみましょう::
 
@@ -406,31 +404,27 @@ XMLFeedSpider
 
 .. class:: XMLFeedSpider
 
-    XMLFeedSpider is designed for parsing XML feeds by iterating through them by a
-    certain node name.  The iterator can be chosen from: ``iternodes``, ``xml``,
-    and ``html``.  It's recommended to use the ``iternodes`` iterator for
-    performance reasons, since the ``xml`` and ``html`` iterators generate the
-    whole DOM at once in order to parse it.  However, using ``html`` as the
-    iterator may be useful when parsing XML with bad markup.
+    XMLFeedSpider は、XML フィードを特定のノード名で繰り返し解析するために設計されています. 
+    イテレーター は  ``iternodes``, ``xml``, 及び ``html`` から選択することができます. 
+    ``xml`` と ``html`` のイテレーターは、解析するために一度に ``DOM`` 全体を生成するので、
+    パフォーマンス上の理由から ``iternode`` イテレーターを使用することをお勧めします. 
+    しかし、イテレータとして ``html`` を使用すると、だめなマークアップで書かれた ``XML`` を解析するときに便利です.
 
-    To set the iterator and the tag name, you must define the following class
-    attributes:
+    イテレータとタグ名を設定するには、次のクラス属性を定義する必要があります:
 
     .. attribute:: iterator
 
-        A string which defines the iterator to use. It can be either:
+        使用するイテレータを定義する文字列:
 
-           - ``'iternodes'`` - a fast iterator based on regular expressions
+           - ``'iternodes'`` - 正規表現に基づく高速なイテレータ
 
-           - ``'html'`` - an iterator which uses :class:`~scrapy.selector.Selector`.
-             Keep in mind this uses DOM parsing and must load all DOM in memory
-             which could be a problem for big feeds
+           - ``'html'`` - :class:`~scrapy.selector.Selector` を使用するイテレータ. 
+             これは DOM 解析を使用しており、大きなフィードの問題となる可能性のあるすべての DOM をメモリにロードする必要があることに注意してください
 
-           - ``'xml'`` - an iterator which uses :class:`~scrapy.selector.Selector`.
-             Keep in mind this uses DOM parsing and must load all DOM in memory
-             which could be a problem for big feeds
+           - ``'xml'`` - :class:`~scrapy.selector.Selector` を使用するイテレータ. 
+             これは DOM 解析を使用しており、大きなフィードの問題となる可能性のあるすべての DOM をメモリにロードする必要があることに注意してください 
 
-        It defaults to: ``'iternodes'``.
+        デフォルト: ``'iternodes'``.
 
     .. attribute:: itertag
 
@@ -440,14 +434,11 @@ XMLFeedSpider
 
     .. attribute:: namespaces
 
-        A list of ``(prefix, uri)`` tuples which define the namespaces
-        available in that document that will be processed with this spider. The
-        ``prefix`` and ``uri`` will be used to automatically register
-        namespaces using the
-        :meth:`~scrapy.selector.Selector.register_namespace` method.
+        このスパイダーで処理される、文書で利用可能な名前空間を定義する ``(prefix, uri)`` タプルのリスト. 
+        ``prefix`` と ``uri`` は、 :meth:`~scrapy.selector.Selector.register_namespace` 
+        メソッドを使って名前空間を自動的に登録するために使われます.
 
-        You can then specify nodes with namespaces in the :attr:`itertag`
-        attribute.
+        :attr:`itertag` 属性に名前空間を持つノードを指定できます.
 
         例::
 
@@ -457,8 +448,7 @@ XMLFeedSpider
                 itertag = 'n:url'
                 # ...
 
-    Apart from these new attributes, this spider has the following overrideable
-    methods too:
+    これらの属性とは別に、このスパイダーは次の無効化可能なメソッドも持っています:
 
     .. method:: adapt_response(response)
 

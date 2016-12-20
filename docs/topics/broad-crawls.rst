@@ -4,162 +4,140 @@
 ブロードクロール
 ============
 
-Scrapy defaults are optimized for crawling specific sites. These sites are
-often handled by a single Scrapy spider, although this is not necessary or
-required (for example, there are generic spiders that handle any given site
-thrown at them).
+Scrapy のデフォルトは, 特定のサイトをクロールするために最適化されています. 
+そのサイトは, 単一の Scrapy スパイダーによって処理されることがよくありますが, 
+これは必須ではありません（たとえば, スローされた任意のサイトを処理するスパイダーがあります）.
 
-In addition to this "focused crawl", there is another common type of crawling
-which covers a large (potentially unlimited) number of domains, and is only
-limited by time or other arbitrary constraint, rather than stopping when the
-domain was crawled to completion or when there are no more requests to perform.
-These are called "broad crawls" and is the typical crawlers employed by search
-engines.
+この「フォーカスクロール」に加えて, ドメインのクロールが完了するまでの間に停止するのではなく, 
+時間や他の任意の制約によってのみ制限されている（潜在的に無制限の）多数のクロールの一般的なタイプがあります. 
+実行するリクエストがもうないとき これらは「ブロードクロール」と呼ばれ, 検索エンジンで採用されている一般的なクローラです.
 
-These are some common properties often found in broad crawls:
+これらは, ブロードクロールでよく見られる共通のプロパティです:
 
-* they crawl many domains (often, unbounded) instead of a specific set of sites
+* 特定のサイトセットではなく, 多くのドメインを無限にクロールする
 
-* they don't necessarily crawl domains to completion, because it would
-  impractical (or impossible) to do so, and instead limit the crawl by time or
-  number of pages crawled
+* ドメインをクロールする必要はない. そのため, クロールを時間またはクロールされたページ数で制限することは実用的ではない（または不可能）
 
-* they are simpler in logic (as opposed to very complex spiders with many
-  extraction rules) because data is often post-processed in a separate stage
+* データはしばしば別の段階で後処理されるため, 論理的にはより単純である（多くの抽出規則を持つ非常に複雑なスパイダーとは対照的す）
 
-* they crawl many domains concurrently, which allows them to achieve faster
-  crawl speeds by not being limited by any particular site constraint (each site
-  is crawled slowly to respect politeness, but many sites are crawled in
-  parallel)
+* 同時に複数のドメインをクロールするため, 特定のサイトの制約に制限されずに高速なクロール速度を実現できる
+（各サイトは丁寧さを考慮してゆっくりとクロールされるが, 多くのサイトは並行してクロールされる）
 
-As said above, Scrapy default settings are optimized for focused crawls, not
-broad crawls. However, due to its asynchronous architecture, Scrapy is very
-well suited for performing fast broad crawls. This page summarizes some things
-you need to keep in mind when using Scrapy for doing broad crawls, along with
-concrete suggestions of Scrapy settings to tune in order to achieve an
-efficient broad crawl.
+上記のように, Scrapy のデフォルト設定は, ブロードクロールではなく, フォーカスクロールに対して最適化されています. 
+しかし, Scrapy は非同期アーキテクチャであるため, 高速な広範なクロールを実行するのに非常に適しています. 
+このページでは, ブロードクロールを行うために Scrapy を使用する際に留意する必要がある事項と, 
+効果的なブロードクロールを達成するために調整する Scrapy 設定の具体的な提案をまとめています.
 
 並行性を高める
 ====================
 
-Concurrency is the number of requests that are processed in parallel. There is
-a global limit and a per-domain limit.
+並行処理は, 並列処理されるリクエストの数です. グローバルごとの制限とドメインごとの制限があります.
 
-The default global concurrency limit in Scrapy is not suitable for crawling
-many different domains in parallel, so you will want to increase it. How much
-to increase it will depend on how much CPU you crawler will have available. A
-good starting point is ``100``, but the best way to find out is by doing some
-trials and identifying at what concurrency your Scrapy process gets CPU
-bounded. For optimum performance, you should pick a concurrency where CPU usage
-is at 80-90%.
+Scrapy の既定のグローバル同時実行制限は, 多くの異なるドメインを同時にクロールするのには適していないため, 
+増やすべきです. どの程度増加させるかは, クローラで使用可能な CPU の量に依存します. 
+良い出発点は ``100``ですが, 調べる最も良い方法は, いくつかの試行を行い, 
+あなたの Scrapy プロセスがどの CPU に束縛されているかを特定することです. 
+最適なパフォーマンスを得るには, CPU 使用率が80〜90％の並行処理を選択する必要があります.
 
-To increase the global concurrency use::
+グローバルな同時使用を増やすには::
 
     CONCURRENT_REQUESTS = 100
 
 Twisted のIOスレッドプールの最大サイズを増やす
 ============================================
 
-Currently Scrapy does DNS resolution in a blocking way with usage of thread
-pool. With higher concurrency levels the crawling could be slow or even fail
-hitting DNS resolver timeouts. Possible solution to increase the number of
-threads handling DNS queries. The DNS queue will be processed faster speeding
-up establishing of connection and crawling overall.
+現在のところ, Scrapy は DNS 解決をスレッドプールの使用でブロックします. 
+並行性レベルが高いと, クロールが遅くなったり, DNS リゾルバのタイムアウトが起こる可能性があります. 
+解決策としては, DNSクエリを処理するスレッドの数を増やすことです. 
+DNS キューは, 接続の確立と全体的なクロールのスピードアップがされ, 速く処理されます.
 
-To increase maximum thread pool size use::
+スレッドプールの最大サイズを増やすには::
 
     REACTOR_THREADPOOL_MAXSIZE = 20
 
 独自のDNSの設定
 ==================
 
-If you have multiple crawling processes and single central DNS, it can act
-like DoS attack on the DNS server resulting to slow down of entire network or
-even blocking your machines. To avoid this setup your own DNS server with
-local cache and upstream to some large DNS like OpenDNS or Verizon.
+複数のクロールプロセスと1つのセントラル DNS がある場合, DNS サーバーに対する DoS 攻撃のように動作し, 
+ネットワーク全体の速度を低下させたり, コンピュータをブロックすることさえあります. 
+このセットアップを避けるために, ローカルキャッシュを持つ独自のDNSサーバーと, 
+OpenDNS や Verizon のような大規模な DNS へのアップストリームをおこなってください.
 
 ログレベルを下げる
 ================
 
-When doing broad crawls you are often only interested in the crawl rates you
-get and any errors found. These stats are reported by Scrapy when using the
-``INFO`` log level. In order to save CPU (and log storage requirements) you
-should not use ``DEBUG`` log level when preforming large broad crawls in
-production. Using ``DEBUG`` level when developing your (broad) crawler may fine
-though.
+ブロードクロールを行うときには, 取得したクロール速度と見つかったエラーにのみ関心があることがよくあります. 
+これらの統計値は,  ``INFO`` ログレベルを使用して Scrapy によって報告されます.  
+CPU（およびログのストレージ要件）を節約するため, 本番環境での広範なクロールを事前実行するときは
+``DEBUG`` ログレベルを使用しないでください. 
+クローラを開発するときには ``DEBUG`` レベルを使用すると, うまくいくかもしれません.
 
-To set the log level use::
+ログレベルの使用を設定するには::
 
     LOG_LEVEL = 'INFO'
 
 クッキーを無効にする
 ===============
 
-Disable cookies unless you *really* need. Cookies are often not needed when
-doing broad crawls (search engine crawlers ignore them), and they improve
-performance by saving some CPU cycles and reducing the memory footprint of your
-Scrapy crawler.
+本当に必要な場合を除き, クッキーを無効にしてください. 
+クッキーはブロードクロール（検索エンジンのクローラーは無視する）の際には必要ではないことが多く, 
+無効にすることで, CPU サイクルを節約し, Scrapy クローラーのメモリーフットプリントを削減することでパフォーマンスを向上させます.
 
-To disable cookies use::
+クッキーを無効にするには::
 
     COOKIES_ENABLED = False
 
 リトライを無効にする
 ===============
 
-Retrying failed HTTP requests can slow down the crawls substantially, specially
-when sites causes are very slow (or fail) to respond, thus causing a timeout
-error which gets retried many times, unnecessarily, preventing crawler capacity
-to be reused for other domains.
+失敗したHTTPリクエストを再試行すると, 特に失敗の原因が非常に遅い
+ときにクロールが大幅に遅くなるため, 結果タイムアウトエラーが何度も再試行され, 
+他のドメインでクローラの容量を再利用できないようになります.
 
-To disable retries use::
+リトライを無効にするには::
 
     RETRY_ENABLED = False
 
 ダウンロードタイムアウトを減らす
 =======================
 
-Unless you are crawling from a very slow connection (which shouldn't be the
-case for broad crawls) reduce the download timeout so that stuck requests are
-discarded quickly and free up capacity to process the next ones.
+非常に遅い接続からクロールしない限り（ブロードクロールの場合はそうでないはずです）, 
+ダウンロードのタイムアウトを短縮することで, スタックされたリクエストがすぐに破棄され, 次のリクエストを処理できるようになります.
 
-To reduce the download timeout use::
+ダウンロードタイムアウトを減らすには::
 
     DOWNLOAD_TIMEOUT = 15
 
 リダイレクトを無効にする
 =================
 
-Consider disabling redirects, unless you are interested in following them. When
-doing broad crawls it's common to save redirects and resolve them when
-revisiting the site at a later crawl. This also help to keep the number of
-request constant per crawl batch, otherwise redirect loops may cause the
-crawler to dedicate too many resources on any specific domain.
+リダイレクトに関心がない限り, リダイレクトを無効にすることを検討してください. 
+ブロードクロールを行うときは, リダイレクトを保存し, 後でサイトに再度アクセスしクロールするときにリダイレクトを解決するのが一般的です. 
+これは, クロールバッチごとに要求の数を一定に保つのに役立ちます. 
+そうしないと, リダイレクトループによってクローラーが特定のドメインのリソースを多すぎるものにする可能性があります.
 
-To disable redirects use::
+リダイレクトを無効にするには::
 
     REDIRECT_ENABLED = False
 
 「Ajaxクロール可能なページ」のクロールを有効にする
 =========================================
 
-Some pages (up to 1%, based on empirical data from year 2013) declare
-themselves as `ajax crawlable`_. This means they provide plain HTML
-version of content that is usually available only via AJAX.
-Pages can indicate it in two ways:
+一部のページ（2013年の実績データに基づいて最大1％）は,  `クロール可能な ajax`_ として宣言しています. 
+つまり, 通常はAJAX経由でのみ利用可能なプレーンなHTMLバージョンのコンテンツを提供します. 
+2つの方法でそれを示すことができます:
 
-1) by using ``#!`` in URL - this is the default way;
-2) by using a special meta tag - this way is used on
-   "main", "index" website pages.
+1) URL に ``#!`` を使用する - これは一般的な方法です. 
+2) 特別なメタタグを使用する - の方法は「メイン」「インデックス」ウェブサイトページで使用されます.
 
-Scrapy handles (1) automatically; to handle (2) enable
-:ref:`AjaxCrawlMiddleware <ajaxcrawl-middleware>`::
+Scrapy は,  (1) のみ自動的にハンドリングします.  (2) をハンドリングするには
+:ref:`AjaxCrawlMiddleware <ajaxcrawl-middleware>` を有効化してください::
 
-    AJAXCRAWL_ENABLED = True
+    AJAXCRAWL_ENABLED = True
+    
+ブロードクロールを行う場合, 多くの「インデックス」Webページをクロールするのが一般的です. 
+よって, AjaxCrawlMiddleware は正しくクロールすることができます.
+フォーマンスのオーバーヘッドがあるため, デフォルトではオフになっています. 
+フォーカスクロールで有効にする意味はあまりありません.
 
-When doing broad crawls it's common to crawl a lot of "index" web pages;
-AjaxCrawlMiddleware helps to crawl them correctly.
-It is turned OFF by default because it has some performance overhead,
-and enabling it for focused crawls doesn't make much sense.
-
-.. _ajax crawlable: https://developers.google.com/webmasters/ajax-crawling/docs/getting-started
+.. _クロール可能な ajax: https://developers.google.com/webmasters/ajax-crawling/docs/getting-started

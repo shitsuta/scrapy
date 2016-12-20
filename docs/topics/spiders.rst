@@ -326,9 +326,9 @@ CrawlSpider
    このスパイダーは, オーバーライド可能なメソッドも公開しています:
 
    .. method:: parse_start_url(response)
-
-      このメソッドは, start_urlsレスポンスに対して呼び出されます. これは初期応答を解析することを可能にし, 
-      :class:`~scrapy.item.Item` オブジェクト, :class:`~scrapy.http.Request` 
+   
+      このメソッドは, start_urlsレスポンスに対して呼び出されます. これは初期応答を解析することを可能にし, 
+      :class:`~scrapy.item.Item` オブジェクト, :class:`~scrapy.http.Request` 
       オブジェクト, またはそれらのいずれかを含む iterable を返さなければなりません.
 
 クローリング規則
@@ -345,8 +345,7 @@ CrawlSpider
    :class:`~scrapy.http.Request` オブジェクト（またはそれらのサブクラス）を含むリストを返す必要があります.
 
    .. warning:: クロールスパイダールールを作成するときは,  :class:`CrawlSpider` は ``parse`` メソッド自体を使用してロジックを実装するため, 
-   ``parse`` をコールバックとして使用しないでください. 
-   したがって, 解析メソッドをオーバーライドすると, クロールスパイダーは機能しなくなります. 
+   ``parse`` メソッドをコールバックとして使用しないでください. したがって, ``parse`` メソッドをオーバーライドすると, クロールスパイダーは機能しなくなります. 
        
    ``cb_kwargs`` は, コールバック関数に渡すキーワード引数を含む ``dict`` です.
 

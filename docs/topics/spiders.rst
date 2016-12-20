@@ -331,7 +331,7 @@ CrawlSpider
       :class:`~scrapy.item.Item` オブジェクト, :class:`~scrapy.http.Request` 
       オブジェクト, またはそれらのいずれかを含む iterable を返さなければなりません.
 
-クローリング規則
+Rule
 ~~~~~~~~~~~~~~
 
 .. class:: Rule(link_extractor, callback=None, cb_kwargs=None, follow=None, process_links=None, process_request=None)
@@ -345,7 +345,7 @@ CrawlSpider
    :class:`~scrapy.http.Request` オブジェクト（またはそれらのサブクラス）を含むリストを返す必要があります.
 
    .. warning:: クロールスパイダールールを作成するときは,  :class:`CrawlSpider` は ``parse`` メソッド自体を使用してロジックを実装するため, 
-   ``parse`` メソッドをコールバックとして使用しないでください. したがって, ``parse`` メソッドをオーバーライドすると, クロールスパイダーは機能しなくなります. 
+   ``parse`` メソッドをコールバックとして使用しないでください. ``parse`` メソッドをオーバーライドすると, CrawlSpider は機能しなくなります. 
        
    ``cb_kwargs`` は, コールバック関数に渡すキーワード引数を含む ``dict`` です.
 

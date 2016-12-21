@@ -4,16 +4,13 @@
 アーキテクチャの概要
 =====================
 
-このドキュメントでは、Scrapyのアーキテクチャとそのコンポーネントがどのように相互作用するかについて説明します.
+このドキュメントでは, Scrapyのアーキテクチャとそのコンポーネントがどのように相互作用するかについて説明します.
 
 概要
 ========
 
-The following diagram shows an overview of the Scrapy architecture with its
-components and an outline of the data flow that takes place inside the system
-(shown by the green arrows). A brief description of the components is included
-below with links for more detailed information about them. The data flow is
-also described below.
+次の図は, Scrapy アーキテクチャの概要とそのコンポーネントと, システム内部で実行されるデータフローの概要を示しています（緑色の矢印）. 
+コンポーネントの簡単な説明は, それらの詳細な情報については, 以下のリンクを参照してください. データフローも以下で説明します.
 
 .. _data-flow:
 
@@ -25,49 +22,40 @@ also described below.
    :height: 470
    :alt: Scrapy architecture
 
-The data flow in Scrapy is controlled by the execution engine, and goes like
-this:
+Scrapy のデータフローは実行エンジンによって制御され, 以下のようになります:
 
-1. The :ref:`Engine <component-engine>` gets the initial Requests to crawl from the
-   :ref:`Spider <component-spiders>`.
+1. :ref:`Engine <component-engine>` は, :ref:`Spider <component-spiders>` からクロールする最初のリクエストを取得します.
 
-2. The :ref:`Engine <component-engine>` schedules the Requests in the
-   :ref:`Scheduler <component-scheduler>` and asks for the
-   next Requests to crawl.
+2. :ref:`Engine <component-engine>` は, :ref:`Scheduler <component-scheduler>` 
+   内のリクエストをスケジュールし, 次にクロールするリクエストを要求します.
 
-3. The :ref:`Scheduler <component-scheduler>` returns the next Requests
-   to the :ref:`Engine <component-engine>`.
+3. :ref:`Scheduler <component-scheduler>` は, 次のリクエストを :ref:`Engine <component-engine>` に渡します.
 
-4. The :ref:`Engine <component-engine>` sends the Requests to the
-   :ref:`Downloader <component-downloader>`, passing through the
-   :ref:`Downloader Middlewares <component-downloader-middleware>` (see
-   :meth:`~scrapy.downloadermiddlewares.DownloaderMiddleware.process_request`).
+4. :ref:`Engine <component-engine>` は, :ref:`Downloader Middlewares <component-downloader-middleware>` 
+   を経由して :ref:`Downloader <component-downloader>` にリクエストを送信します
+   (:meth:`~scrapy.downloadermiddlewares.DownloaderMiddleware.process_request` を参照してください).
 
-5. Once the page finishes downloading the
-   :ref:`Downloader <component-downloader>` generates a Response (with
-   that page) and sends it to the Engine, passing through the
-   :ref:`Downloader Middlewares <component-downloader-middleware>` (see
-   :meth:`~scrapy.downloadermiddlewares.DownloaderMiddleware.process_response`).
+5. ページのダウンロードが終了すると, 
+   :ref:`Downloader <component-downloader>` はそのページでレスポンスを生成し, 
+   :ref:`Downloader Middlewares <component-downloader-middleware>` 
+   (:meth:`~scrapy.downloadermiddlewares.DownloaderMiddleware.process_response` を参照してください) を経由して 
+   :ref:`Engine <component-engine>` に送信します.
 
-6. The :ref:`Engine <component-engine>` receives the Response from the
-   :ref:`Downloader <component-downloader>` and sends it to the
-   :ref:`Spider <component-spiders>` for processing, passing
-   through the :ref:`Spider Middleware <component-spider-middleware>` (see
-   :meth:`~scrapy.spidermiddlewares.SpiderMiddleware.process_spider_input`).
+6. :ref:`Engine <component-engine>` は, レスポンスを :ref:`Downloader <component-downloader>` 
+   から受信し, :ref:`Spider Middleware <component-spider-middleware>`
+   (:meth:`~scrapy.spidermiddlewares.SpiderMiddleware.process_spider_input` を参照してください)
+   を経由する処理のために :ref:`Spider <component-spiders>` に送信します.
 
-7. The :ref:`Spider <component-spiders>` processes the Response and returns
-   scraped items and new Requests (to follow) to the
-   :ref:`Engine <component-engine>`, passing through the
-   :ref:`Spider Middleware <component-spider-middleware>` (see
-   :meth:`~scrapy.spidermiddlewares.SpiderMiddleware.process_spider_output`).
+7. :ref:`Spider <component-spiders>` はレスポンスを処理し, 
+   :ref:`Spider Middleware <component-spider-middleware>` 
+   (:meth:`~scrapy.spidermiddlewares.SpiderMiddleware.process_spider_output` を参照してください)
+   を経由して, 収集したアイテムと新しいリクエストを :ref:`Engine <component-engine>` に返します.
 
-8. The :ref:`Engine <component-engine>` sends processed items to
-   :ref:`Item Pipelines <component-pipelines>`, then send processed Requests to
-   the :ref:`Scheduler <component-scheduler>` and asks for possible next Requests
-   to crawl.
+8. The :ref:`Engine <component-engine>` は, 処理されたアイテムを
+   :ref:`Item Pipelines <component-pipelines>` に渡し, 処理されたリクエストを
+   :ref:`Scheduler <component-scheduler>` に渡した後, 次のクロールリクエストを要求します.
 
-9. The process repeats (from step 1) until there are no more requests from the
-   :ref:`Scheduler <component-scheduler>`.
+9. このプロセスは, :ref:`Scheduler <component-scheduler>` からの要求がなくなるまで（ステップ1から）繰り返されます.
 
 コンポーネント
 ==========
@@ -77,93 +65,84 @@ this:
 Scrapy エンジン
 -------------
 
-The engine is responsible for controlling the data flow between all components
-of the system, and triggering events when certain actions occur. See the
-:ref:`Data Flow <data-flow>` section above for more details.
+エンジンは, システムのすべてのコンポーネント間のデータフローを制御し, 
+特定のアクションが発生したときにイベントをトリガーします. 
+詳細については, 上記の :ref:`データフロー <data-flow>` のセクションを参照してください.
 
 .. _component-scheduler:
 
 スケジューラー
 ---------
 
-The Scheduler receives requests from the engine and enqueues them for feeding
-them later (also to the engine) when the engine requests them.
+スケジューラは, エンジンからリクエストを受信し, 
+エンジンが要求したときに後で（エンジンにも）それらを供給するためにそれらのキューを実行します.
 
 .. _component-downloader:
 
 ダウンローダー
 ----------
 
-The Downloader is responsible for fetching web pages and feeding them to the
-engine which, in turn, feeds them to the spiders.
+ダウンローダーは, Web ページを取得してエンジンに供給し, そのエンジンをスパイダーにフィードします.
 
 .. _component-spiders:
 
 スパイダー
 -------
 
-Spiders are custom classes written by Scrapy users to parse responses and
-extract items (aka scraped items) from them or additional requests to
-follow. For more information see :ref:`topics-spiders`.
+スパイダーとは, Scrapy ユーザーがレスポンスを解析し, それらから収集したアイテム
+を抽出するためのカスタムクラスです. 詳細は :ref:`topics-spiders` を参照してください.
 
 .. _component-pipelines:
 
 アイテムパイプライン
 -------------
 
-The Item Pipeline is responsible for processing the items once they have been
-extracted (or scraped) by the spiders. Typical tasks include cleansing,
-validation and persistence (like storing the item in a database). For more
-information see :ref:`topics-item-pipeline`.
+アイテムパイプラインは, アイテムがスパイダーによって抽出されるとアイテムの処理を行います. 
+典型的なタスクには, クレンジング, 検証, 永続性（アイテムをデータベースに格納するなど）が含まれます. 
+詳細は,  :ref:`topics-item-pipeline` を参照してください.
 
 .. _component-downloader-middleware:
 
-ダウンロードミドルウェア
+ダウンローダーミドルウェア
 ----------------------
 
-Downloader middlewares are specific hooks that sit between the Engine and the
-Downloader and process requests when they pass from the Engine to the
-Downloader, and responses that pass from Downloader to the Engine.
+ダウンローダーミドルウェアは, エンジンとダウンローダーの間に位置し, エンジンからダウンローダーに渡されたリクエストと, 
+ダウンローダーからエンジンに渡すレスポンスを処理する特定のフックです.
 
-Use a Downloader middleware if you need to do one of the following:
+次のいずれかを実行する必要がある場合は, ダウンローダーミドルウェアを使用します:
 
-* process a request just before it is sent to the Downloader
-  (i.e. right before Scrapy sends the request to the website);
-* change received response before passing it to a spider;
-* send a new Request instead of passing received response to a spider;
-* pass response to a spider without fetching a web page;
-* silently drop some requests.
+* ダウンローダに送信される直前のリクエスト（つまり, Scrapy がリクエストをウェブサイトに送信する直前）を処理する
+* 受信したレスポンスをスパイダーに渡す前に変更する
+* 受け取ったレスポンスをスパイダーに渡す代わりに新しいリクエストを送信する
+* ウェブページを取得せずにスパイダーにレスポンスを渡す
+* いくつかのリクエストを実行しない
 
-For more information see :ref:`topics-downloader-middleware`.
+詳細については,  :ref:`topics-downloader-middleware` を参照してください.
 
 .. _component-spider-middleware:
 
 スパイダーミドルウェア
 ------------------
 
-Spider middlewares are specific hooks that sit between the Engine and the
-Spiders and are able to process spider input (responses) and output (items and
-requests).
+スパイダーミドルウェアは, エンジンとスパイダーの間に位置し, 
+スパイダーの入力（レスポンス）と出力（アイテムとリクエスト）を処理する特定のフックです.
 
-Use a Spider middleware if you need to
+次のいずれかを実行する必要がある場合は, スパイダーミドルウェアを使用します:
 
-* post-process output of spider callbacks - change/add/remove requests or items;
-* post-process start_requests;
-* handle spider exceptions;
-* call errback instead of callback for some of the requests based on response
-  content.
+* スパイダーコールバックの後処理出力 - リクエストまたはアイテムの変更/追加/削除
+* start_requests の後処理
+* スパイダーの例外処理
+* レスポンスの内容に基づいてリクエストの一部をコールバックする代わりにerrbackを呼び出す.
 
-For more information see :ref:`topics-spider-middleware`.
+詳細については,  :ref:`topics-spider-middleware` を参照してください.
 
 イベントドリブンネットワーキング
 =======================
 
-Scrapy is written with `Twisted`_, a popular event-driven networking framework
-for Python. Thus, it's implemented using a non-blocking (aka asynchronous) code
-for concurrency.
+Scrapy は, Python の有名なイベント駆動型ネットワークフレームワークである `Twisted`_ 
+で書かれています. したがって, 非同期コードを使用して同時実行性を実現しています.
 
-For more information about asynchronous programming and Twisted see these
-links:
+非同期プログラミングと Twisted の詳細については, これらのリンクを参照してください:
 
 * `Introduction to Deferreds in Twisted`_
 * `Twisted - hello, asynchronous programming`_

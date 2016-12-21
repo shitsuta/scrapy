@@ -155,40 +155,40 @@ scrapy.Spider
 
    .. method:: make_requests_from_url(url)
    
-      AURLを受け取って、 :class:`~scrapy.http.Request` オブジェクト
+      AURLを受け取って,  :class:`~scrapy.http.Request` オブジェクト
       （または :class:`~scrapy.http.Request` オブジェクトのリスト) を返すメソッド. 
-      このメソッドは、:meth:`start_requests` メソッドで初期リクエストを作成するために使用され、
+      このメソッドは, :meth:`start_requests` メソッドで初期リクエストを作成するために使用され, 
       通常は URL をリクエストに変換するために使用されます.
       
-      オーバーライドされない限り、このメソッドは、callback関数として :meth:`parse`
+      オーバーライドされない限り, このメソッドは, callback関数として :meth:`parse`
       メソッドを使用し, パラメータを有効にしてリクエストを返します
       (詳細は :class:`~scrapy.http.Request` クラスを参照してください).
 
    .. method:: parse(response)
       
-      これは、リクエストがコールバックを指定していないときに、
+      これは, リクエストがコールバックを指定していないときに, 
       ダウンロードされたレスポンスを処理するために Scrapy に使用されるデフォルトのコールバックです.
       
-      ``parse`` ソッドは、レスポンスを処理し、スクレイピングされたデータおよび/または、
-      より多くのURLを返すことを担当します。
+      ``parse`` ソッドは, レスポンスを処理し, スクレイピングされたデータおよび/または, 
+      より多くのURLを返すことを担当します. 
       その他のリクエストコールバックは :class:`Spider` クラスと同じ要件を持ちます.      
       
-      このメソッドおよび他のRequestコールバックは、 イテレータブルな :class:`~scrapy.http.Request` 
-      および/または、 ``dict`` または、
+      このメソッドおよび他のRequestコールバックは,  イテレータブルな :class:`~scrapy.http.Request` 
+      および/または,  ``dict`` または, 
       :class:`~scrapy.item.Item` オブジェクトを返さなければなりません.
 
       :param response: パースするレスポンス
       :type response: :class:`~scrapy.http.Response`
 
    .. method:: log(message, [level, component])
-
-       スパイダーの :attr:`logger` を介してログメッセージを送信し、下位互換性を保つために保管されたラッパー. 
-       詳細については :ref:`topics-logging-from-spiders` を参照してください.
+   
+      スパイダーの :attr:`logger` を介してログメッセージを送信し, 下位互換性を保つために保管されたラッパー. 
+      詳細については :ref:`topics-logging-from-spiders` を参照してください.
 
    .. method:: closed(reason)
-
-       スパイダーが閉じたときに呼び出されます。このメソッドは、
-       :signal:`spider_closed` シグナルを送信するための signals.connect() メソッドのショートカットを提供します.
+   
+      スパイダーが閉じたときに呼び出されます. このメソッドは, 
+      :signal:`spider_closed` シグナルを送信するための signals.connect() メソッドのショートカットを提供します.
 
 例を見てみましょう::
 
@@ -404,13 +404,13 @@ XMLFeedSpider
 
 .. class:: XMLFeedSpider
 
-    XMLFeedSpider は、XML フィードを特定のノード名で繰り返し解析するために設計されています. 
+    XMLFeedSpider は, XML フィードを特定のノード名で繰り返し解析するために設計されています. 
     イテレーター は  ``iternodes``, ``xml``, 及び ``html`` から選択することができます. 
-    ``xml`` と ``html`` のイテレーターは、解析するために一度に ``DOM`` 全体を生成するので、
+    ``xml`` と ``html`` のイテレーターは, 解析するために一度に ``DOM`` 全体を生成するので, 
     パフォーマンス上の理由から ``iternode`` イテレーターを使用することをお勧めします. 
-    しかし、イテレータとして ``html`` を使用すると、だめなマークアップで書かれた ``XML`` を解析するときに便利です.
+    しかし, イテレータとして ``html`` を使用すると, だめなマークアップで書かれた ``XML`` を解析するときに便利です.
 
-    イテレータとタグ名を設定するには、次のクラス属性を定義する必要があります:
+    イテレータとタグ名を設定するには, 次のクラス属性を定義する必要があります:
 
     .. attribute:: iterator
 
@@ -419,23 +419,25 @@ XMLFeedSpider
            - ``'iternodes'`` - 正規表現に基づく高速なイテレータ
 
            - ``'html'`` - :class:`~scrapy.selector.Selector` を使用するイテレータ. 
-             これは DOM 解析を使用しており、大きなフィードの問題となる可能性のあるすべての DOM をメモリにロードする必要があることに注意してください
+             これは DOM 解析を使用しており, 大きなフィードの問題となる可能性のあるすべての DOM をメモリにロードする必要があることに注意してください
 
            - ``'xml'`` - :class:`~scrapy.selector.Selector` を使用するイテレータ. 
-             これは DOM 解析を使用しており、大きなフィードの問題となる可能性のあるすべての DOM をメモリにロードする必要があることに注意してください 
+             これは DOM 解析を使用しており, 大きなフィードの問題となる可能性のあるすべての DOM をメモリにロードする必要があることに注意してください 
 
         デフォルト: ``'iternodes'``.
 
     .. attribute:: itertag
 
-        反復処理するノード（または要素）の名前の文字列. 例::
+        反復処理するノード（または要素）の名前の文字列. 
+        
+        例::
 
             itertag = 'product'
 
     .. attribute:: namespaces
 
-        このスパイダーで処理される、文書で利用可能な名前空間を定義する ``(prefix, uri)`` タプルのリスト. 
-        ``prefix`` と ``uri`` は、 :meth:`~scrapy.selector.Selector.register_namespace` 
+        このスパイダーで処理される, 文書で利用可能な名前空間を定義する ``(prefix, uri)`` タプルのリスト. 
+        ``prefix`` と ``uri`` は,  :meth:`~scrapy.selector.Selector.register_namespace` 
         メソッドを使って名前空間を自動的に登録するために使われます.
 
         :attr:`itertag` 属性に名前空間を持つノードを指定できます.
@@ -448,32 +450,27 @@ XMLFeedSpider
                 itertag = 'n:url'
                 # ...
 
-    これらの属性とは別に、このスパイダーは次の無効化可能なメソッドも持っています:
+    これらの属性とは別に, このスパイダーは次の無効化可能なメソッドも持っています:
 
     .. method:: adapt_response(response)
 
-        スパイダーミドルウェアから到着するとすぐに、スパイダーが解析を開始する前に応答を受け取る方法。
-        これは、解析する前に応答本体を変更するために使用できます. 
-        This method receives a response and
-        also returns a response (it could be the same or another one).
+        スパイダーミドルウェアから送られたレスポンスを, スパイダーが解析を開始する前に受け取るメソッド. 
+        これは, 解析する前にレスポンス本体の内容を変更するために使用できます. 
+        このメソッドはレスポンスを受け取り, レスポンスを返します（同じものか別のものかが返されます）.
 
     .. method:: parse_node(response, selector)
 
-        This method is called for the nodes matching the provided tag name
-        (``itertag``).  Receives the response and an
-        :class:`~scrapy.selector.Selector` for each node.  Overriding this
-        method is mandatory. Otherwise, you spider won't work.  This method
-        must return either a :class:`~scrapy.item.Item` object, a
-        :class:`~scrapy.http.Request` object, or an iterable containing any of
-        them.
+        このメソッドは, 指定されたタグ名 (``itertag``) と一致するノードに対して呼び出されます. 
+        各ノードのレスポンスと :class:`~scrapy.selector.Selector` を受け取ります. このメソッドをオーバーライドすることは必須です. 
+        そうしなければ, スパイダーが動作しません. このメソッドは,  :class:`~scrapy.item.Item` オブジェクト, 
+        :class:`~scrapy.http.Request` オブジェクト, またはいずれかを含む iterable を返す必要があります.
 
     .. method:: process_results(response, results)
 
-        This method is called for each result (item or request) returned by the
-        spider, and it's intended to perform any last time processing required
-        before returning the results to the framework core, for example setting the
-        item IDs. It receives a list of results and the response which originated
-        those results. It must return a list of results (Items or Requests).
+        このメソッドは, スパイダーから返された各結果（アイテムまたはリクエスト）に対して呼び出され, 
+        結果をフレームワークコアに返す前に必要な最後の処理（たとえば, アイテムIDの設定）を実行するためのものです. 
+        これは結果のリストとそれらの結果を生み出したレスポンスを受け取ります. 
+        結果のリスト（アイテムまたはレスポンス）を返す必要があります.
 
 
 XMLFeedSpider の例
@@ -500,7 +497,7 @@ XMLFeedSpider の例
             item['description'] = node.xpath('description').extract()
             return item
 
-上記は基本的な、指定された ``start_urls`` からフィードをダウンロードし、それぞれの ``item`` タグを繰り返して印刷し、
+上記は基本的な, 指定された ``start_urls`` からフィードをダウンロードし, それぞれの ``item`` タグを繰り返して印刷し, 
 ランダムなデータを :class:`~scrapy.item.Item` に格納するスパイダーです.
 
 CSVFeedSpider
@@ -508,29 +505,28 @@ CSVFeedSpider
 
 .. class:: CSVFeedSpider
 
-   このスパイダーはXMLFeedSpiderと非常に似ていますが、
-   ノードの代わりに行を反復する点が異なります。
-   各反復で呼び出されるメソッドは、 :meth:`parse_row` です.
+   このスパイダーはXMLFeedSpiderと非常に似ていますが, 
+   ノードの代わりに行を反復する点が異なります. 
+   各反復で呼び出されるメソッドは,  :meth:`parse_row` です.
 
    .. attribute:: delimiter
-
-       CSVファイルの各フィールドの区切り文字を含む文字列. デフォルトは ``','`` (コンマ).
+      
+      CSVファイルの各フィールドの区切り文字を含む文字列. デフォルトは ``','`` (コンマ).
 
    .. attribute:: quotechar
-
-       A string with the enclosure character for each field in the CSV file
-       Defaults to ``'"'`` (quotation mark).
+      
+      CSVファイル内の各フィールドのエンクロージャ文字を含む文字列. デフォルトは ``'"'`` （引用符）です.
 
    .. attribute:: headers
-
-       ファイルからフィールドを抽出するために使用されるCSVファイルのフィードに含まれる行のリスト.
+      
+      ファイルからフィールドを抽出するために使用されるCSVファイルのフィードに含まれる行のリスト.
 
    .. method:: parse_row(response, row)
 
-       Receives a response and a dict (representing each row) with a key for each
-       provided (or detected) header of the CSV file.  This spider also gives the
-       opportunity to override ``adapt_response`` and ``process_results`` methods
-       for pre- and post-processing purposes.
+       CSVファイルの各ヘッダーのキーを使用（または検出）して, 
+       レスポンスと ``dict`` （各行を表す）を受け取ります. 
+       このスパイダーは, 事前処理と後処理の目的で ``adapt_response`` メソッドと 
+       ``process_results`` メソッドをオーバーライドする機会も与えます.
 
 CSVFeedSpider の例
 ~~~~~~~~~~~~~~~~~~~~~
@@ -575,14 +571,13 @@ SitemapSpider
 
     .. attribute:: sitemap_rules
 
-        A list of tuples ``(regex, callback)`` where:
+        タプル ``(regex, callback)`` のリスト:
 
-        * ``regex`` is a regular expression to match urls extracted from sitemaps.
-          ``regex`` can be either a str or a compiled regex object.
+        * ``regex`` は, サイトマップから抽出されたURLに一致する正規表現です.
+          ``regex`` は str かコンパイルされた正規表現オブジェクトのどちらかです.
 
-        * callback is the callback to use for processing the urls that match
-          the regular expression. ``callback`` can be a string (indicating the
-          name of a spider method) or a callable.
+        * ``callback`` は, 正規表現に一致するURLを処理するために使用するコールバックです. 
+          ``callback`` は文字列（スパイダーメソッドの名前を示す）または呼び出し可能なものにすることができます.
 
         例えば::
 
@@ -590,22 +585,19 @@ SitemapSpider
 
         ルールは順番に適用され, 一致する最初のルールのみが使用されます.
 
-        If you omit this attribute, all urls found in sitemaps will be
-        processed with the ``parse`` callback.
+        この属性を省略すると, サイトマップ内のすべてのURLが ``parse`` コールバックで処理されます.
 
     .. attribute:: sitemap_follow
 
-        A list of regexes of sitemap that should be followed. This is is only
-        for sites that use `Sitemap index files`_ that point to other sitemap
-        files.
+        あなたが従うべきサイトマップの正規表現のリスト. 
+        これは, 他のサイトマップファイルを指す `Sitemap index files`_ を使用するサイトのみに適用されます.
 
         デフォルトでは, すべてのサイトマップに従います.
 
     .. attribute:: sitemap_alternate_links
 
-        Specifies if alternate links for one ``url`` should be followed. These
-        are links for the same website in another language passed within
-        the same ``url`` block.
+        ``url`` の代替リンクに従うかどうかを指定します. 
+        これらは, 同じ ``url`` ブロック内で渡された別の言語の同じWebサイトのリンクです.
 
         例えば::
 
@@ -614,9 +606,8 @@ SitemapSpider
                 <xhtml:link rel="alternate" hreflang="de" href="http://example.com/de"/>
             </url>
 
-        With ``sitemap_alternate_links`` set, this would retrieve both URLs. With
-        ``sitemap_alternate_links`` disabled, only ``http://example.com/`` would be
-        retrieved.
+        上記の例では, ``sitemap_alternate_links`` が設定されていると, 両方のURLが取得されます. 
+        ``sitemap_alternate_links`` を無効にすると, ``http://example.com/`` のみが取得されます.
 
         デフォルトでは ``sitemap_alternate_links`` は無効化されています.
 

@@ -155,8 +155,8 @@ scrapy.Spider
 
    .. method:: make_requests_from_url(url)
    
-      AURLを受け取って,  :class:`~scrapy.http.Request` オブジェクト
-      （または :class:`~scrapy.http.Request` オブジェクトのリスト) を返すメソッド. 
+      URLを受け取って, :class:`~scrapy.http.Request` オブジェクト 
+      (または :class:`~scrapy.http.Request` オブジェクトのリスト) を返すメソッド. 
       このメソッドは, :meth:`start_requests` メソッドで初期リクエストを作成するために使用され, 
       通常は URL をリクエストに変換するために使用されます.
       
@@ -176,9 +176,9 @@ scrapy.Spider
       このメソッドおよび他のRequestコールバックは,  イテレータブルな :class:`~scrapy.http.Request` 
       および/または,  ``dict`` または, 
       :class:`~scrapy.item.Item` オブジェクトを返さなければなりません.
-
-      :param response: パースするレスポンス
-      :type response: :class:`~scrapy.http.Response`
+      
+      :param response: パースするレスポンス
+      :type response: :class:`~scrapy.http.Response`
 
    .. method:: log(message, [level, component])
    

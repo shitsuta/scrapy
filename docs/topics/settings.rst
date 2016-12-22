@@ -104,10 +104,10 @@ Scrapyを使用するときは, 環境変数 ``SCRAPY_SETTINGS_MODULE`` を使�
    ``settings`` 属性は, スパイダーが初期化された後, 
    ベース Spider クラスに設定されます. 
    初期化の前に設定を使用する場合（たとえば, スパイダーの ``__init__()`` メソッド）, 
-   :meth:`~scrapy.spiders.Spider.from_crawler`メソッドをオーバーライドする必要があります.
+   :meth:`~scrapy.spiders.Spider.from_crawler` メソッドをオーバーライドする必要があります.
 
 設定は, 拡張機能, ミドルウェアおよびアイテムパイプラインの ``from_crawler`` メソッドに渡される, 
-クローラの :attr:`scrapy.crawler.Crawler.settings` 属性を介してアクセスできます. 
+クローラの :attr:`scrapy.crawler.Crawler.settings` 属性を介してアクセスできます. :
 
     class MyExtension(object):
         def __init__(self, log_is_enabled=False):

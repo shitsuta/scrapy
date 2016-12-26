@@ -642,7 +642,7 @@ SitemapSpider の例
         def parse_category(self, response):
             pass # ... scrape category ...
 
- `robots.txt`_ ファイルによって定義されたサイトマップと, 一部に ``/sitemap_shop`` を含むURLのみを処理する::
+`robots.txt`_ ファイルによって定義されたサイトマップと, 一部に ``/sitemap_shop`` を含むURLのみを処理する::
 
     from scrapy.spiders import SitemapSpider
 

@@ -188,7 +188,7 @@ DepthMiddleware
 
       * :setting:`DEPTH_LIMIT` - クロールできる最大の深さ. ゼロの場合, 制限は課されません.
       * :setting:`DEPTH_STATS` - 深度統計を収集するかどうか.
-      * :setting:`DEPTH_PRIORITY` - リクエストを深さに基づいて優先順位付けするかどうか.
+      * :setting:`DEPTH_PRIORITY` - リクエストを深さに基づいて優先順位付けするかどうか.
 
 HttpErrorMiddleware
 -------------------

@@ -515,7 +515,7 @@ CSVFeedSpider
 
    .. attribute:: quotechar
       
-      CSVファイル内の各フィールドのエンクロージャ文字を含む文字列. デフォルトは ``'"'`` （引用符）です.
+      CSVファイル内の各フィールドのエンクロージャ文字を含む文字列. デフォルトは ``'"'`` （引用符）です.
 
    .. attribute:: headers
       
@@ -524,8 +524,8 @@ CSVFeedSpider
    .. method:: parse_row(response, row)
 
        CSVファイルの各ヘッダーのキーを使用（または検出）して, 
-       レスポンスと ``dict`` （各行を表す）を受け取ります. 
-       このスパイダーは, 事前処理と後処理の目的で ``adapt_response`` メソッドと 
+       レスポンスと ``dict`` （各行を表す）を受け取ります. 
+       このスパイダーは, 事前処理と後処理の目的で ``adapt_response`` メソッドと 
        ``process_results`` メソッドをオーバーライドする機会も与えます.
 
 CSVFeedSpider の例

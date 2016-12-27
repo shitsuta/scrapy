@@ -59,104 +59,88 @@
 
     .. method:: process_spider_input(response, spider)
 
-        This method is called for each response that goes through the spider
-        middleware and into the spider, for processing.
+        このメソッドは、処理のためにスパイダーミドルウェアを経由してスパイダーに入る各レスポンスに対して呼び出されます.
 
-        :meth:`process_spider_input` should return ``None`` or raise an
-        exception.
+        :meth:`process_spider_input` は必ず ``None`` を返すか、または例外を発生させなければいけません.
 
-        If it returns ``None``, Scrapy will continue processing this response,
-        executing all other middlewares until, finally, the response is handed
-        to the spider for processing.
+        ``None`` を返すと, Scrapy はこのレスポンスの処理を続行し,
+        最終的にレスポンスが処理のためにスパイダーに渡されるまで他のすべてのミドルウェアを実行します.
 
-        If it raises an exception, Scrapy won't bother calling any other spider
-        middleware :meth:`process_spider_input` and will call the request
-        errback.  The output of the errback is chained back in the other
-        direction for :meth:`process_spider_output` to process it, or
-        :meth:`process_spider_exception` if it raised an exception.
+        例外が発生した場合, Scrapy は他のミドルウェアの :meth:`process_spider_input` 
+        メソッド呼び出しを無視して errback リクエストを呼び出します. 
+        errback の出力は、:meth:`process_spider_output` で処理されるか, エラーが発生した場合は
+        :meth:`process_spider_exception` メソッドにチェーンされて戻ります.
 
-        :param response: the response being processed
-        :type response: :class:`~scrapy.http.Response` object
-
-        :param spider: the spider for which this response is intended
-        :type spider: :class:`~scrapy.spiders.Spider` object
-
+        :param response: 処理されているレスポンス
+        :type response: :class:`~scrapy.http.Response` オブジェクト
+        
+        :param spider: このレスポンスを処理しているスパイダー
+        :type spider: :class:`~scrapy.spiders.Spider` オブジェクト
+        
 
     .. method:: process_spider_output(response, result, spider)
 
-        This method is called with the results returned from the Spider, after
-        it has processed the response.
+        このメソッドは、レスポンスを処理した後にスパイダーから返された結果にたいして呼び出されます.
 
-        :meth:`process_spider_output` must return an iterable of
-        :class:`~scrapy.http.Request`, dict or :class:`~scrapy.item.Item` 
-        objects.
+        :meth:`process_spider_output` は必ずイテラブルな :class:`~scrapy.http.Request`, 
+        ``dict`` または :class:`~scrapy.item.Item` オブジェクトのいずれかを返す必要があります.
 
-        :param response: the response which generated this output from the
-          spider
-        :type response: :class:`~scrapy.http.Response` object
-
-        :param result: the result returned by the spider
-        :type result: an iterable of :class:`~scrapy.http.Request`, dict
-          or :class:`~scrapy.item.Item` objects
-
-        :param spider: the spider whose result is being processed
-        :type spider: :class:`~scrapy.spiders.Spider` object
-
+        :param response: スパイダーによって出力されたレスポンス
+        :type response: :class:`~scrapy.http.Response` オブジェクト
+        
+        :param result: スパイダーによって返された結果
+        :type result: イテラブルな :class:`~scrapy.http.Request`, ``dict`` または :class:`~scrapy.item.Item` オブジェクト
+        
+        :param spider: 結果が処理されているスパイダー
+        :type spider: :class:`~scrapy.spiders.Spider` オブジェクト
+        
 
     .. method:: process_spider_exception(response, exception, spider)
 
-        This method is called when when a spider or :meth:`process_spider_input`
-        method (from other spider middleware) raises an exception.
+        このメソッドは、スパイダーまたは :meth:`process_spider_input` メソッド 
+        (他のスパイダーミドルウェアのもの) が例外を発生させたときに呼び出されます.
 
-        :meth:`process_spider_exception` should return either ``None`` or an
-        iterable of :class:`~scrapy.http.Response`, dict or
-        :class:`~scrapy.item.Item` objects.
+        :meth:`process_spider_exception` は ``None`` 、イテラブルな 
+        :class:`~scrapy.http.Response`, ``dict`` または
+        :class:`~scrapy.item.Item` オブジェクトを返さなければいけません.
 
-        If it returns ``None``, Scrapy will continue processing this exception,
-        executing any other :meth:`process_spider_exception` in the following
-        middleware components, until no middleware components are left and the
-        exception reaches the engine (where it's logged and discarded).
+        ``None`` を返すと, Scrapy は, ミドルウェアコンポーネントが残っていない、かつ例外がエンジンに到達するまで、
+        この例外の処理を続け、次のミドルウェアコンポーネントで :meth:`process_spider_exception` を実行します。
+        
+        イテラブルを返すと :meth:`process_spider_output` パイプラインが起動し, 
+        ほかの :meth:`process_spider_exception` は呼び出されません.
 
-        If it returns an iterable the :meth:`process_spider_output` pipeline
-        kicks in, and no other :meth:`process_spider_exception` will be called.
-
-        :param response: the response being processed when the exception was
-          raised
-        :type response: :class:`~scrapy.http.Response` object
-
-        :param exception: the exception raised
-        :type exception: `Exception`_ object
-
-        :param spider: the spider which raised the exception
-        :type spider: :class:`~scrapy.spiders.Spider` object
-
+        :param response: 例外が発生したときに処理されるレスポンス
+        :type response: :class:`~scrapy.http.Response` オブジェクト
+        
+        :param exception: 発生した例外
+        :type exception: `Exception`_ オブジェクト
+        
+        :param spider: 例外が発生したスパイダー
+        :type spider: :class:`~scrapy.spiders.Spider` オブジェクト
+        
     .. method:: process_start_requests(start_requests, spider)
 
         .. versionadded:: 0.15
 
-        This method is called with the start requests of the spider, and works
-        similarly to the :meth:`process_spider_output` method, except that it
-        doesn't have a response associated and must return only requests (not
-        items).
+        このメソッドはスパイダーの開始要求とともに呼び出され, :meth:`process_spider_output` 
+        メソッドと同様に動作します。ただし、レスポンスが関連付けられておらず、リクエスト（項目ではない）のみを返さなければなりません.
 
-        It receives an iterable (in the ``start_requests`` parameter) and must
-        return another iterable of :class:`~scrapy.http.Request` objects.
+        イテラブル ( ``start_requests`` パラメーター無い) を受取り、
+        イテラブルな :class:`~scrapy.http.Request` オブジェを返さなければいけません. 
 
-        .. note:: When implementing this method in your spider middleware, you
-           should always return an iterable (that follows the input one) and
-           not consume all ``start_requests`` iterator because it can be very
-           large (or even unbounded) and cause a memory overflow. The Scrapy
-           engine is designed to pull start requests while it has capacity to
-           process them, so the start requests iterator can be effectively
-           endless where there is some other condition for stopping the spider
-           (like a time limit or item/page count).
+        .. note:: このメソッドをスパイダー・ミドルウェアに実装する場合は、常にiterableを返し、
+            ``start_requests`` をすべて消費しないようにする必要があります。
+            非常に大きい（または制限なし）ことがあり、メモリーがオーバーフローする可能性があるからです. 
+            Scrapy エンジンは、開始要求を処理する能力を持っている間に開始要求を引き出すように設計されているため、
+            開始要求イテレータは、スパイダーを停止するためのその他の条件（時間制限や項目/ページ数など）がある場合には効果的に無限になります.
 
-        :param start_requests: the start requests
-        :type start_requests: an iterable of :class:`~scrapy.http.Request`
+        :param start_requests: スタートリクエスト
+        :type start_requests: イテラブルな :class:`~scrapy.http.Request`
 
-        :param spider: the spider to whom the start requests belong
-        :type spider: :class:`~scrapy.spiders.Spider` object
-
+        :param spider: スタートリクエストが属するスパイダー
+        :type spider: :class:`~scrapy.spiders.Spider` オブジェクト
+        
 
 .. _Exception: https://docs.python.org/2/library/exceptions.html#exceptions.Exception
 
@@ -198,22 +182,18 @@ HttpErrorMiddleware
 
 .. class:: HttpErrorMiddleware
 
-    Filter out unsuccessful (erroneous) HTTP responses so that spiders don't
-    have to deal with them, which (most of the time) imposes an overhead,
-    consumes more resources, and makes the spider logic more complex.
+    スパイダーが対処する必要がないように、失敗した（誤った）HTTP レスポンスを除外します。
+    ほとんどの場合、オーバーヘッドがかかり、より多くのリソースを消費し、スパイダーロジックがより複雑になります.
 
-According to the `HTTP standard`_, successful responses are those whose
-status codes are in the 200-300 range.
+`HTTP standard`_ によれば、成功したレスポンスは、ステータスコードが200〜300の範囲にあるものです.
 
 .. _HTTP standard: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 
-If you still want to process response codes outside that range, you can
-specify which response codes the spider is able to handle using the
-``handle_httpstatus_list`` spider attribute or
-:setting:`HTTPERROR_ALLOWED_CODES` setting.
+その範囲外のレスポンスコードを処理したい場合は、
+``handle_httpstatus_list`` 属性または
+:setting:`HTTPERROR_ALLOWED_CODES` 設定を使用して、スパイダーが処理できるレスポンスコードを指定できます.
 
-For example, if you want your spider to handle 404 responses you can do
-this::
+たとえば、スパイダーが 404 レスポンスを処理するようにするには、以下のようにします。:
 
     class MySpider(CrawlSpider):
         handle_httpstatus_list = [404]
@@ -222,15 +202,15 @@ this::
 
 .. reqmeta:: handle_httpstatus_all
 
-The ``handle_httpstatus_list`` key of :attr:`Request.meta
-<scrapy.http.Request.meta>` can also be used to specify which response codes to
-allow on a per-request basis. You can also set the meta key ``handle_httpstatus_all``
-to ``True`` if you want to allow any response code for a request.
+:attr:`Request.meta<scrapy.http.Request.meta>` の  ``handle_httpstatus_list`` 
+キーを使用して、リクエストごとに許可するレスポンスコードを指定することもできます. 
+リクエストにすべてのレスポンスコードを許可させる場合は、meta キー ``handle_httpstatus_all``
+を ``True`` に設定することもできます.
 
-Keep in mind, however, that it's usually a bad idea to handle non-200
-responses, unless you really know what you're doing.
+しかし、あなた自信が何を行いたいかを本当に理解していない限り、
+200以外の回答をむやみに処理することは、通常は悪い考えです.
 
-For more information see: `HTTP Status Code Definitions`_.
+詳細については、 `HTTP Status Code Definitions`_ を参照してください.
 
 .. _HTTP Status Code Definitions: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 
@@ -263,33 +243,27 @@ OffsiteMiddleware
 
 .. class:: OffsiteMiddleware
 
-   Filters out Requests for URLs outside the domains covered by the spider.
+   スパイダーがカバーするドメイン外のURLに対するリクエストをフィルタリングします.
 
-   This middleware filters out every request whose host names aren't in the
-   spider's :attr:`~scrapy.spiders.Spider.allowed_domains` attribute.
-   All subdomains of any domain in the list are also allowed.
-   E.g. the rule ``www.example.org`` will also allow ``bob.www.example.org``
-   but not ``www2.example.com`` nor ``example.com``.
+   このミドルウェアは、スパイダーの :attr:`~scrapy.spiders.Spider.allowed_domains` 
+   属性にないホスト名を持つすべてのリクエストをフィルタリングします.
+   リスト内の任意のドメインのすべてのサブドメインも許可されます.
+   例えば、ルールに ``www.example.org`` が指定されている場合でも ``bob.www.example.org`` は許可されますが、
+   ``www2.example.com`` や ``example.com`` は許可されません.
 
-   When your spider returns a request for a domain not belonging to those
-   covered by the spider, this middleware will log a debug message similar to
-   this one::
+   スパイダーが許可されていないドメインのリクエストを返すと、このミドルウェアはこのようなデバッグメッセージを記録します::
 
       DEBUG: Filtered offsite request to 'www.othersite.com': <GET http://www.othersite.com/some/page.html>
 
-   To avoid filling the log with too much noise, it will only print one of
-   these messages for each new domain filtered. So, for example, if another
-   request for ``www.othersite.com`` is filtered, no log message will be
-   printed. But if a request for ``someothersite.com`` is filtered, a message
-   will be printed (but only for the first request filtered).
+   あまりにも多くのノイズをログに書き込まないようにするため、フィルタリングされた新しいドメインごとにこれらのメッセージの1つのみを出力します. 
+   たとえば、 ``www.othersite.com`` の別のリクエストがフィルタリングされた場合、ログメッセージは出力されません. 
+   しかし、 ``someothersite.com`` のリクエストがフィルタリングされると、メッセージが出力されます（最初のリクエストがフィルタリングされた場合のみ）.
 
-   If the spider doesn't define an
-   :attr:`~scrapy.spiders.Spider.allowed_domains` attribute, or the
-   attribute is empty, the offsite middleware will allow all requests.
+   スパイダーが :attr:`~scrapy.spiders.Spider.allowed_domains` 属性を定義していないか、
+   属性が空の場合、オフサイトミドルウェアはすべてのリクエストを許可します.
 
-   If the request has the :attr:`~scrapy.http.Request.dont_filter` attribute
-   set, the offsite middleware will allow the request even if its domain is not
-   listed in allowed domains.
+   リクエストに :attr:`~scrapy.http.Request.dont_filter` 属性が設定されている場合、
+   オフサイトミドルウェアはドメインが許可リストになくてもリクエストを許可します.
 
 
 RefererMiddleware
@@ -327,6 +301,6 @@ UrlLengthMiddleware
    URL が URLLENGTH_LIMIT より長い場合, リクエストをフィルタリングします
    
    The :class:`UrlLengthMiddleware` は, 以下の設定によって構成することができます（詳細については, 設定ドキュメントを参照してください）:
-
-      * :setting:`URLLENGTH_LIMIT` - クロールするURLで許可されるURLの最大長.
+   
+   * :setting:`URLLENGTH_LIMIT` - クロールするURLで許可されるURLの最大長.
 

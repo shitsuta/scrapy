@@ -59,16 +59,16 @@
 
     .. method:: process_spider_input(response, spider)
 
-        このメソッドは、処理のためにスパイダーミドルウェアを経由してスパイダーに入る各レスポンスに対して呼び出されます.
+        このメソッドは, 処理のためにスパイダーミドルウェアを経由してスパイダーに入る各レスポンスに対して呼び出されます.
 
-        :meth:`process_spider_input` は必ず ``None`` を返すか、または例外を発生させなければいけません.
+        :meth:`process_spider_input` は必ず ``None`` を返すか, または例外を発生させなければいけません.
 
         ``None`` を返すと, Scrapy はこのレスポンスの処理を続行し,
         最終的にレスポンスが処理のためにスパイダーに渡されるまで他のすべてのミドルウェアを実行します.
 
         例外が発生した場合, Scrapy は他のミドルウェアの :meth:`process_spider_input` 
         メソッド呼び出しを無視して errback リクエストを呼び出します. 
-        errback の出力は、:meth:`process_spider_output` で処理されるか, エラーが発生した場合は
+        errback の出力は, :meth:`process_spider_output` で処理されるか, エラーが発生した場合は
         :meth:`process_spider_exception` メソッドにチェーンされて戻ります.
 
         :param response: 処理されているレスポンス
@@ -80,7 +80,7 @@
 
     .. method:: process_spider_output(response, result, spider)
 
-        このメソッドは、レスポンスを処理した後にスパイダーから返された結果にたいして呼び出されます.
+        このメソッドは, レスポンスを処理した後にスパイダーから返された結果にたいして呼び出されます.
 
         :meth:`process_spider_output` は必ずイテラブルな :class:`~scrapy.http.Request`, 
         ``dict`` または :class:`~scrapy.item.Item` オブジェクトのいずれかを返す必要があります.
@@ -97,15 +97,15 @@
 
     .. method:: process_spider_exception(response, exception, spider)
 
-        このメソッドは、スパイダーまたは :meth:`process_spider_input` メソッド 
+        このメソッドは, スパイダーまたは :meth:`process_spider_input` メソッド 
         (他のスパイダーミドルウェアのもの) が例外を発生させたときに呼び出されます.
 
-        :meth:`process_spider_exception` は ``None`` 、イテラブルな 
+        :meth:`process_spider_exception` は ``None`` , イテラブルな 
         :class:`~scrapy.http.Response`, ``dict`` または
         :class:`~scrapy.item.Item` オブジェクトを返さなければいけません.
 
-        ``None`` を返すと, Scrapy は, ミドルウェアコンポーネントが残っていない、かつ例外がエンジンに到達するまで、
-        この例外の処理を続け、次のミドルウェアコンポーネントで :meth:`process_spider_exception` を実行します。
+        ``None`` を返すと, Scrapy は, ミドルウェアコンポーネントが残っていない, かつ例外がエンジンに到達するまで, 
+        この例外の処理を続け, 次のミドルウェアコンポーネントで :meth:`process_spider_exception` を実行します. 
         
         イテラブルを返すと :meth:`process_spider_output` パイプラインが起動し, 
         ほかの :meth:`process_spider_exception` は呼び出されません.
@@ -124,16 +124,16 @@
         .. versionadded:: 0.15
 
         このメソッドはスパイダーの開始要求とともに呼び出され, :meth:`process_spider_output` 
-        メソッドと同様に動作します。ただし、レスポンスが関連付けられておらず、リクエスト（項目ではない）のみを返さなければなりません.
+        メソッドと同様に動作します. ただし, レスポンスが関連付けられておらず, リクエスト（項目ではない）のみを返さなければなりません.
 
-        イテラブル ( ``start_requests`` パラメーター無い) を受取り、
+        イテラブル ( ``start_requests`` パラメーター無い) を受取り, 
         イテラブルな :class:`~scrapy.http.Request` オブジェを返さなければいけません. 
 
-        .. note:: このメソッドをスパイダー・ミドルウェアに実装する場合は、常にiterableを返し、
-            ``start_requests`` をすべて消費しないようにする必要があります。
-            非常に大きい（または制限なし）ことがあり、メモリーがオーバーフローする可能性があるからです. 
-            Scrapy エンジンは、開始要求を処理する能力を持っている間に開始要求を引き出すように設計されているため、
-            開始要求イテレータは、スパイダーを停止するためのその他の条件（時間制限や項目/ページ数など）がある場合には効果的に無限になります.
+        .. note:: このメソッドをスパイダー・ミドルウェアに実装する場合は, 常にiterableを返し, 
+            ``start_requests`` をすべて消費しないようにする必要があります. 
+            非常に大きい（または制限なし）ことがあり, メモリーがオーバーフローする可能性があるからです. 
+            Scrapy エンジンは, 開始要求を処理する能力を持っている間に開始要求を引き出すように設計されているため, 
+            開始要求イテレータは, スパイダーを停止するためのその他の条件（時間制限や項目/ページ数など）がある場合には効果的に無限になります.
 
         :param start_requests: スタートリクエスト
         :type start_requests: イテラブルな :class:`~scrapy.http.Request`
@@ -182,18 +182,18 @@ HttpErrorMiddleware
 
 .. class:: HttpErrorMiddleware
 
-    スパイダーが対処する必要がないように、失敗した（誤った）HTTP レスポンスを除外します。
-    ほとんどの場合、オーバーヘッドがかかり、より多くのリソースを消費し、スパイダーロジックがより複雑になります.
+    スパイダーが対処する必要がないように, 失敗した（誤った）HTTP レスポンスを除外します. 
+    ほとんどの場合, オーバーヘッドがかかり, より多くのリソースを消費し, スパイダーロジックがより複雑になります.
 
-`HTTP standard`_ によれば、成功したレスポンスは、ステータスコードが200〜300の範囲にあるものです.
+`HTTP standard`_ によれば, 成功したレスポンスは, ステータスコードが200〜300の範囲にあるものです.
 
 .. _HTTP standard: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 
-その範囲外のレスポンスコードを処理したい場合は、
+その範囲外のレスポンスコードを処理したい場合は, 
 ``handle_httpstatus_list`` 属性または
-:setting:`HTTPERROR_ALLOWED_CODES` 設定を使用して、スパイダーが処理できるレスポンスコードを指定できます.
+:setting:`HTTPERROR_ALLOWED_CODES` 設定を使用して, スパイダーが処理できるレスポンスコードを指定できます.
 
-たとえば、スパイダーが 404 レスポンスを処理するようにするには、以下のようにします。:
+たとえば, スパイダーが 404 レスポンスを処理するようにするには, 以下のようにします::
 
     class MySpider(CrawlSpider):
         handle_httpstatus_list = [404]
@@ -203,14 +203,14 @@ HttpErrorMiddleware
 .. reqmeta:: handle_httpstatus_all
 
 :attr:`Request.meta<scrapy.http.Request.meta>` の  ``handle_httpstatus_list`` 
-キーを使用して、リクエストごとに許可するレスポンスコードを指定することもできます. 
-リクエストにすべてのレスポンスコードを許可させる場合は、meta キー ``handle_httpstatus_all``
+キーを使用して, リクエストごとに許可するレスポンスコードを指定することもできます. 
+リクエストにすべてのレスポンスコードを許可させる場合は, meta キー ``handle_httpstatus_all``
 を ``True`` に設定することもできます.
 
-しかし、あなた自信が何を行いたいかを本当に理解していない限り、
-200以外の回答をむやみに処理することは、通常は悪い考えです.
+しかし, あなた自信が何を行いたいかを本当に理解していない限り, 
+200以外の回答をむやみに処理することは, 通常は悪い考えです.
 
-詳細については、 `HTTP Status Code Definitions`_ を参照してください.
+詳細については,  `HTTP Status Code Definitions`_ を参照してください.
 
 .. _HTTP Status Code Definitions: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 
@@ -245,24 +245,24 @@ OffsiteMiddleware
 
    スパイダーがカバーするドメイン外のURLに対するリクエストをフィルタリングします.
 
-   このミドルウェアは、スパイダーの :attr:`~scrapy.spiders.Spider.allowed_domains` 
+   このミドルウェアは, スパイダーの :attr:`~scrapy.spiders.Spider.allowed_domains` 
    属性にないホスト名を持つすべてのリクエストをフィルタリングします.
    リスト内の任意のドメインのすべてのサブドメインも許可されます.
-   例えば、ルールに ``www.example.org`` が指定されている場合でも ``bob.www.example.org`` は許可されますが、
+   例えば, ルールに ``www.example.org`` が指定されている場合でも ``bob.www.example.org`` は許可されますが, 
    ``www2.example.com`` や ``example.com`` は許可されません.
 
-   スパイダーが許可されていないドメインのリクエストを返すと、このミドルウェアはこのようなデバッグメッセージを記録します::
+   スパイダーが許可されていないドメインのリクエストを返すと, このミドルウェアはこのようなデバッグメッセージを記録します::
 
       DEBUG: Filtered offsite request to 'www.othersite.com': <GET http://www.othersite.com/some/page.html>
 
-   あまりにも多くのノイズをログに書き込まないようにするため、フィルタリングされた新しいドメインごとにこれらのメッセージの1つのみを出力します. 
-   たとえば、 ``www.othersite.com`` の別のリクエストがフィルタリングされた場合、ログメッセージは出力されません. 
-   しかし、 ``someothersite.com`` のリクエストがフィルタリングされると、メッセージが出力されます（最初のリクエストがフィルタリングされた場合のみ）.
+   あまりにも多くのノイズをログに書き込まないようにするため, フィルタリングされた新しいドメインごとにこれらのメッセージの1つのみを出力します. 
+   たとえば,  ``www.othersite.com`` の別のリクエストがフィルタリングされた場合, ログメッセージは出力されません. 
+   しかし,  ``someothersite.com`` のリクエストがフィルタリングされると, メッセージが出力されます（最初のリクエストがフィルタリングされた場合のみ）.
 
-   スパイダーが :attr:`~scrapy.spiders.Spider.allowed_domains` 属性を定義していないか、
-   属性が空の場合、オフサイトミドルウェアはすべてのリクエストを許可します.
+   スパイダーが :attr:`~scrapy.spiders.Spider.allowed_domains` 属性を定義していないか, 
+   属性が空の場合, オフサイトミドルウェアはすべてのリクエストを許可します.
 
-   リクエストに :attr:`~scrapy.http.Request.dont_filter` 属性が設定されている場合、
+   リクエストに :attr:`~scrapy.http.Request.dont_filter` 属性が設定されている場合, 
    オフサイトミドルウェアはドメインが許可リストになくてもリクエストを許可します.
 
 

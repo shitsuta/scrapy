@@ -10,7 +10,7 @@
 
 Scrapyツールは, 複数の目的で複数のコマンドを提供し, それぞれが異なる引数とオプションのセットを受け入れます.
 
-( ``scrapy deploy`` マンドは1.0で削除され,  ``scrapyd-deploy`` が採用されました. `Deploying your project`_ を参照してください.)
+( ``scrapy deploy`` コマンドは 1.0 で廃止され,  ``scrapyd-deploy`` が採用されました. `Deploying your project`_ を参照してください.)
 
 .. _topics-config-settings:
 

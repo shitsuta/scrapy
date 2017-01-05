@@ -107,7 +107,7 @@ Scrapyを使用するときは, 環境変数 ``SCRAPY_SETTINGS_MODULE`` を使�
    :meth:`~scrapy.spiders.Spider.from_crawler` メソッドをオーバーライドする必要があります.
 
 設定は, 拡張機能, ミドルウェアおよびアイテムパイプラインの ``from_crawler`` メソッドに渡される, 
-クローラの :attr:`scrapy.crawler.Crawler.settings` 属性を介してアクセスできます. :
+クローラの :attr:`scrapy.crawler.Crawler.settings` 属性を介してアクセスできます. ::
 
     class MyExtension(object):
         def __init__(self, log_is_enabled=False):
@@ -409,7 +409,7 @@ DOWNLOADER_CLIENT_TLS_METHOD
 DOWNLOADER_MIDDLEWARES
 ----------------------
 
-デフォルト:: ``{}``
+デフォルト: ``{}``
 
 あなたのプロジェクトで有効になっているダウンローダミドルウェアとその注文を含む辞書. 
 詳細については :ref:`topics-downloader-middleware-setting` を参照してください.

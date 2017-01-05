@@ -349,11 +349,9 @@ Twisted の ``protocol.ClientFactory`` クラスを定義します.
 
 .. note::
 
-    HTTP/1.0 is rarely used nowadays so you can safely ignore this setting,
-    unless you use Twisted<11.1, or if you really want to use HTTP/1.0
-    and override :setting:`DOWNLOAD_HANDLERS_BASE` for ``http(s)`` scheme
-    accordingly, i.e. to
-    ``'scrapy.core.downloader.handlers.http.HTTP10DownloadHandler'``.
+    Twisted < 11.1 を使用しない限り, HTTP/1.0 は今日めったに使われないので, この設定を無視しても問題ありません. 
+    HTTP/1.0 を使用し, ``http(s)`` スキームに応じて :setting:`DOWNLOAD_HANDLERS_BASE` をオーバーライドする, 
+    すなわち ``'scrapy.core.downloader.handlers.http.HTTP10DownloadHandler'``.
 
 .. setting:: DOWNLOADER_CLIENTCONTEXTFACTORY
 
@@ -370,15 +368,15 @@ ContextFactory は,  SSL / TLS コンテキストの Twisted の用語で,
 
 .. note::
 
-    Scrapy default context factory **does NOT perform remote server
-    certificate verification**. This is usually fine for web scraping.
+    Scrapy のデフォルトコンテキストファクトリは, リモートサーバー証明書の検証を実行しません. 
+    これは, 通常のウェブスクレーピングでは問題ありません.
 
-    If you do need remote server certificate verification enabled,
-    Scrapy also has another context factory class that you can set,
-    ``'scrapy.core.downloader.contextfactory.BrowserLikeContextFactory'``,
-    which uses the platform's certificates to validate remote endpoints.
-    **This is only available if you use Twisted>=14.0.**
-
+    リモートサーバー証明書の検証が有効になっている必要がある場合は,
+    プラットフォームの証明書を使用してリモートエンドポイントを検証する 
+    ``'scrapy.core.downloader.contextfactory.BrowserLikeContextFactory'`` 
+    という別のコンテキストファクトリクラスを使用することもできます. 
+    **Twisted>=14.0.** で使用することができます. 
+    
 カスタム ContextFactory を使用する場合は, 
 init で ``method`` パラメータを受け入れるようにしてください
 （これは ``OpenSSL.SSL`` メソッドの :setting:`DOWNLOADER_CLIENT_TLS_METHOD` のマッピングです）. 

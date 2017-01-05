@@ -1041,13 +1041,12 @@ SPIDER_CONTRACTS_BASE
         'scrapy.contracts.default.ScrapesContract': 3,
     }
 
-A dict containing the scrapy contracts enabled by default in Scrapy. You should
-never modify this setting in your project, modify :setting:`SPIDER_CONTRACTS`
-instead. For more info see :ref:`topics-contracts`.
+Scrapyでデフォルトで有効になっているコントラクトを含む辞書. 
+プロジェクトでこの設定を変更しないでください,  :setting:`SPIDER_CONTRACTS` 
+を変更してください. 詳細は, :ref:`topics-contracts` を参照してください.
 
-You can disable any of these contracts by assigning ``None`` to their class
-path in :setting:`SPIDER_CONTRACTS`. E.g., to disable the built-in
-``ScrapesContract``, place this in your ``settings.py``::
+これらのコントラクトを無効にするには :setting:`SPIDER_CONTRACTS` のクラスパスに ``None`` を割り当ててください. 
+例えば, 組み込みの ``ScrapesContract`` を無効にするには, ``settings.py`` に, この様に記述します::
 
     SPIDER_CONTRACTS = {
         'scrapy.contracts.default.ScrapesContract': None,
@@ -1060,8 +1059,7 @@ SPIDER_LOADER_CLASS
 
 デフォルト: ``'scrapy.spiderloader.SpiderLoader'``
 
-The class that will be used for loading spiders, which must implement the
-:ref:`topics-api-spiderloader`.
+:ref:`topics-api-spiderloader` を実装する必要があるスパイダーのロードに使用されるクラス.
 
 .. setting:: SPIDER_MIDDLEWARES
 
@@ -1070,8 +1068,8 @@ SPIDER_MIDDLEWARES
 
 デフォルト:: ``{}``
 
-A dict containing the spider middlewares enabled in your project, and their
-orders. For more info see :ref:`topics-spider-middleware-setting`.
+なたのプロジェクトで利用可能なスパイダーミドルウェアとその注文を含む辞書. 
+詳細は :ref:`topics-spider-middleware-setting` を参照してください.
 
 .. setting:: SPIDER_MIDDLEWARES_BASE
 
@@ -1088,9 +1086,9 @@ SPIDER_MIDDLEWARES_BASE
         'scrapy.spidermiddlewares.depth.DepthMiddleware': 900,
     }
 
-A dict containing the spider middlewares enabled by default in Scrapy, and
-their orders. Low orders are closer to the engine, high orders are closer to
-the spider. For more info see :ref:`topics-spider-middleware-setting`.
+Scrapy でデフォルトで有効になっているスパイダーミドルウェアとそのオーダーを含む辞書. 
+オーダーの値が低いものはエンジンに近く, 高いものははスパイダーに近くなっています. 
+詳細については,  :ref:`topics-spider-middleware-setting` を参照してください.
 
 .. setting:: SPIDER_MODULES
 
@@ -1099,9 +1097,9 @@ SPIDER_MODULES
 
 デフォルト: ``[]``
 
-A list of modules where Scrapy will look for spiders.
+Scrapy がスパイダーを探すモジュールのリスト.
 
-Example::
+例::
 
     SPIDER_MODULES = ['mybot.spiders_prod', 'mybot.spiders_dev']
 
@@ -1112,8 +1110,7 @@ STATS_CLASS
 
 デフォルト: ``'scrapy.statscollectors.MemoryStatsCollector'``
 
-The class to use for collecting stats, who must implement the
-:ref:`topics-api-stats`.
+:ref:`topics-api-stats` を実装する必要がある, 統計を収集するために使用するクラス.
 
 .. setting:: STATS_DUMP
 
@@ -1122,10 +1119,9 @@ STATS_DUMP
 
 デフォルト: ``True``
 
-Dump the :ref:`Scrapy stats <topics-stats>` (to the Scrapy log) once the spider
-finishes.
+スパイダーが終了したときに :ref:`Scrapy stats <topics-stats>` (Scrapy ログに) をダンプします.
 
-For more info see: :ref:`topics-stats`.
+詳細については,  :ref:`topics-stats` を参照してください.
 
 .. setting:: STATSMAILER_RCPTS
 
@@ -1134,8 +1130,8 @@ STATSMAILER_RCPTS
 
 デフォルト: ``[]`` (empty list)
 
-Send Scrapy stats after spiders finish scraping. See
-:class:`~scrapy.extensions.statsmailer.StatsMailer` for more info.
+スパイダーがスクレイピングを終えた後, Scrapyの統計情報を送信します. 詳細は 
+:class:`~scrapy.extensions.statsmailer.StatsMailer` を参照してください.
 
 .. setting:: TELNETCONSOLE_ENABLED
 
@@ -1144,8 +1140,8 @@ TELNETCONSOLE_ENABLED
 
 デフォルト: ``True``
 
-A boolean which specifies if the :ref:`telnet console <topics-telnetconsole>`
-will be enabled (provided its extension is also enabled).
+:ref:`telnet console <topics-telnetconsole>` を有効にするかどうかを指定する真偽値です 
+(拡張機能が有効な場合).
 
 .. setting:: TELNETCONSOLE_PORT
 
@@ -1154,23 +1150,20 @@ TELNETCONSOLE_PORT
 
 デフォルト: ``[6023, 6073]``
 
-The port range to use for the telnet console. If set to ``None`` or ``0``, a
-dynamically assigned port is used. For more info see
-:ref:`topics-telnetconsole`.
+Telnet コンソールに使用するポート範囲. ``None`` または ``0`` を設定すると, 
+動的に割り当てられたポートが使用されます. 詳細については, :ref:`topics-telnetconsole` を参照してください.
 
 .. setting:: TEMPLATES_DIR
 
 TEMPLATES_DIR
 -------------
 
-デフォルト: ``templates`` dir inside scrapy module
+デフォルト: Scrapy モジュール内の ``templates`` ディレクトリ
 
-The directory where to look for templates when creating new projects with
-:command:`startproject` command and new spiders with :command:`genspider`
-command.
+:command:`startproject` コマンドで新しいプロジェクトを作成するときにテンプレートを検索するディレクトリと,  
+:command:`genspider` コマンドで新しいスパイダーを検索するディレクトリ.
 
-The project name must not conflict with the name of custom files or directories
-in the ``project`` subdirectory.
+プロジェクト名は, プロジェクトサブディレクトリ内のカスタムファイルまたはディレクトリの名前と競合してはいけません.
 
 
 .. setting:: URLLENGTH_LIMIT
@@ -1180,10 +1173,10 @@ URLLENGTH_LIMIT
 
 デフォルト: ``2083``
 
-Scope: ``spidermiddlewares.urllength``
+スコープ: ``spidermiddlewares.urllength``
 
-The maximum URL length to allow for crawled URLs. For more information about
-the default value for this setting see: http://www.boutell.com/newfaq/misc/urllength.html
+クロールを許可するURLの最大長. 
+この設定のデフォルト値の詳細については,  http://www.boutell.com/newfaq/misc/urllength.html を参照してください. 
 
 .. setting:: USER_AGENT
 
@@ -1192,14 +1185,13 @@ USER_AGENT
 
 デフォルト: ``"Scrapy/VERSION (+http://scrapy.org)"``
 
-The default User-Agent to use when crawling, unless overridden.
+オーバーライドされない限り, クロール時に使用されるデフォルトの User-Agent.
 
 
-Settings documented elsewhere:
+他の場所で文書化された設定:
 ------------------------------
 
-The following settings are documented elsewhere, please check each specific
-case to see how to enable and use them.
+次の設定は他の場所で文書化されています. それぞれのケースを確認して使用する方法を確認してください.
 
 .. settingslist::
 

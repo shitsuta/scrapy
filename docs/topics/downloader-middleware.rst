@@ -455,7 +455,7 @@ LevelDB_ ストレージバックエンドは, HTTPキャッシュミドルウ�
 
 このストレージバックエンドを使用するには:
 
-* ``scrapy.extensions.httpcache.LeveldbCacheStorage`` に :setting:`HTTPCACHE_STORAGE` を設定します
+* :setting:`HTTPCACHE_STORAGE` に ``scrapy.extensions.httpcache.LeveldbCacheStorage`` を設定します
 * ``pip install leveldb`` のようにして,  `LevelDB の Python バインディング`_ をインストールします
 
 .. _LevelDB: https://github.com/google/leveldb

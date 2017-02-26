@@ -63,13 +63,13 @@ Scrapy で BeautifulSoup を使うことができますか?
 Scrapy がサポートしているのは Python のどのバージョンですか?
 -----------------------------------------
 
-Scrapy is supported under Python 2.7 and Python 3.3+.
-Python 2.6 support was dropped starting at Scrapy 0.20.
-Python 3 support was added in Scrapy 1.1.
+Scrapy は Python 2.7 と Python 3.3+　での動作が確認されています。
+Python 2.6　は　Scrapy 0.20　からサポート対象から外されています。
+Scrapy 1.1 から　Python 3 サポートが開始されています。
 
 .. note::
-    Python 3 is not yet supported on Windows.
-
+    Windows では　Python 3 はサポートされていません。
+    
 Did Scrapy "steal" X from Django?
 ---------------------------------
 

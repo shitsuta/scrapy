@@ -11,10 +11,8 @@ Scrapy のリクエストとレスポンスをグローバルに変更するた�
 
 ダウンローダーミドルウェアの有効化
 ==================================
-
-To activate a downloader middleware component, add it to the
-:setting:`DOWNLOADER_MIDDLEWARES` setting, which is a dict whose keys are the
-middleware class paths and their values are the middleware orders.
+ダウンローダーミドルウェアの有効化をするためには、:setting:`DOWNLOADER_MIDDLEWARES` に設定してください。
+これは辞書であり、キーがミドルウェアクラスパスであり、値はミドルウェアのオーダーであることに注意してください。
 
 例::
 
@@ -22,34 +20,23 @@ middleware class paths and their values are the middleware orders.
         'myproject.middlewares.CustomDownloaderMiddleware': 543,
     }
 
-The :setting:`DOWNLOADER_MIDDLEWARES` setting is merged with the
-:setting:`DOWNLOADER_MIDDLEWARES_BASE` setting defined in Scrapy (and not meant
-to be overridden) and then sorted by order to get the final sorted list of
-enabled middlewares: the first middleware is the one closer to the engine and
-the last is the one closer to the downloader. In other words,
-the :meth:`~scrapy.downloadermiddlewares.DownloaderMiddleware.process_request`
-method of each middleware will be invoked in increasing
-middleware order (100, 200, 300, ...) and the :meth:`~scrapy.downloadermiddlewares.DownloaderMiddleware.process_response` method
-of each middleware will be invoked in decreasing order.
+:setting:`DOWNLOADER_MIDDLEWARES` 設定はScrapy（オーバーリデンではない）で決められている
+:setting:`DOWNLOADER_MIDDLEWARES_BASE`とマージされます。その後、ソートされ実行される順番が決められます。
+最初のミドルウェアがエンジンに近く、最後がダウンローダーに近いです。言い換えると、それぞれの:meth:`~scrapy.downloadermiddlewares.DownloaderMiddleware.process_request`メソッドが昇順で(100,200,300..)で実行されていき、それぞれの:meth:`~scrapy.downloadermiddlewares.DownloaderMiddleware.process_response`メソッドが降順で実行されます。
 
-To decide which order to assign to your middleware see the
-:setting:`DOWNLOADER_MIDDLEWARES_BASE` setting and pick a value according to
-where you want to insert the middleware. The order does matter because each
-middleware performs a different action and your middleware could depend on some
-previous (or subsequent) middleware being applied.
 
-If you want to disable a built-in middleware (the ones defined in
-:setting:`DOWNLOADER_MIDDLEWARES_BASE` and enabled by default) you must define it
-in your project's :setting:`DOWNLOADER_MIDDLEWARES` setting and assign `None`
-as its value.  For example, if you want to disable the user-agent middleware::
+ミドルウェアの順番を決めるためには:setting:`DOWNLOADER_MIDDLEWARES_BASE`を参考にし、値を決める必要があります。順番はそれぞれのミドルウェアの関係性を考慮し決めなくてはなりません。
+
+もしあなたが標準のミドルウェアを実行したくない場合は、:setting:`DOWNLOADER_MIDDLEWARES` で  `None`を設定してください。
+例えばあなたがuser-agent middlewareを実行したくない場合は
 
     DOWNLOADER_MIDDLEWARES = {
         'myproject.middlewares.CustomDownloaderMiddleware': 543,
         'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware': None,
     }
 
-Finally, keep in mind that some middlewares may need to be enabled through a
-particular setting. See each middleware documentation for more info.
+ミドルウェアの中には特別な設定が必要なものもあります。
+詳しくはドキュメントを参照してください。
 
 独自のダウンローダーミドルウェアの作成
 ======================================
